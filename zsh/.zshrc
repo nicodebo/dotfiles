@@ -250,17 +250,6 @@ zle -N zle-line-init
 
 # }}}
 
-# liquidprompt ------------------------------------------------------------ {{{
-
-# customize liquid prompt
-LP_PS1_PREFIX=$'╭─'
-LP_PS1_POSTFIX=$'\n╰─%B$%b '
-
-# colored version
-# LP_PS1_PREFIX=$'%F{red}╭─%F{reset_color}'
-# LP_PS1_POSTFIX=$'\n%F{red}╰─%B$%b%F{reset_color} '
-
-# }}}
 
 # fzf theme --------------------------------------------------------------- {{{
 

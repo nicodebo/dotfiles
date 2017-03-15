@@ -38,3 +38,33 @@ export PYTHONSTARTUP=~/bin/python_startup_script.py
 
 # default browser, needed for termite url hints amongst other things
 export BROWSER=qutebrowser
+
+
+# Preferred editor for local and remote sessions
+ # http://unix.stackexchange.com/questions/4859/visual-vs-editor-whats-the-difference
+if [[ -n $SSH_CONNECTION ]]; then
+    export VISUAL='nvim'
+    export EDITOR="$VISUAL"
+else
+    export VISUAL='nvim'
+    export EDITOR="$VISUAL"
+fi
+
+mkdir -p "${XDG_DATA_HOME}/zsh" # directory that store zsh cmd history
+mkdir -p "${XDG_CACHE_HOME}/less" # directory that store the less history
+
+# liquidprompt ------------------------------------------------------------ {{{
+
+# customize liquid prompt
+export LP_PS1_PREFIX=$'╭─'
+export LP_PS1_POSTFIX=$'\n╰─%B$%b '
+
+# colored version
+# LP_PS1_PREFIX=$'%F{red}╭─%F{reset_color}'
+# LP_PS1_POSTFIX=$'\n%F{red}╰─%B$%b%F{reset_color} '
+
+# }}}
+
+# z
+mkdir -p "${XDG_DATA_HOME}/z"
+export _Z_DATA="${XDG_DATA_HOME}/z/z"

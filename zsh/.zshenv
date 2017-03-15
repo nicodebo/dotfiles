@@ -20,17 +20,3 @@ if [[ -r ${ZDOTDIR}/config/aliasrc ]]; then
 else
   echo "aliasrc not found"
 fi
-
-# Preferred editor for local and remote sessions
- # http://unix.stackexchange.com/questions/4859/visual-vs-editor-whats-the-difference
- if [[ -n $SSH_CONNECTION ]]; then
-     export VISUAL='nvim'
-     export EDITOR="$VISUAL"
- else
-     export VISUAL='nvim'
-     export EDITOR="$VISUAL"
- fi
-
-
-mkdir -p "${XDG_DATA_HOME}/zsh" # directory that store zsh cmd history
-mkdir -p "${XDG_CACHE_HOME}/less" # directory that store the less history
