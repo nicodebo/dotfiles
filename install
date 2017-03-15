@@ -43,6 +43,7 @@ function main() {
   sym_conf "${SCRIPT_DIR}/pam" "${HOME}"
   sym_conf "${SCRIPT_DIR}/plowshare" "${conf_dir}/plowshare"
   sym_conf "${SCRIPT_DIR}/qutebrowser" "${conf_dir}/qutebrowser"
+  sym_conf "${SCRIPT_DIR}/ssh" "${HOME}/.ssh"
   sym_conf "${SCRIPT_DIR}/termite" "${conf_dir}/termite"
   sym_conf "${SCRIPT_DIR}/taskwarrior" "${conf_dir}/task"
   sym_conf "${SCRIPT_DIR}/vimpck" "${conf_dir}/vimpck"

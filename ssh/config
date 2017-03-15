@@ -1,0 +1,18 @@
+# global options
+User debz
+
+# host-specific options
+## eeepc
+Host jaipete
+    HostName jaipete
+    Port 22
+
+## dellxps, mon server
+Host saintpaul
+    HostName saintpaul
+    Port 22
+
+## pc principal
+Host marie-clara
+    HostName marie-clara
+    Port 22
