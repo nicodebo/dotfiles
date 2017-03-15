@@ -68,3 +68,7 @@ export LP_PS1_POSTFIX=$'\n╰─%B$%b '
 # z
 mkdir -p "${XDG_DATA_HOME}/z"
 export _Z_DATA="${XDG_DATA_HOME}/z/z"
+
+# notmuch
+export NOTMUCH_CONFIG="${XDG_CONFIG_HOME}/notmuch/notmuchrc"
+export NMBGIT="${XDG_DATA_HOME}/notmuch/nmbug"
