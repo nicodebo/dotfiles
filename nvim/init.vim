@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Mar 13
+" Last Change: 2017 Mar 15
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -210,81 +210,104 @@ let g:vimtex_latexmk_progname='nvr'
 " Résolution des conflits entre le bépo et les mappings par défaut du plugin
 " vimtex.
 " Éviter les ralentissements
+
 let g:vimtex_mappings_enabled=0
+
 nmap <localleader>li <plug>(vimtex-info)
 nmap <localleader>lI <plug>(vimtex-info-full)
-nmap <localleader>lt <plug>(vimtex-toc-open)
-nmap <localleader>lT <plug>(vimtex-toc-toggle)
-nmap <localleader>ly <plug>(vimtex-labels-open)
-nmap <localleader>lY <plug>(vimtex-labels-toggle)
-nmap <localleader>lv <plug>(vimtex-view)
-nmap <localleader>lr <plug>(vimtex-reverse-search)
+nmap <localleader>lx <plug>(vimtex-reload)
+nmap <localleader>ls <plug>(vimtex-toggle-main)
+
+nmap ds$ <plug>(vimtex-env-delete-math)
+nmap ls$ <plug>(vimtex-env-change-math)
+nmap dse <plug>(vimtex-env-delete)
+nmap lse <plug>(vimtex-env-change)
+nmap jse <plug>(vimtex-env-toggle-star)
+
+nmap dsc <plug>(vimtex-cmd-delete)
+nmap lsc <plug>(vimtex-cmd-change)
+nmap jsc <plug>(vimtex-cmd-toggle-star)
+nmap <F7> <plug>(vimtex-cmd-create)
+xmap <F7> <plug>(vimtex-cmd-create)
+imap <F7> <plug>(vimtex-cmd-create)
+
+nmap jsd <plug>(vimtex-delim-toggle-modifier)
+vmap jsd <plug>(vimtex-delim-toggle-modifier)
+imap ]] <plug>(vimtex-delim-close)
+
+" latexmk related mapping
 nmap <localleader>ll <plug>(vimtex-compile-toggle)
+nmap <localleader>lo <plug>(vimtex-compile-output)
 nmap <localleader>lL <plug>(vimtex-compile-selected)
 xmap <localleader>lL <plug>(vimtex-compile-selected)
 nmap <localleader>lk <plug>(vimtex-stop)
 nmap <localleader>lK <plug>(vimtex-stop-all)
 nmap <localleader>le <plug>(vimtex-errors)
-nmap <localleader>lo <plug>(vimtex-compile-output)
-nmap <localleader>lg <plug>(vimtex-status)
-nmap <localleader>lG <plug>(vimtex-status-all)
 nmap <localleader>lc <plug>(vimtex-clean)
 nmap <localleader>lC <plug>(vimtex-clean-full)
-nmap <localleader>lm <plug>(vimtex-imaps-list)
-nmap <localleader>lx <plug>(vimtex-reload)
-nmap <localleader>ls <plug>(vimtex-toggle-main)
-nmap dse <plug>(vimtex-env-delete)
-nmap ds$ <plug>(vimtex-env-delete-math)
-nmap lse <plug>(vimtex-env-change)
-nmap lsc <plug>(vimtex-cmd-change)
-nmap ls$ <plug>(vimtex-cmd-change-math)
-nmap jsc <plug>(vimtex-cmd-toggle-star)
-nmap jse <plug>(vimtex-env-toggle-star)
-nmap jsd <plug>(vimtex-delim-toggle-modifier)
-xmap jsd <plug>(vimtex-delim-toggle-modifier)
-nmap <F7> <plug>(vimtex-cmd-create)
-xmap <F7> <plug>(vimtex-cmd-create)
-imap <F7> <plug>(vimtex-cmd-create)
-imap ]] <plug>(vimtex-delim-close)
-nmap ac <plug>(vimtex-ac)
-xmap ac <plug>(vimtex-ac)
-omap ac <plug>(vimtex-ac)
-nmap ic <plug>(vimtex-ic)
-xmap ic <plug>(vimtex-ic)
-omap ic <plug>(vimtex-ic)
-nmap ad <plug>(vimtex-ad)
-xmap ad <plug>(vimtex-ad)
-omap ad <plug>(vimtex-ad)
-nmap id <plug>(vimtex-id)
-xmap id <plug>(vimtex-id)
-omap id <plug>(vimtex-id)
-nmap ae <plug>(vimtex-ae)
-xmap ae <plug>(vimtex-ae)
-omap ae <plug>(vimtex-ae)
-nmap ie <plug>(vimtex-ie)
-xmap ie <plug>(vimtex-ie)
-omap ie <plug>(vimtex-ie)
-nmap a$ <plug>(vimtex-a$)
-xmap a$ <plug>(vimtex-a$)
-omap a$ <plug>(vimtex-a$)
-nmap i$ <plug>(vimtex-i$)
-xmap i$ <plug>(vimtex-i$)
-omap i$ <plug>(vimtex-i$)
-nmap % <plug>(vimtex-%)
-xmap % <plug>(vimtex-%)
-omap % <plug>(vimtex-%)
+nmap <localleader>lg <plug>(vimtex-status)
+nmap <localleader>lG <plug>(vimtex-status-all)
+
+" motion related mapping
 nmap ]] <plug>(vimtex-]])
 xmap ]] <plug>(vimtex-]])
 omap ]] <plug>(vimtex-]])
+
 nmap ][ <plug>(vimtex-][)
 xmap ][ <plug>(vimtex-][)
 omap ][ <plug>(vimtex-][)
+
 nmap [] <plug>(vimtex-[])
 xmap [] <plug>(vimtex-[])
 omap [] <plug>(vimtex-[])
+
 nmap [[ <plug>(vimtex-[[)
 xmap [[ <plug>(vimtex-[[)
 omap [[ <plug>(vimtex-[[)
+
+nmap % <plug>(vimtex-%)
+xmap % <plug>(vimtex-%)
+omap % <plug>(vimtex-%)
+
+" text object related mappings
+xmap ac <plug>(vimtex-ac)
+omap ac <plug>(vimtex-ac)
+
+xmap ic <plug>(vimtex-ic)
+omap ic <plug>(vimtex-ic)
+
+xmap ad <plug>(vimtex-ad)
+omap ad <plug>(vimtex-ad)
+
+xmap id <plug>(vimtex-id)
+omap id <plug>(vimtex-id)
+
+xmap ae <plug>(vimtex-ae)
+omap ae <plug>(vimtex-ae)
+
+xmap ie <plug>(vimtex-ie)
+omap ie <plug>(vimtex-ie)
+
+xmap a$ <plug>(vimtex-a$)
+omap a$ <plug>(vimtex-a$)
+
+xmap i$ <plug>(vimtex-i$)
+omap i$ <plug>(vimtex-i$)
+
+" toc related
+nmap <localleader>lt <plug>(vimtex-toc-open)
+nmap <localleader>lT <plug>(vimtex-toc-toggle)
+
+" label related
+nmap <localleader>ly <plug>(vimtex-labels-open)
+nmap <localleader>lY <plug>(vimtex-labels-toggle)
+
+" viewer
+nmap <localleader>lv <plug>(vimtex-view)
+nmap <localleader>lr <plug>(vimtex-reverse-search)
+
+" insert mapping list
+nmap <localleader>lm <plug>(vimtex-imaps-list)
 
   " }}}
 
