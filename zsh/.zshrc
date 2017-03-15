@@ -50,7 +50,7 @@ fi
 source "${ZPLUG_HOME}/init.zsh"
 # Supports oh-my-zsh plugins and the like
 zplug "plugins/extract", from:oh-my-zsh
-zplug "plugins/vi-mode", from:oh-my-zsh
+# zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "rupa/z", use:z.sh # manage most frequent directory
 zplug "voronkovich/gitignore.plugin.zsh" # cli to download from gitignore api
 zplug "nojhan/liquidprompt" # zsh prompt with git and python venv support
