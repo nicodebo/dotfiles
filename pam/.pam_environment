@@ -1,6 +1,7 @@
 # Setting variables that reuse your $HOME
 # I'm settings this variable because I need to reuse them for application that don't follow xdg standard. Thus I'm just settings this variable to default xdg value.
 # ref: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
+# Also .pam_environment is shell agnostic
 XDG_CACHE_HOME   DEFAULT=@{HOME}/.cache
 XDG_CONFIG_HOME  DEFAULT=@{HOME}/.config
 XDG_DATA_HOME    DEFAULT=@{HOME}/.local/share
@@ -22,3 +23,6 @@ LESSKEY    	DEFAULT=${XDG_CONFIG_HOME}/less/lesskey
 # make ssh use gpg-agent instead of ssh-agent
 SSH_AGENT_PID	DEFAULT=
 SSH_AUTH_SOCK	DEFAULT="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+
+# xorg-xauth
+XAUTHORITY      DEFAULT="${XDG_RUNTIME_DIR}/Xauthority"
