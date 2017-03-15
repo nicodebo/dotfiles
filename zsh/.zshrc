@@ -226,6 +226,11 @@ vf() {
   fi
 }
 
+# fh - repeat history
+fh() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
+}
+
   # }}}
 
 # }}}
@@ -249,7 +254,6 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 
 # }}}
-
 
 # fzf theme --------------------------------------------------------------- {{{
 
