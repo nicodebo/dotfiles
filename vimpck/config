@@ -1,0 +1,45 @@
+;example vimpck configuration file
+;color scheme should go under "pack/*/opt"
+;filetype plugin should go under "pack/*/start" unless you have more than one plugin for a filetype and want to chose which one to use depending on a condition.
+;Maybe I can lazyload some plugin with the packadd mechanism ?
+
+[DEFAULT]
+;The built in package directory. See :help packages 
+pack_path= ~/.local/share/nvim/site/pack
+
+[https://github.com/tpope/vim-commentary]
+package = common
+type = start
+
+[https://github.com/yuttie/comfortable-motion.vim]
+package = common
+type = start
+
+[https://github.com/tpope/vim-dispatch]
+package = common
+type = start 
+
+[https://github.com/wellle/targets.vim]
+package = common
+type = start 
+
+[https://github.com/radenling/vim-dispatch-neovim]
+package = common
+type = opt 
+
+[https://github.com/mustache/vim-mustache-handlebars]
+;syntax highlighting of mustach filetype
+package = filetype
+type = start
+
+[https://github.com/jalvesaq/Nvim-R]
+package = filetype
+type = opt
+
+[https://github.com/lervag/vimtex]
+package = filetype
+type = start 
+
+[https://github.com/chriskempson/base16-vim]
+package = colors
+type = opt

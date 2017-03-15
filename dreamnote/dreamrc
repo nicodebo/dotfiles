@@ -1,0 +1,8 @@
+# /home/debz/.dreamrc : dreamnote configuration file
+
+
+# path of the dream note
+dream_note_path=/home/debz/Documents
+
+# name of the dream note
+dream_note_name=Mon_Journal_de_Reve

@@ -1,0 +1,18 @@
+#!/bin/sh
+if echo "$1" | grep -e youtube
+then
+  termite -e "mpv $1" &
+else
+  echo 'youtube not found in url'
+fi
+# if echo "$1" | grep -e jpg$ -e jpeg$ -e gif$ -e png$
+# then
+#   feh "$1"
+# else
+#         if echo "$1" | grep -e swf$ -e flv$
+#         then
+#         flashplayer "$1"
+#         else
+# xlinks2 "$1"
+# fi
+# fi

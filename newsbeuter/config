@@ -1,0 +1,85 @@
+###############################################################################
+#                          Newsbeuter configuration                           #
+###############################################################################
+
+# Global settings
+auto-reload yes
+reload-time 10
+max-items 100
+text-width 100
+browser $BROWSER 
+
+# macro
+## open youtube rss feed with mpv instead of qutebrowser
+# macro o set browser "mpv %u" ; open-in-browser ; set browser $BROWSER
+macro o set browser "~/.config/newsbeuter/browser-mpv %u"; open-in-browser ; set browser $BROWSER
+
+# Binding pour BÉPO
+# unbind-key e
+ 
+# bind-key e next-unread
+# bind-key i prev-unread
+ 
+unbind-key t
+unbind-key s
+# bind-key UP prev-feed
+# bind-key DOWN next-feed 
+
+bind-key w save
+
+unbind-key ^J
+bind-key j set-tag
+bind-key ^J clear-tag
+ 
+unbind-key ^T
+# unbind-key ^S
+# bind-key ^T next-unread-feed 
+# bind-key ^S prev-unread-feed 
+unbind-key J 
+unbind-key K
+unbind-key ^K
+# unbind-key T
+# unbind-key S
+bind-key S prev
+bind-key T next
+bind-key ^S random-unread
+ 
+ 
+ 
+# unbind-key o
+# unbind-key O
+ 
+# bind-key o open-in-browser-and-mark-read
+# bind-key O open-in-browser
+ 
+ 
+# bind-key è set-tag
+# bind-key ^È clear-tag
+ 
+ 
+# unbind-key b
+# bind-key b bookmark
+ 
+ 
+unbind-key D
+bind-key d delete-article
+# bind-key u purge-deleted 
+ 
+bind-key t down
+bind-key s up
+
+## configuration option: browser
+## description: Set the browser command to use when opening an article in the browser. If <browser-command> contains %u, it will be used as complete commandline and %u will be replaced with the URL that shall be opened.
+## parameter syntax: <browser-command>
+
+
+# ignore-article "http://rss.framasoft.org/" "title =~ \"Commentaires\""
+# ignore-article "http://rss.framasoft.org/" "title =~ \"Re:\""
+ignore-mode "display"
+
+## podbeuter settings
+download-path "~/Downloads/%n"
+max-downloads 2
+player "$PLAYER"
+# bind-key o pb-download
+# bind-key d pb-delete

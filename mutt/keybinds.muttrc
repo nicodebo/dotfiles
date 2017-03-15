@@ -1,0 +1,85 @@
+# -*- muttrc -*-
+# 
+# vim-like keybinds for bépo layout
+# 
+# set ft=muttrc for syntax highlighting in this file.
+
+# ctrl-n, ctrl-p to select next, prev folder 
+# ctrl-o to open selected folder 
+bind index \CP sidebar-prev 
+bind index \CN sidebar-next 
+bind index \CO sidebar-open 
+bind pager \CP sidebar-prev 
+bind pager \CN sidebar-next 
+bind pager \CO sidebar-open 
+
+# I don't need these. just for documentation purposes. See below. 
+# sidebar-scroll-up 
+# sidebar-scroll-down 
+
+# b toggles sidebar visibility 
+macro index b '<enter-command>toggle sidebar_visible<enter>' 
+macro pager b '<enter-command>toggle sidebar_visible<enter>' 
+
+# Remap bounce-message function to "B" 
+bind index B bounce-message 
+
+# 
+# Mario Holbe suggests: 
+# macro index b '<enter-command>toggle sidebar_visible<enter><refresh>' 
+# macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>' 
+#
+bind browser,attach t next-entry
+bind browser,attach s previous-entry
+bind index t next-undeleted
+bind index s previous-undeleted
+bind generic,index t next-entry
+bind generic,index s previous-entry
+bind browser T next-entry
+bind browser S previous-entry
+bind pager t next-line
+bind pager s previous-line
+bind index,attach j tag-entry
+bind index J tag-pattern
+bind index ^J untag-pattern
+bind index <Esc>j tag-thread
+bind pager,index k save-message
+bind attach,pager c exit
+bind browser c previous-page
+bind pager h change-folder
+bind generic C top-page
+bind generic R bottom-page
+#bind generic L recall-message
+bind browser r select-entry
+bind index r display-message
+bind pager r view-attachments
+bind attach r view-attach
+bind attach k save-entry
+bind index,pager,attach , reply
+
+# Index Key Bindings ---------------------------------
+bind index gg       first-entry
+bind index G        last-entry
+
+bind index R        group-reply
+bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+
+# Ctrl-R to mark all as read
+#macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+
+# Saner copy/move dialogs
+#macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+#macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+
+# Pager Key Bindings ---------------------------------
+#bind pager k  previous-line
+#bind pager j  next-line
+bind pager gg top
+bind pager G  bottom
+
+bind pager R  group-reply
+
+# View attachments properly.
+bind attach <return> view-mailcap

@@ -1,0 +1,23 @@
+set from      = "user@email2.com"
+set sendmail  = "/usr/bin/msmtp -a main_ndebonn"
+set realname  = "Nicolas Debonnaire"
+set folder    = ~/.mail/user@email2.com
+set spoolfile = "+INBOX"
+set mbox      = "+archive"
+set record    = "+sent"
+set postponed = "+drafts"
+set trash     = "+trash"
+set status_format = "────[ user@email2.com ]───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+unmailboxes *
+mailboxes +INBOX \
+          +sent \
+          +flagged \
+          +trash \
+          +important \
+          +drafts \
+          +archive \
+
+macro index S \
+    "<save-message>+Work/Spam<enter>"  \
+        "mark message as spam"

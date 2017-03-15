@@ -1,0 +1,17 @@
+[alias]
+        ci = commit
+        co = checkout
+        st = status
+        br = branch
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+
+; git status command
+[status]
+	; show files in untracked directory, see mans git-config showUntrackedFiles
+        showUntrackedFiles = all	
+[user]
+        name = nicodebo
+        email = user@email1.com

@@ -1,0 +1,91 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/2397d79d/
+$NVIM_TUI_ENABLE_CURSOR_SHAPE	init.vim	/^    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1 " the cursor is a pipe in insert mode.$/;"	v
+<F3>	init.vim	/^nmap <F3> :let @\/ = ""<CR>$/;"	m
+<leader>"	init.vim	/^nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel$/;"	m
+<leader>"	init.vim	/^vnoremap <leader>" c""<esc>P$/;"	m
+<leader>'	init.vim	/^nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel$/;"	m
+<leader>'	init.vim	/^vnoremap <leader>' c''<esc>P$/;"	m
+<leader>c	init.vim	/^  nmap <leader>c  <Plug>Commentary$/;"	m
+<leader>c	init.vim	/^  omap <leader>c  <Plug>Commentary$/;"	m
+<leader>c	init.vim	/^  xmap <leader>c  <Plug>Commentary$/;"	m
+<leader>cc	init.vim	/^  nmap <leader>cc <Plug>CommentaryLine$/;"	m
+<leader>cu	init.vim	/^  nmap <leader>cu <Plug>Commentary<Plug>Commentary$/;"	m
+<leader>d	init.vim	/^nnoremap <leader>d :b#<CR>$/;"	m
+<leader>ev	init.vim	/^nnoremap <leader>ev :vsplit $MYVIMRC<cr>$/;"	m
+<leader>l	init.vim	/^nnoremap <leader>l :set list!<CR>$/;"	m
+<leader>m	init.vim	/^nnoremap <leader>m :MakeTags<cr>$/;"	m
+<leader>n	init.vim	/^nnoremap <leader>n :call NumberToggle()<cr>$/;"	m
+<leader>p	init.vim	/^nnoremap <leader>p :buffers<CR>:buffer<Space>$/;"	m
+<leader>sv	init.vim	/^nnoremap <leader>sv :source $MYVIMRC<cr>$/;"	m
+<leader>u	init.vim	/^nnoremap <leader>u :call MajBuffers()<cr>$/;"	m
+BuildComposer	init.vim	/^function! BuildComposer(info)$/;"	f
+CompilerSet	compiler/awesome.vim	/^  command -nargs=* CompilerSet setlocal <args>$/;"	c
+CompilerSet	compiler/flake8.vim	/^  command -nargs=* CompilerSet setlocal <args>$/;"	c
+CompilerSet	compiler/luac.vim	/^  command -nargs=* CompilerSet setlocal <args>$/;"	c
+CompilerSet	compiler/luacheck.vim	/^  command -nargs=* CompilerSet setlocal <args>$/;"	c
+CompilerSet	compiler/mdl.vim	/^  command -nargs=* CompilerSet setlocal <args>$/;"	c
+CompilerSet	compiler/shellcheck.vim	/^  command -nargs=* CompilerSet setlocal <args>$/;"	c
+CompilerSet	compiler/vint.vim	/^  command -nargs=* CompilerSet setlocal <args>$/;"	c
+IndentConvert	init.vim	/^function! IndentConvert(line1, line2, what, cols)$/;"	f
+Indenting	init.vim	/^function! Indenting(indent, what, cols)$/;"	f
+LastMod	init.vim	/^function! LastMod()$/;"	f
+MajBuffers	init.vim	/^function! MajBuffers()$/;"	f
+MakeTags	init.vim	/^command! MakeTags !ctags .$/;"	c
+NumberToggle	init.vim	/^function! NumberToggle()$/;"	f
+RetabIndent	init.vim	/^command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)$/;"	c
+RunExecutable	init.vim	/^command! -nargs=* RunExecutable call s:RunExecutable()$/;"	c
+RunIPython	init.vim	/^command! -nargs=* RunIPython call s:RunIPython()$/;"	c
+ShowSpaces	init.vim	/^command! -bar -nargs=? ShowSpaces call ShowSpaces(<args>)$/;"	c
+ShowSpaces	init.vim	/^function! ShowSpaces(...)$/;"	f
+Space2Tab	init.vim	/^command! -nargs=? -range=% Space2Tab call IndentConvert(<line1>,<line2>,0,<q-args>)$/;"	c
+Tab2Space	init.vim	/^command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,<q-args>)$/;"	c
+TrimSpaces	init.vim	/^command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()$/;"	c
+TrimSpaces	init.vim	/^function! TrimSpaces() range$/;"	f
+al"	init.vim	/^onoremap al" :<c-u>normal! F"va"<cr>$/;"	m
+al'	init.vim	/^onoremap al' :<c-u>normal! F'va'<cr>$/;"	m
+al(	init.vim	/^onoremap al( :<c-u>normal! F)va(<cr>$/;"	m
+al{	init.vim	/^onoremap al{ :<c-u>normal! F{va{<cr>$/;"	m
+an"	init.vim	/^onoremap an" :<c-u>normal! f"va"<cr>$/;"	m
+an'	init.vim	/^onoremap an' :<c-u>normal! f'va'<cr>$/;"	m
+an(	init.vim	/^onoremap an( :<c-u>normal! f(va(<cr>$/;"	m
+an{	init.vim	/^onoremap an{ :<c-u>normal! f{va{<cr>$/;"	m
+current_compiler	compiler/awesome.vim	/^let current_compiler = 'awesome'$/;"	v
+current_compiler	compiler/flake8.vim	/^let current_compiler = 'flake8'$/;"	v
+current_compiler	compiler/luac.vim	/^let current_compiler = 'luac'$/;"	v
+current_compiler	compiler/luacheck.vim	/^let current_compiler = 'luacheck'$/;"	v
+current_compiler	compiler/mdl.vim	/^let current_compiler = 'mdl'$/;"	v
+current_compiler	compiler/shellcheck.vim	/^let current_compiler = 'shellcheck'$/;"	v
+current_compiler	compiler/vint.vim	/^let current_compiler = 'vint'$/;"	v
+g:markdown_fenced_languages	init.vim	/^let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'dosini']$/;"	v
+g:tex_flavor	init.vim	/^let g:tex_flavor = 'latex'$/;"	v
+il"	init.vim	/^onoremap il" :<c-u>normal! F"vi"<cr>$/;"	m
+il'	init.vim	/^onoremap il' :<c-u>normal! F'vi'<cr>$/;"	m
+il(	init.vim	/^onoremap il( :<c-u>normal! F)vi(<cr>$/;"	m
+il{	init.vim	/^onoremap il{ :<c-u>normal! F{vi{<cr>$/;"	m
+in"	init.vim	/^onoremap in" :<c-u>normal! f"vi"<cr>$/;"	m
+in'	init.vim	/^onoremap in' :<c-u>normal! f'vi'<cr>$/;"	m
+in(	init.vim	/^onoremap in( :<c-u>normal! f(vi(<cr>$/;"	m
+in{	init.vim	/^onoremap in{ :<c-u>normal! f{vi{<cr>$/;"	m
+l<leader>c	init.vim	/^  nmap l<leader>c <Plug>ChangeCommentary$/;"	m
+mapleader	init.vim	/^let mapleader = ","              " Change the map leader key from \/ to ,$/;"	v
+maplocalleader	init.vim	/^let maplocalleader = ";"         " Used by nvim-r, vimtex.$/;"	v
+s:RunExecutable	init.vim	/^function! s:RunExecutable()$/;"	f
+s:RunIPython	init.vim	/^function! s:RunIPython()$/;"	f
+s:save_cpo	compiler/awesome.vim	/^let s:save_cpo = &cpo$/;"	v
+s:save_cpo	compiler/flake8.vim	/^let s:save_cpo = &cpo$/;"	v
+s:save_cpo	compiler/luac.vim	/^let s:save_cpo = &cpo$/;"	v
+s:save_cpo	compiler/luacheck.vim	/^let s:save_cpo = &cpo$/;"	v
+s:save_cpo	compiler/mdl.vim	/^let s:save_cpo = &cpo$/;"	v
+s:save_cpo	compiler/shellcheck.vim	/^let s:save_cpo = &cpo$/;"	v
+s:save_cpo	compiler/vint.vim	/^let s:save_cpo = &cpo$/;"	v
+setfiletype	init.vim	/^augroup setfiletype$/;"	a
+statusline	init.vim	/^augroup statusline$/;"	a
+statusline#TabWarning	autoload/statusline.vim	/^function! statusline#TabWarning()$/;"	f
+statusline#TrailingSpaceWarning	autoload/statusline.vim	/^function! statusline#TrailingSpaceWarning()$/;"	f
+vimrc	init.vim	/^augroup vimrc$/;"	a

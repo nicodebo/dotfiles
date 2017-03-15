@@ -1,0 +1,40 @@
+# I need time (return by the tool 'date') to be in french format for my
+# dreamnote
+export LC_TIME=fr_FR.UTF8
+
+# PATH modification
+export PATH="$PATH:/home/debz/.local/bin" # user install program such as
+# pipsi, pip,...
+export PATH="$PATH:$HOME/bin" # my custom script directory
+# needed for ruby gem command line to be available from anywhere
+export PATH="$PATH:/home/debz/.gem/ruby/2.4.0/bin/"
+
+# luarocks, lua package manager, needed to be able to install package locally
+# http://leafo.net/guides/customizing-the-luarocks-tree.html#the-install-locations/local-install
+if hash luarocks 2>/dev/null; then
+    eval $(luarocks path) # needed to import local module from a lua program
+    export PATH="/home/debz/.luarocks/bin:$PATH"
+else
+    echo "luarock is not installed"
+fi
+
+# configure python-virtualenvwrapper
+# https://virtualenvwrapper.readthedocs.io/en/latest/install.html
+export WORKON_HOME="$HOME/.virtualenvs"
+export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME/hooks"
+# project are placed here by default when using mkproject
+export PROJECT_HOME="$HOME/Documents/Dev/pyprojects"
+mkdir -p "$PROJECT_HOME"
+# not sure if I can log to /var/log/
+#export VIRTUALENVWRAPPER_LOG_FILE=/var/log/virtualenvwrapper.log
+# these two following lines seems to fix 
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
+#source $(which virtualenvwrapper.sh)
+source /usr/bin/virtualenvwrapper.sh
+
+# Python start up script, mainly print the current env in the python prompt.
+export PYTHONSTARTUP=~/bin/python_startup_script.py
+
+# default browser, needed for termite url hints amongst other things
+export BROWSER=qutebrowser

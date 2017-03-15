@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+###############################################################################
+#                          Script execution options                           #
+###############################################################################
+
+#set -o errexit    # exit when a command fails
+#set -o pipefail
+#set -o nounset    # exit when using undeclared variable
+#set -o xtrace     # verbose
+
+function usage() {
+  echo "Usage :  $0 <program> <keyword>
+    This program allow to search for a <keyword> inside a manual <program>.
+    Only keyword at the start of a line are match.
+
+    Options:
+    -h|help       Display this message
+
+    Parameters:
+    <program>:    name of the manual of the program to look from
+    <keyword>:    keyword to search."
+} # ----------  end of function usage  ----------
+
+# This function print the man page of specified program and directly go to the
+# specified section
+# $1 - The program to look the manual from
+# $2 - The keyword to look the manual into
+function print_man() {
+  local prog="$1"; shift
+  local key="$1"; shift
+  man --pager="less -p ^[\ ]*$key" "$prog"
+}
+
+# TODO: Don't open if nothing is returned or just print the normal man <prog>
+
+###############################################################################
+#                               Main function                                 #
+###############################################################################
+
+# The main function contains variable definition and the getopts loop that
+# allow to handle the command line arguments.
+function main() {
+    #local SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  while getopts ":h" opt; do
+    case $opt in
+
+      h | help)
+        usage
+        exit 0
+        ;;
+
+      *)
+        echo -e "\n  Option does not exist : $OPTARG\n"
+        usage
+        exit 1
+        ;;
+
+    esac # --- end of case ---
+  done
+
+  shift $(($OPTIND - 1))
+  if [[ $# != 2 ]]; then
+    echo "Incorrect number of positional parameters"
+    usage
+    exit 1
+  else
+    print_man "$1" "$2"
+  fi
+}
+
+###############################################################################
+#                                Launch Main                                  #
+###############################################################################
+main "$@"

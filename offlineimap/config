@@ -1,0 +1,96 @@
+###############################################################################
+#                               General options                               #
+###############################################################################
+
+# for all possible options, see: https://github.com/OfflineIMAP/offlineimap/blob/master/offlineimap.conf
+[general]
+ui = ttyui
+accounts = Perso, Work, Work2
+pythonfile=$HOME/bin/offlineimap.py
+fsync = False
+metadata = $XDG_DATA_HOME/offlineimap 
+
+###############################################################################
+#                                user@email5.com                                #
+###############################################################################
+
+[Account Perso]
+localrepository = Perso-Local
+remoterepository = Perso-Remote
+status_backend = sqlite
+postsynchook = notmuch new
+
+[Repository Perso-Local]
+type = Maildir
+localfolders = ~/.mail/user@email5.com
+
+[Repository Perso-Remote]
+maxconnections = 1
+type = IMAP
+remotehost = imap-mail.outlook.com 
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = user@email5.com
+remotepasseval = get_pass("user@email5.com")
+realdelete = no
+auth_mechanisms = LOGIN
+
+###############################################################################
+#                           user@email2.com                            #
+###############################################################################
+
+[Account Work]
+localrepository = Work-Local
+remoterepository = Work-Remote
+status_backend = sqlite
+postsynchook = notmuch new
+
+[Repository Work-Local]
+type = Maildir
+localfolders = ~/.mail/user@email2.com
+nametrans = lambda folder: {'drafts':  '[Gmail]/Brouillons',
+                            'sent':    '[Gmail]/Messages envoy&AOk-s',
+                            'flagged': '[Gmail]/Suivis',
+                            'trash':   '[Gmail]/Corbeille',
+                            'archive': '[Gmail]/Tous les messages',
+                            'important': '[Gmail]/Important',
+                            }.get(folder, folder)
+
+[Repository Work-Remote]
+maxconnections = 1
+type = Gmail
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = user@email2.com
+remotepasseval = get_pass("user@email2.com")
+realdelete = no
+auth_mechanisms = LOGIN
+nametrans = lambda folder: {'[Gmail]/Brouillons': 'drafts',
+                            '[Gmail]/Messages envoy&AOk-s': 'sent',
+                            '[Gmail]/Suivis': 'flagged',
+                            '[Gmail]/Corbeille': 'trash',
+                            '[Gmail]/Tous les messages': 'archive',
+                            '[Gmail]/Important': 'important',
+                            }.get(folder, folder)
+#folderfilter = lambda folder: folder not in ['[Gmail]/Tous les messages']
+###############################################################################
+#                          user@email1.com                          #
+###############################################################################
+
+[Account Work2]
+localrepository = Work2-Local
+remoterepository = Work2-Remote
+status_backend = sqlite
+postsynchook = notmuch new
+
+[Repository Work2-Local]
+type = Maildir
+localfolders = ~/.mail/user@email1.com
+
+[Repository Work2-Remote]
+maxconnections = 1
+type = IMAP
+remotehost = imap.openmailbox.org
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = user@email1.com
+remotepasseval = get_pass("user@email1.com")
+realdelete = no
+auth_mechanisms = LOGIN

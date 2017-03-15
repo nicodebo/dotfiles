@@ -1,0 +1,20 @@
+# global options
+--recurse=yes
+--exclude=.git
+# exclude all files from the .gitignore
+# It doesn't exclude directory from the gitignore though, ex: .tox/ seems to not be parsed correctly by ctags. It needs to be .tox but .tox is a file for gitignore. The easiest way is to 
+# use the the exclude flags of ctags when I have problems
+--exclude=@.gitignore
+--exclude=.tox
+
+# python options
+## turn off generation of files for python import
+--python-kinds=-I
+
+# markdown definition
+# https://github.com/majutsushi/tagbar/wiki#markdown
+--langdef=markdown
+--langmap=markdown:.mkd
+--regex-markdown=/^#[ \t]+(.*)/\1/h,Heading_L1/
+--regex-markdown=/^##[ \t]+(.*)/\1/i,Heading_L2/
+--regex-markdown=/^###[ \t]+(.*)/\1/k,Heading_L3/

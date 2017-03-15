@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+
+###############################################################################
+#                                  functions                                  #
+###############################################################################
+
+# Create a symlink of a file inside one directory directly under user's home
+# $1 - Source directory
+# $2 - target directory
+# $3 - filefilter
+# function sym_file() {
+#     local src_dir="$1"; shift
+#     local tar_dir="$1"; shift
+#     local filt="$1"; shift
+
+#     mkdir -p "$tar_dir"
+#     cd "$tar_dir" || return
+#     #find . -xtype l -delete
+#     find "$src_dir" -maxdepth 1 -type f -name "$filt" -exec ln -sfv {} \;
+# }
+
+
+# Create recursively symlink of file inside a directory tree. Used for
+# configuraton files that are to be placed inside some dir. (newsbeuter,
+# .config/<name>
+# $1 - Source directory ex: /home/user/.dotfiles/nvim
+# $2 - target directory ex: /home/user/.config
+# function sym_dir() {
+#     local src_dir="$1"; shift
+#     local tar_dir="$1"; shift
+
+#     # Extract rootdir
+#     local rootdir
+#     rootdir=$(find "$src_dir" -maxdepth 0 -type d -exec basename {} \;)
+
+#     # find broken in each directory except the root dir. For exemple the
+#     # following code block will not execute in one file directory such as tmux.
+#     find "$src_dir" -maxdepth 1 -mindepth 1 -type d -exec basename {} \; |
+#     while IFS= read -r file; do
+#         #echo "$file"
+#         local subdir="${tar_dir}/${rootdir}/${file}"
+#         if [ -d "$subdir" ]; then
+#             find "$subdir" -type d |
+#             while IFS= read -r dirbis; do
+#                 #echo "$dirbis"
+#                 find "$dirbis" -xtype l -exec rm -v {} \;
+#             #find "$dirbis" -xtype l -exec echo {} \;
+#             done
+#         fi
+#     done
+
+    # cp -sRvf "$src_dir" "$tar_dir"
+# }
+
+function sym_conf() {
+
+  local src_dir="$1"
+  shift
+  local tar_dir="$1"
+  shift
+
+  # Don't scan for broken symlink in my home directory
+  if [ "$tar_dir" != "$HOME" ]; then
+    mkdir -p "$tar_dir"
+    find "$tar_dir" -xtype l -exec rm -v {} \;
+  fi
+
+  # http://askubuntu.com/questions/86822/how-can-i-copy-the-contents-of-a-folder-to-another-folder-in-a-different-directo
+  cp -sRvf "$src_dir/." "$tar_dir"
+}
+###############################################################################
+#                               main function                                 #
+###############################################################################
+function main() {
+
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  local conf_dir=${XDG_CONFIG_HOME:-$HOME/.config}
+  local data_dir=${XDG_DATA_HOME:-$HOME/.local/share}
+
+  sym_conf "${SCRIPT_DIR}/bin" "${HOME}/bin"
+  sym_conf "${SCRIPT_DIR}/ctags" "${HOME}"
+  sym_conf "${SCRIPT_DIR}/dreamnote" "${conf_dir}/dreamnote"
+  sym_conf "${SCRIPT_DIR}/git" "${conf_dir}/git"
+  sym_conf "${SCRIPT_DIR}/mpd" "${conf_dir}/mpd"
+  sym_conf "${SCRIPT_DIR}/msmtp" "${HOME}"
+  sym_conf "${SCRIPT_DIR}/mutt" "${HOME}/.mutt"
+  sym_conf "${SCRIPT_DIR}/newsbeuter" "${conf_dir}/newsbeuter"
+  sym_conf "${SCRIPT_DIR}/nvim" "${conf_dir}/nvim"
+  sym_conf "${SCRIPT_DIR}/offlineimap" "${conf_dir}/offlineimap"
+  sym_conf "${SCRIPT_DIR}/pam" "${HOME}"
+  sym_conf "${SCRIPT_DIR}/plowshare" "${conf_dir}/plowshare"
+  sym_conf "${SCRIPT_DIR}/qutebrowser" "${conf_dir}/qutebrowser"
+  sym_conf "${SCRIPT_DIR}/termite" "${conf_dir}/termite"
+  sym_conf "${SCRIPT_DIR}/taskwarrior" "${conf_dir}/task"
+  sym_conf "${SCRIPT_DIR}/vimpck" "${conf_dir}/vimpck"
+  sym_conf "${SCRIPT_DIR}/x11" "${HOME}"
+  sym_conf "${SCRIPT_DIR}/xbindkeys" "${HOME}"
+  sym_conf "${SCRIPT_DIR}/zathura" "${conf_dir}/zathura"
+  sym_conf "${SCRIPT_DIR}/zsh" "${conf_dir}/zsh"
+
+  mkdir -p $(dirname "$LESSKEY")
+  lesskey "${SCRIPT_DIR}/less/lesskey"
+  #chmod 755 "${HOME}/.offlineimaprc"
+}
+
+###############################################################################
+#                                execute main                                 #
+###############################################################################
+main
+
+#TODO: mkdir ~/.local/share/newsbeuter/ <-- this xdg directory must exist if
+# the configuration files are placed in ~/.config/newsbeuter/
+#TODO: mkdir -p .mail here or in the post install script
+# Ref: http://stackoverflow.com/questions/7470165/how-to-go-to-each-directory-and-execute-a-command

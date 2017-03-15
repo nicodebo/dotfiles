@@ -1,0 +1,69 @@
+# Adaptation à BÉPO
+
+# hjkl → ctsr
+map t scroll down
+map s scroll up
+map c scroll left
+map r scroll right
+
+# JK → TS
+map T navigate next
+map S navigate previous
+
+
+# r → p
+map p rotate rotate-cw
+
+# R → u
+map u reload
+
+# b ↔ a car le a est plus accessible
+map b adjust_window best-fit
+map a adjust_window width
+
+# Mode Index
+map [index] t navigate_index down
+map [index] s navigate_index up
+map [index] r navigate_index expand
+map [index] c navigate_index collapse
+
+map [index] R navigate_index expand-all
+map [index] C navigate_index collapse-all
+
+set font "DejaVu Sans Mono 11"
+
+# Base16 OceanicNext
+# Author: https://github.com/voronianski/oceanic-next-color-scheme
+
+set default-bg                  "#1B2B34"
+set default-fg                  "#343D46"
+
+set statusbar-fg                "#A7ADBA"
+set statusbar-bg                "#4F5B66"
+
+set inputbar-bg                 "#1B2B34"
+set inputbar-fg                 "#D8DEE9"
+
+set notification-bg             "#1B2B34" 
+set notification-fg             "#D8DEE9"
+
+set notification-error-bg       "#1B2B34"
+set notification-error-fg       "#EC5f67"
+
+set notification-warning-bg     "#1B2B34"
+set notification-warning-fg     "#EC5f67"
+
+set highlight-color             "#FAC863"
+set highlight-active-color      "#6699CC"
+
+set completion-bg               "#343D46"
+set completion-fg               "#6699CC"
+
+set completion-highlight-fg     "#D8DEE9"
+set completion-highlight-bg     "#6699CC"
+
+set recolor-lightcolor          "#1B2B34"
+set recolor-darkcolor           "#CDD3DE"
+
+set recolor                     "false"
+set recolor-keephue             "false"
