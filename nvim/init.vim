@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Mar 15
+" Last Change: 2017 Mar 16
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -232,7 +232,7 @@ xmap <F7> <plug>(vimtex-cmd-create)
 imap <F7> <plug>(vimtex-cmd-create)
 
 nmap jsd <plug>(vimtex-delim-toggle-modifier)
-vmap jsd <plug>(vimtex-delim-toggle-modifier)
+xmap jsd <plug>(vimtex-delim-toggle-modifier)
 imap ]] <plug>(vimtex-delim-close)
 
 " latexmk related mapping
