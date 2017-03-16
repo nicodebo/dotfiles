@@ -8,15 +8,11 @@
 #path=(~/bin $path) # my custom script directory
 
 # Load environement variable modification
-if [[ -r ${ZDOTDIR}/config/envrc ]]; then
-  . ${ZDOTDIR}/config/envrc
-else
-  echo "envrc not found"
-fi
+# if [[ -r ${ZDOTDIR}/config/envrc ]]; then
+#   . ${ZDOTDIR}/config/envrc
+# fi
 
 # load alias (needed to be available to the nvim ! command
 if [[ -r ${ZDOTDIR}/config/aliasrc ]]; then
   . ${ZDOTDIR}/config/aliasrc
-else
-  echo "aliasrc not found"
 fi
