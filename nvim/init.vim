@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Mar 16
+" Last Change: 2017 Mar 17
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -180,7 +180,6 @@ colorscheme base16-oceanicnext
 function! UnmapCommentary()
   unmap gc
   nunmap gcc
-  nunmap cgc
   nunmap gcu
 endfunction
 
