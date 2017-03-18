@@ -13,6 +13,9 @@ alias hibernate='systemctl hibernate'
 # remind
 alias rmind='remind ~/.config/remind/remind'
 
+# paperless
+alias myserver_consume='scp ~/Documents/papier_administratif/consume/* debz@saintpaul:~/.cache/paperless/consume && mv ~/Documents/papier_administratif/consume/* ~/Documents/papier_administratif/cache/'
+
 # alias mymail='offlineimap && mutt'
 
 # Manage packages
@@ -62,7 +65,7 @@ alias clo='cloc $(git ls-files)'
 
 # TODO: The new version of cloc (1.7) has the option --vcs=git which allow to
 # automatically call git ls-files. When this new version arrives change the
-# alias clo='cloc --vcs=git' 
+# alias clo='cloc --vcs=git'
 
 
 # colored output
