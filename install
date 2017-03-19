@@ -29,6 +29,7 @@ function main() {
   local data_dir=${XDG_DATA_HOME:-$HOME/.local/share}
 
   sym_conf "${SCRIPT_DIR}/bin" "${HOME}/bin"
+  sym_conf "${SCRIPT_DIR}/cookiecutter" "${HOME}"
   sym_conf "${SCRIPT_DIR}/ctags" "${HOME}"
   sym_conf "${SCRIPT_DIR}/dreamnote" "${conf_dir}/dreamnote"
   sym_conf "${SCRIPT_DIR}/git" "${conf_dir}/git"
