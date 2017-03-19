@@ -35,6 +35,7 @@ function main() {
   sym_conf "${SCRIPT_DIR}/gpg" "${HOME}/.gnupg"
   sym_conf "${SCRIPT_DIR}/liquidprompt" "${conf_dir}"
   sym_conf "${SCRIPT_DIR}/mpd" "${conf_dir}/mpd"
+  sym_conf "${SCRIPT_DIR}/mpv" "${conf_dir}/mpv"
   sym_conf "${SCRIPT_DIR}/msmtp" "${HOME}"
   sym_conf "${SCRIPT_DIR}/mutt" "${HOME}/.mutt"
   sym_conf "${SCRIPT_DIR}/newsbeuter" "${conf_dir}/newsbeuter"
