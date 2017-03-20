@@ -163,6 +163,7 @@ function histats {
 
 fmpc() {
   local song_position
+  mpc current
   song_position=$(mpc -f "%position%) %artist% - %title%" playlist | \
     fzf --query="$1" --reverse --select-1 --exit-0 | \
     sed -n 's/^\([0-9]\+\)).*/\1/p') || return 1
@@ -226,9 +227,23 @@ vf() {
   fi
 }
 
+
 # fh - repeat history
 fh() {
   print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
+}
+
+
+# find and open one or more note file with preview
+fn() {
+  local note_path="${HOME}/Documents/Note"
+  local files
+  local header="Searching my notes ..."
+  files=$(find "${note_path}" -type f -name *.md | fzf -m -q "$1" --height=90% --header="$header" --preview="pygmentize {}")
+  if [[ -n $files ]]
+  then
+    echo "$files" | tr '\n' ' ' | xargs nvim
+  fi
 }
 
   # }}}
