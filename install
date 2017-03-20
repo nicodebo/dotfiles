@@ -32,6 +32,7 @@ function main() {
   sym_conf "${SCRIPT_DIR}/cookiecutter" "${HOME}"
   sym_conf "${SCRIPT_DIR}/ctags" "${HOME}"
   sym_conf "${SCRIPT_DIR}/dreamnote" "${conf_dir}/dreamnote"
+  sym_conf "${SCRIPT_DIR}/feh" "${conf_dir}/feh"
   sym_conf "${SCRIPT_DIR}/git" "${conf_dir}/git"
   sym_conf "${SCRIPT_DIR}/gpg" "${HOME}/.gnupg"
   sym_conf "${SCRIPT_DIR}/liquidprompt" "${conf_dir}"

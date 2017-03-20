@@ -15,12 +15,12 @@ text/html;  w3m -T text/html -dump %s; nametemplate=%s.html; copiousoutput;
 application/pdf;  zathura %s; nametemplate=%s.pdf; test=sh -c 'test $DISPLAY'
 application/pdf;  pdftotext %s -; copiousoutput 
 
-image/bmp;feh %s
-image/gif;feh %s
-image/jpg;feh %s
-image/jpeg;feh %s
-image/png;feh %s
-image/tiff;feh %s
+image/bmp;feh -Tautofit %s
+image/gif;feh -Tautofit %s
+image/jpg;feh -Tautofit %s
+image/jpeg;feh -Tautofit %s
+image/png;feh -Tautofit %s
+image/tiff;feh -Tautofit %s
 
 
 # Previous settings

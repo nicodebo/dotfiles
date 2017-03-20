@@ -1,0 +1,4 @@
+# feh themes. A few example themes are available /usr/share/doc/feh/examples
+
+# fullscreen awesome theme
+autofit --scale-down --auto-zoom
