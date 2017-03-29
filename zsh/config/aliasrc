@@ -61,12 +61,7 @@ alias awtry='Xephyr :5 & sleep 1 ; DISPLAY=:5 awesome'
 alias msq='mpg123 -vC *mp3'
 
 #git count line of code
-alias clo='cloc $(git ls-files)'
-
-# TODO: The new version of cloc (1.7) has the option --vcs=git which allow to
-# automatically call git ls-files. When this new version arrives change the
-# alias clo='cloc --vcs=git'
-
+alias clo='cloc --vcs=git'
 
 # colored output
 ## Ref: https://wiki.archlinux.org/index.php/Color_output_in_console
