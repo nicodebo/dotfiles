@@ -312,3 +312,19 @@ export GPG_TTY=$(tty)
 
 # Refresh gpg-agent tty in case user switches into an X session
 gpg-connect-agent updatestartuptty /bye >/dev/null
+
+
+# configure python-virtualenvwrapper
+# https://virtualenvwrapper.readthedocs.io/en/latest/install.html
+export WORKON_HOME="$HOME/.virtualenvs"
+export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME/hooks"
+# project are placed here by default when using mkproject
+export PROJECT_HOME="$HOME/Documents/Dev/pyprojects"
+mkdir -p "$PROJECT_HOME"
+# not sure if I can log to /var/log/
+#export VIRTUALENVWRAPPER_LOG_FILE=/var/log/virtualenvwrapper.log
+# these two following lines seems to fix 
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
+#source $(which virtualenvwrapper.sh)
+source /usr/bin/virtualenvwrapper.sh
