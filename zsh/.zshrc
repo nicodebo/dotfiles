@@ -62,7 +62,6 @@ zplug "junegunn/fzf-bin", \
     as:command, \
     rename-to:fzf, \
     use:"*linux*amd64*"
-
 # Set the priority when loading
 # e.g., zsh-syntax-highlighting must be loaded
 # after executing compinit command and sourcing other plugins
@@ -173,7 +172,7 @@ fmpc() {
 # Play one or multiple album, search by artist and album
 # $1 - initial query
 ampc() {
-  local choice 
+  local choice
   local sep=":"
   mpc clear
   choice=$(mpc search -f "[[%artist% ${sep} ]%album%]" artist "" | sort -u | fzf -m -q "$1")
@@ -244,6 +243,20 @@ fn() {
   then
     echo "$files" | tr '\n' ' ' | xargs nvim
   fi
+}
+
+# Find note content
+fs() {
+  local note_path="${HOME}/Documents/Note"
+  local header="grepping my notes ..."
+
+  # silent : prevent ag from populating my home with log files
+  ag --markdown --silent --break --color --nonumber --noheading . "$note_path" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {2..-1} {1} | pygmentize -l md" --preview-window=right:50%
+  # files=$(find "${note_path}" -type f -name *.md | fzf -m -q "$1" --height=90% --header="$header" --preview="pygmentize {}")
+  # if [[ -n $files ]]
+  # then
+    # echo "$files" | tr '\n' ' ' | xargs nvim
+  # fi
 }
 
   # }}}
@@ -323,7 +336,7 @@ export PROJECT_HOME="$HOME/Documents/Dev/pyprojects"
 mkdir -p "$PROJECT_HOME"
 # not sure if I can log to /var/log/
 #export VIRTUALENVWRAPPER_LOG_FILE=/var/log/virtualenvwrapper.log
-# these two following lines seems to fix 
+# these two following lines seems to fix
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
 #source $(which virtualenvwrapper.sh)
