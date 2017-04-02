@@ -162,29 +162,39 @@ function histats {
 
 fmpc() {
   local song_position
-  mpc current
+  local header="Current song : $(mpc current)"
   song_position=$(mpc -f "%position%) %artist% - %title%" playlist | \
-    fzf --query="$1" --reverse --select-1 --exit-0 | \
+    fzf --header="$header" --query="$1" --reverse --select-1 --exit-0 | \
     sed -n 's/^\([0-9]\+\)).*/\1/p') || return 1
   [ -n "$song_position" ] && mpc -q play $song_position
 }
 
-# Play one or multiple album, search by artist and album
+# Play one or multiple album, filter by album, artist, genre and date
 # $1 - initial query
 ampc() {
   local choice
-  local sep=":"
-  mpc clear
-  choice=$(mpc search -f "[[%artist% ${sep} ]%album%]" artist "" | sort -u | fzf -m -q "$1")
-  if [ -z "$choice" ] && exit 1
-  while read -r line; do
-    IFS="$sep" read -r art alb <<< "$line"
-    art="$(echo -e "${art}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-    alb="$(echo -e "${alb}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-    mpc findadd artist "$art" album "$alb" | mpc add
-  done <<< "$choice"
-  mpc playlist
-  mpc -q play
+  local sep=";"
+  local i=0
+  declare -A music
+  local header="Searching music..."
+
+  choice=$(mpc search -f "[%artist% ${sep} %album% [${sep} %genre%] [${sep} %date%]]" artist "" | sort -u | fzf -m -q "$1" --header="$header")
+  if [ -n "$choice" ]; then
+    while read -r line; do
+      IFS="$sep" read -r art alb gnr dte <<< "$line"
+      art="$(echo -e "${art}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+      alb="$(echo -e "${alb}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+      music[$i,0]=$art
+      music[$i,1]=$alb
+      i=$((i+1))
+    done <<< "$choice"
+    mpc clear
+    for ((j=0;j<=i-1;j++)) do
+      mpc findadd artist "${music[$j,0]}" album "${music[$j,1]}" | mpc add
+    done
+    mpc playlist -f "[(%artist% - %album%) :: %position%) %title%]"
+    mpc -q play
+  fi
 }
 
 # http://stackoverflow.com/questions/369758/how-to-trim-whitespace-from-a-bash-variable
@@ -252,11 +262,6 @@ fs() {
 
   # silent : prevent ag from populating my home with log files
   ag --markdown --silent --break --color --nonumber --noheading . "$note_path" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {2..-1} {1} | pygmentize -l md" --preview-window=right:50%
-  # files=$(find "${note_path}" -type f -name *.md | fzf -m -q "$1" --height=90% --header="$header" --preview="pygmentize {}")
-  # if [[ -n $files ]]
-  # then
-    # echo "$files" | tr '\n' ' ' | xargs nvim
-  # fi
 }
 
   # }}}
