@@ -247,7 +247,7 @@ fh() {
 fn() {
   local note_path="${HOME}/Documents/Note"
   local files
-  local header="Searching my notes ..."
+  local header="Searching my notes and open file in editor..."
   files=$(find "${note_path}" -type f -name *.md | fzf -m -q "$1" --height=90% --header="$header" --preview="pygmentize {}")
   if [[ -n $files ]]
   then
@@ -255,13 +255,49 @@ fn() {
   fi
 }
 
-# Find note content
-fs() {
+# Find note content and open selected line in editor
+fse() {
   local note_path="${HOME}/Documents/Note"
-  local header="grepping my notes ..."
+  local header="grepping my notes and open in editor..."
+  local line
+  local file
+  local search
 
   # silent : prevent ag from populating my home with log files
-  ag --markdown --silent --break --color --nonumber --noheading . "$note_path" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {2..-1} {1} | pygmentize -l md" --preview-window=right:50%
+  search=$(ag --markdown --silent --break --color --number --noheading . "$note_path" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {3..-1} {1} | pygmentize -l md" --preview-window=right:50% --print0)
+  if [[ -n $search ]]
+  then
+    line=$(echo "$search" | cut -d ":" -f 2)
+    file=$(echo "$search" | cut -d ":" -f 1)
+    "$EDITOR" +"$line" "$file"
+  fi
+}
+
+# Find note content and print selected entry with context to stdout
+fs() {
+  local note_path="${HOME}/Documents/Note"
+  local header="grepping my notes and print to stdout..."
+  local match
+  local file
+  local search
+
+  # silent : prevent ag from populating my home with log files
+  search=$(ag --markdown --silent --break --color --number --noheading . "$note_path" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {3..-1} {1} | pygmentize -l md" --preview-window=right:50% --print0)
+  if [[ -n $search ]]
+  then
+    match=$(echo "$search" | cut -d ":" -f 3-)
+    file=$(echo "$search" | cut -d ":" -f 1)
+    # http://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux#5947802
+    DARKGRAY='\033[1;30m'
+    NC='\033[0m' # No Color
+    # echo -e "${DARKGRAY}"${file##*/}"${NC}"
+    echo -e "${DARKGRAY}${file}${NC}"
+    printf "${DARKGRAY}-%.0s${NC}" {1..80}
+    echo "\r"
+    grep --context=5 --color=always -F "$match" "$file" | pygmentize -l md
+    printf "${DARKGRAY}-%.0s${NC}" {1..80}
+    echo "\r"
+  fi
 }
 
   # }}}
