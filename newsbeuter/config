@@ -9,6 +9,7 @@ max-items 100
 text-width 100
 browser $BROWSER 
 
+# NOTE: Default prefix key for macro ','
 # macro
 ## open youtube rss feed with mpv instead of qutebrowser
 # macro o set browser "mpv %u" ; open-in-browser ; set browser $BROWSER
