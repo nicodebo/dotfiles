@@ -361,6 +361,15 @@ _gen_fzf_default_opts
 
 # }}}
 
+# $1 - music archive path (file to extract)
+mextract(){
+  music_loc="/media/debz/93f53fa6-5498-4619-9895-455c59fe361c/music/"
+  mv "$1" "$music_loc"
+  cd "$music_loc"
+  extract -r "$1"
+  mpc update
+}
+
 # Set GPG TTY
 export GPG_TTY=$(tty)
 
