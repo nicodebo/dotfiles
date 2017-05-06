@@ -68,6 +68,9 @@ alias clo='cloc --vcs=git'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 
+alias tmuxinator='rvm 2.4@tmuxinator do tmuxinator'
+alias mux='tmuxinator'
+
 #TODO: A mettre dans le fichier .com_varrc
 export LESS=-R
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold

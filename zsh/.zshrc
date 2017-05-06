@@ -1,5 +1,6 @@
 
 # Completion -------------------------------------------------------------- {{{
+
 # The following lines were added by compinstall
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
@@ -391,3 +392,6 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
 #source $(which virtualenvwrapper.sh)
 source /usr/bin/virtualenvwrapper.sh
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
