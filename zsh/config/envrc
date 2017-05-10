@@ -1,29 +1,20 @@
+# xdg standard variable. It can't be created inside .pam_environment because it
+# does not support shell substitution
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+
+# Xorg server
+export XINITRC="${XDG_CONFIG_HOME}/X11/xinitrc"
+export XSERVERRC="${XDG_CONFIG_HOME}/X11/xserverrc"
+
 # I need time (return by the tool 'date') to be in french format for my
 # dreamnote
 export LC_TIME=fr_FR.UTF8
-
-# PATH modification
-export PATH="$PATH:/home/debz/.local/bin" # user install program such as
-# pipsi, pip,...
-export PATH="$PATH:$HOME/bin" # my custom script directory
-# needed for ruby gem command line to be available from anywhere
-export PATH="$PATH:/home/debz/.gem/ruby/2.4.0/bin/"
-
-# luarocks, lua package manager, needed to be able to install package locally
-# http://leafo.net/guides/customizing-the-luarocks-tree.html#the-install-locations/local-install
-if hash luarocks 2>/dev/null; then
-    eval $(luarocks path) # needed to import local module from a lua program
-    export PATH="/home/debz/.luarocks/bin:$PATH"
-else
-    echo "luarock is not installed"
-fi
 
 # Python start up script, mainly print the current env in the python prompt.
 export PYTHONSTARTUP=~/bin/python_startup_script.py
 
 # default browser, needed for termite url hints amongst other things
 export BROWSER=qutebrowser
-
 
 # Preferred editor for local and remote sessions
  # http://unix.stackexchange.com/questions/4859/visual-vs-editor-whats-the-difference
@@ -35,25 +26,80 @@ else
     export EDITOR="$VISUAL"
 fi
 
-mkdir -p "${XDG_DATA_HOME}/zsh" # directory that store zsh cmd history
-mkdir -p "${XDG_CACHE_HOME}/less" # directory that store the less history
-
-# liquidprompt ------------------------------------------------------------ {{{
-
 # customize liquid prompt
 export LP_PS1_PREFIX=$'╭─'
 export LP_PS1_POSTFIX=$'\n╰─%B$%b '
 
-# colored version
-# LP_PS1_PREFIX=$'%F{red}╭─%F{reset_color}'
-# LP_PS1_POSTFIX=$'\n%F{red}╰─%B$%b%F{reset_color} '
+  # colored version
+  # LP_PS1_PREFIX=$'%F{red}╭─%F{reset_color}'
+  # LP_PS1_POSTFIX=$'\n%F{red}╰─%B$%b%F{reset_color} '
 
-# }}}
-
-# z
-mkdir -p "${XDG_DATA_HOME}/z"
+# Program follow xdg standard directories
+## z follow xdg standard
 export _Z_DATA="${XDG_DATA_HOME}/z/z"
 
-# notmuch
+## notmuch follow xdg standard
 export NOTMUCH_CONFIG="${XDG_CONFIG_HOME}/notmuch/notmuchrc"
 export NMBGIT="${XDG_DATA_HOME}/notmuch/nmbug"
+
+## taskwarrior follow xdg standard
+export TASKDATA="${XDG_DATA_HOME}/task"
+export TASKRC="${XDG_CONFIG_HOME}/task/taskrc"
+
+## pass follow xdg standard
+export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/pass"
+
+## less follow xdg standard
+export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
+export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
+
+## xorg-xauth follow xdg standard
+export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"
+
+# ipython follow xdg standard
+export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
+
+## personal env variable
+# music storage directory
+export MUSICSTOREDIR="/media/debz/93f53fa6-5498-4619-9895-455c59fe361c/music/"
+# note directory
+export NOTESTOREDIR="${HOME}/Documents/Note"
+
+# colorized less and man pages
+export LESS=-R
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
+# export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+# and so on
+# http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
+
+
+# configure python-virtualenvwrapper
+# https://virtualenvwrapper.readthedocs.io/en/latest/install.html
+# virtualenvwrapper follows xdg standard
+export WORKON_HOME="${XDG_DATA_HOME}/virtualenvs"
+# project are placed here by default when using mkproject
+export PROJECT_HOME="$HOME/Documents/Dev/pyprojects"
+# not sure if I can log to /var/log/
+#export VIRTUALENVWRAPPER_LOG_FILE=/var/log/virtualenvwrapper.log
+# these two following lines seems to fix
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
+#source $(which virtualenvwrapper.sh)
+
+# zplug
+export ZPLUG_HOME="${XDG_DATA_HOME}/zplug"
+export ZPLUG_CACHE_DIR="${XDG_CACHE_HOME}/zplug"
+export ZPLUG_LOADFILE="${ZDOTDIR}/packages.zsh"
+
+# tmux follows xdg standard
+export TMUX_TMPDIR="${XDG_RUNTIME_DIR}"
+
+# make ssh use gpg-agent instead of ssh-agent
+export SSH_AGENT_PID=""
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"

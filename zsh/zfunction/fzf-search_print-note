@@ -1,0 +1,23 @@
+# Find note content and print selected entry with context to stdout
+local match
+local file
+local search
+
+search=$(ag --markdown --silent --break --color --number --noheading . "${NOTESTOREDIR}" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {3..-1} {1} | pygmentize -l md" --preview-window=right:50% --print0)
+if [[ -n $search ]]
+then
+  match=$(echo "$search" | cut -d ":" -f 3-)
+  file=$(echo "$search" | cut -d ":" -f 1)
+  DARKGRAY='\033[1;30m'
+  NC='\033[0m' # No Color
+  # echo -e "${DARKGRAY}"${file##*/}"${NC}"
+  echo -e "${DARKGRAY}${file}${NC}"
+  printf "${DARKGRAY}-%.0s${NC}" {1..80}
+  echo "\r"
+  grep --context=5 --color=always -F "$match" "$file" | pygmentize -l md
+  printf "${DARKGRAY}-%.0s${NC}" {1..80}
+  echo "\r"
+fi
+
+# silent : prevent ag from populating my home with log files
+# http://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux#5947802

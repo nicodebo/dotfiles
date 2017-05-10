@@ -1,5 +1,6 @@
 set from      = "user@email2.com"
-set sendmail  = "/usr/bin/msmtp -a main_ndebonn"
+# set sendmail  = "/usr/bin/msmtp -a main_ndebonn"
+set sendmail  = "/usr/bin/msmtp -C $XDG_CONFIG_HOME/msmtp/msmtprc -a main_ndebonn"
 set realname  = "Nicolas Debonnaire"
 set folder    = ~/.mail/user@email2.com
 set spoolfile = "+INBOX"

@@ -6,16 +6,12 @@ push <show-version>   #get Mutt to show its version on startup
 ###############################################################################
 #                                    Paths                                    #
 ###############################################################################
-#set editor           = /usr/bin/nvim
 set editor           = `echo \$EDITOR`
-#set alias_file       = ~/.mutt/alias         # where to store aliases
-set header_cache     = ~/.mutt/cache/headers # where to store headers
-set message_cachedir = ~/.mutt/cache/bodies  # where to store bodies
-#set certificate_file = ~/.mutt/certificates  # where to store certs
-set mailcap_path     = ~/.mutt/mailcap       # entries for filetypes
-set tmpdir           = ~/.mutt/temp          # where to keep temp files
-set signature        = ~/.mutt/sig           # my signature file
-# set ispell           = "aspell -e -c"        # correcteur orthographique
+set header_cache     = $XDG_CACHE_HOME/mutt/headers # where to store headers
+set message_cachedir = $XDG_CACHE_HOME/mutt/bodies  # where to store bodies
+set mailcap_path     = $XDG_CONFIG_HOME/mailcap     # entries for filetypes
+set tmpdir           = $XDG_CACHE_HOME/mutt/temp    # where to keep temp files
+set signature        = $XDG_CONFIG_HOME/sig         # my signature file
 ###############################################################################
 #                               Basic options                                 #
 ###############################################################################
@@ -36,7 +32,7 @@ set text_flowed = yes
 #                                Sidebar patch                                #
 ###############################################################################
 # sidebar display
-set sidebar_width=25 
+set sidebar_width=25
 set sidebar_visible
 set sidebar_divider_char = '│'
 set mail_check_stats # autoupdate count
@@ -52,9 +48,9 @@ hdr_order from: to: cc: date: subject:  # and in this order
 ###############################################################################
 #                                Folder hook                                  #
 ###############################################################################
-folder-hook user@email5.com/* source ~/.mutt/accounts/personal.muttrc
-folder-hook user@email2.com/* source ~/.mutt/accounts/work.muttrc
-folder-hook user@email1.com* source ~/.mutt/accounts/work2.muttrc
+folder-hook user@email5.com/* source $XDG_CONFIG_HOME/mutt/accounts/personal.muttrc
+folder-hook user@email2.com/* source $XDG_CONFIG_HOME/mutt/accounts/work.muttrc
+folder-hook user@email1.com* source $XDG_CONFIG_HOME/mutt/accounts/work2.muttrc
 ###############################################################################
 #                                    Index                                    #
 ###############################################################################
@@ -87,8 +83,8 @@ auto_view text/html
 alternative_order text/plain text/enriched text/html
 
 
-# color of folders with new mail 
-color sidebar_new yellow default 
+# color of folders with new mail
+color sidebar_new yellow default
 ###############################################################################
 #                                   Macro                                     #
 ###############################################################################
@@ -105,9 +101,9 @@ macro pager \cb |urlview\n
 ###############################################################################
 #                                Source files                                 #
 ###############################################################################
-source ~/.mutt/accounts/work.muttrc          # load default account user@email2.com
-source ~/.mutt/keybinds.muttrc               # load key bindings
-source ~/.mutt/theme.muttrc
+source $XDG_CONFIG_HOME/mutt/accounts/work.muttrc          # load default account user@email2.com
+source $XDG_CONFIG_HOME/mutt/keybinds.muttrc               # load key bindings
+source $XDG_CONFIG_HOME/mutt/theme.muttrc
 
 set query_command = "abook --mutt-query '%s'"
 macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"

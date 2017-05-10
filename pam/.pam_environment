@@ -1,28 +1,18 @@
+#
+# ~/.pam_environment
+#
+
 # Setting variables that reuse your $HOME
-# I'm settings this variable because I need to reuse them for application that don't follow xdg standard. Thus I'm just settings this variable to default xdg value.
+# I'm settings this variable because I need to reuse them for application that
+# don't follow xdg standard. Thus I'm just settings this variable to default
+# xdg value.
 # ref: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
 # Also .pam_environment is shell agnostic
+
+# xdg variables
 XDG_CACHE_HOME   DEFAULT=@{HOME}/.cache
 XDG_CONFIG_HOME  DEFAULT=@{HOME}/.config
 XDG_DATA_HOME    DEFAULT=@{HOME}/.local/share
 
 # zsh trick to follow xdg_config_home
 ZDOTDIR    DEFAULT=${XDG_CONFIG_HOME}/zsh
-
-# taskwarrior follow xdg_config_home and xdg_data_home
-TASKDATA   DEFAULT=${XDG_DATA_HOME}/task
-TASKRC     DEFAULT=${XDG_CONFIG_HOME}/task/taskrc
-
-# pass follow xdg_config_home
-PASSWORD_STORE_DIR    DEFAULT=${XDG_DATA_HOME}/pass
-
-# less follow xdg_standard dir
-LESSHISTFILE    DEFAULT=${XDG_CACHE_HOME}/less/history
-LESSKEY    	DEFAULT=${XDG_CONFIG_HOME}/less/lesskey
-
-# make ssh use gpg-agent instead of ssh-agent
-SSH_AGENT_PID	DEFAULT=
-SSH_AUTH_SOCK	DEFAULT="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
-
-# xorg-xauth
-XAUTHORITY      DEFAULT="${XDG_RUNTIME_DIR}/Xauthority"

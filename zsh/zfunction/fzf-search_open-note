@@ -1,0 +1,15 @@
+# Find note content and open selected line in editor
+local header="grepping my notes and open in editor..."
+local line
+local file
+local search
+
+search=$(ag --markdown --silent --break --color --number --noheading . "${NOTESTOREDIR}" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {3..-1} {1} | pygmentize -l md" --preview-window=right:50% --print0)
+if [[ -n $search ]]
+then
+  line=$(echo "$search" | cut -d ":" -f 2)
+  file=$(echo "$search" | cut -d ":" -f 1)
+  "$EDITOR" +"$line" "$file"
+fi
+
+# silent flag : prevent ag from populating my home folder with log files

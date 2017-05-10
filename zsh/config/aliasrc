@@ -1,4 +1,3 @@
-
 ################################################################################
 # Aliases definition
 #http://www.howtogeek.com/73768/how-to-use-aliases-to-customize-ubuntu-commands/
@@ -9,51 +8,28 @@ alias reboot='systemctl reboot'
 alias suspend='systemctl suspend'
 alias poweroff='systemctl poweroff'
 alias hibernate='systemctl hibernate'
+alias lock='xscreensaver-command --lock'
 
 # remind
 alias rmind='remind ~/.config/remind/remind'
 
 # paperless
+# TODO: make a proper function for this
 alias myserver_consume='scp ~/Documents/papier_administratif/consume/* debz@saintpaul:~/.cache/paperless/consume && mv ~/Documents/papier_administratif/consume/* ~/Documents/papier_administratif/cache/'
-
-# alias mymail='offlineimap && mutt'
-
-# Manage packages
-#alias acp='apt-cache policy'
-#alias acs='apt-cache search'
-#alias agi='sudo apt-get install'
-#alias agr='sudo apt-get remove'
-#alias agp='sudo apt-get purge'
-#alias agu='sudo apt-get update'
-#alias agar='sudo apt-get autoremove'
-#alias maj='sudo apt-get update && time sudo apt-get dist-upgrade'
-#alias agcl='sudo apt-get autoclean && sudo apt-get clean && sudo apt-get autoremove'
-alias ps='pacman -Ss'
-alias pi='sudo pacman -S'
-alias pq='pacman -Qi'
 
 # Manage files and folders
 alias cp='cp -iv'
 alias mv='mv -iv'
-#alias rm='rm -i'
 
 # Navigating the system
-#alias documents='cd ~/Documents'
-#alias downloads='cd ~/Téléchargements'
-#alias desktop='cd ~/Bureau'
-#alias music='cd ~/Musique'
-#alias videos='cd ~/Vidéos'
 #alias ..='cd ..'
 #alias ...='cd ../..'
 #alias ....='cd ../../..'
 
 # Other useful aliases
 alias e='exit'
-alias lock='xscreensaver-command --lock'
 
-#alias mounted='mount | column –t
 alias ll='ls -lArth'
-# alias vim='nvim'
 
 alias awtry='Xephyr :5 & sleep 1 ; DISPLAY=:5 awesome'
 
@@ -67,30 +43,36 @@ alias clo='cloc --vcs=git'
 ## Ref: https://wiki.archlinux.org/index.php/Color_output_in_console
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
+alias ls='ls --color=auto'
 
+# tmuxinator
 alias tmuxinator='rvm 2.4@tmuxinator do tmuxinator'
 alias mux='tmuxinator'
 
-#TODO: A mettre dans le fichier .com_varrc
-export LESS=-R
-export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
-export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
-export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
-export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
-# and so on
+# zsh autoload function
+alias j='fzf-z'
+alias ampc='fzf-mpc-add'
+alias fmpc='fzf-mpc-select'
+alias mextract='extract-music'
+alias histats='history-stats'
+alias fh='history-search_cmd'
+alias fn='fzf-open-note'
+alias fs='fzf-search_print-note'
+alias fse='fzf-search_open-note'
 
-alias ls='ls --color=auto'
+# abook follow xdg standard
+alias abook='abook --config "$XDG_CONFIG_HOME"/abook/abookrc --datafile "$XDG_DATA_HOME"/abook/addressbook'
 
-#TODO: A mettre dans une partie fonction
-man() {
-    LESS_TERMCAP_md=$'\e[01;31m' \
-    LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_se=$'\e[0m' \
-    LESS_TERMCAP_so=$'\e[01;44;33m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[01;32m' \
-    command man "$@"
+# tmux follow xdg standard dir
+alias tmux='tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
+
+# command is used to prevent recursive function
+# equivalent to alias msmtp='msmtp -C "${XDG_CONFIG_HOME}/msmtp/msmtprc"'
+msmtp () {
+  command msmtp -C "${XDG_CONFIG_HOME}/msmtp/msmtprc" "$@"
+}
+
+# xbindkeys follow xdg configuration dir
+xbindkeys () {
+  command xbindkeys -f "${XDG_CONFIG_HOME}/xbindkeys/xbindkeysrc" "$@"
 }

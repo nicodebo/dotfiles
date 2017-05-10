@@ -1,0 +1,7 @@
+# select a song to play from the current mpd playlist
+local song_position
+local header="Current song : $(mpc current)"
+song_position=$(mpc -f "%position%) %artist% - %title%" playlist | \
+  fzf --header="$header" --query="$1" --reverse --select-1 --exit-0 | \
+  sed -n 's/^\([0-9]\+\)).*/\1/p') || return 1
+[ -n "$song_position" ] && mpc -q play $song_position

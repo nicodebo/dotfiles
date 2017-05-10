@@ -1,4 +1,3 @@
-
 # Completion -------------------------------------------------------------- {{{
 
 # The following lines were added by compinstall
@@ -27,65 +26,6 @@ compinit
 
 # }}}
 
-# Lines configured by zsh-newuser-install
-#setopt appendhistory autocd nomatch notify
-unsetopt beep
-# End of lines configured by zsh-newuser-install
-
-# plugin management ------------------------------------------------------- {{{
-
-# - auto install zplug ---------------------------------------------------- {{{
-
-export ZPLUG_HOME="${HOME}/.local/share/zplug"
-if [[ ! -d "$ZPLUG_HOME" ]];then
-  git clone https://github.com/zplug/zplug $ZPLUG_HOME
-  source "${ZPLUG_HOME}/init.zsh"
-fi
-# TODO: Replace the zplug_home definition with xdg path
-
-# - }}}
-
-# - define plugins -------------------------------------------------------- {{{
-
-# Essential
-source "${ZPLUG_HOME}/init.zsh"
-# Supports oh-my-zsh plugins and the like
-zplug "plugins/extract", from:oh-my-zsh
-# zplug "plugins/vi-mode", from:oh-my-zsh
-zplug "rupa/z", use:z.sh # manage most frequent directory
-zplug "voronkovich/gitignore.plugin.zsh" # cli to download from gitignore api
-zplug "nojhan/liquidprompt" # zsh prompt with git and python venv support
-zplug "paulirish/git-open", as:command
-# Grab binaries from GitHub Releases
-# and rename with the "rename-to:" tag
-zplug "junegunn/fzf-bin", \
-    from:gh-r, \
-    as:command, \
-    rename-to:fzf, \
-    use:"*linux*amd64*"
-# Set the priority when loading
-# e.g., zsh-syntax-highlighting must be loaded
-# after executing compinit command and sourcing other plugins
-# (If the defer tag is given 2 or above, run after compinit command)
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "zsh-users/zsh-history-substring-search", defer:2
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-# Then, source plugins and add commands to $PATH
-# zplug load --verbose # useful for debugging
-zplug load
-
-# - }}}
-
-# }}}
-
 # keybind ----------------------------------------------------------------- {{{
 
 # zsh-history-substring-search
@@ -96,16 +36,12 @@ bindkey -M vicmd 't' history-substring-search-down
 
 # }}}
 
-# Source alias -------------------------------------------------------------{{{
-if [[ -r ${ZDOTDIR}/config/aliasrc ]]; then
-  . ${ZDOTDIR}/config/aliasrc
-fi
-# }}}
-
 # zsh settings ------------------------------------------------------------ {{{
 
 # - General settings ------------------------------------------------------ {{{
 
+#setopt appendhistory autocd nomatch notify
+unsetopt beep
 bindkey -v # activate vim mode for 'zsh line editor'
 
 # - }}}
@@ -144,162 +80,6 @@ setopt longlistjobs
 setopt nonomatch
 # report the status of backgrounds jobs immediately
 setopt notify
-
-  # }}}
-
-# }}}
-
-# Functions --------------------------------------------------------------- {{{
-
-# - History statistics ---------------------------------------------------- {{{
-# http://linux.byexamples.com/archives/332/what-is-your-10-common-linux-commands/
-function histats {
-  history 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n10
-}
-
-  # }}}
-
-# - fzf functions ---------------------------------------------------- {{{
-
-fmpc() {
-  local song_position
-  local header="Current song : $(mpc current)"
-  song_position=$(mpc -f "%position%) %artist% - %title%" playlist | \
-    fzf --header="$header" --query="$1" --reverse --select-1 --exit-0 | \
-    sed -n 's/^\([0-9]\+\)).*/\1/p') || return 1
-  [ -n "$song_position" ] && mpc -q play $song_position
-}
-
-# Play one or multiple album, filter by album, artist, genre and date
-# $1 - initial query
-ampc() {
-  local choice
-  local sep=";"
-  local i=0
-  declare -A music
-  local header="Searching music..."
-
-  choice=$(mpc search -f "[%artist% ${sep} %album% [${sep} %genre%] [${sep} %date%]]" artist "" | sort -u | fzf -m -q "$1" --header="$header")
-  if [ -n "$choice" ]; then
-    while read -r line; do
-      IFS="$sep" read -r art alb gnr dte <<< "$line"
-      art="$(echo -e "${art}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-      alb="$(echo -e "${alb}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-      music[$i,0]=$art
-      music[$i,1]=$alb
-      i=$((i+1))
-    done <<< "$choice"
-    mpc clear
-    for ((j=0;j<=i-1;j++)) do
-      mpc findadd artist "${music[$j,0]}" album "${music[$j,1]}" | mpc add
-    done
-    mpc playlist -f "[(%artist% - %album%) :: %position%) %title%]"
-    mpc -q play
-  fi
-}
-
-# http://stackoverflow.com/questions/369758/how-to-trim-whitespace-from-a-bash-variable
-
-# search through my most visited directory ~ bookmarks
-unalias z 2> /dev/null
-z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
-}
-
-
-# find directory
-fd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
-}
-
-
-# find directory, hidden directory included (slower than fd)
-fda() {
-  local dir
-  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
-}
-
-
-# find a file and open it with nvim
-vf() {
-  local files
-
-  files=(${(f)"$(locate -Ai -0 $@ | grep -z -vE '~$' | fzf --read0 -0 -1 -m)"})
-
-  if [[ -n $files ]]
-  then
-     nvim -- $files
-     print -l $files[1]
-  fi
-}
-
-
-# fh - repeat history
-fh() {
-  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
-}
-
-
-# find and open one or more note file with preview
-fn() {
-  local note_path="${HOME}/Documents/Note"
-  local files
-  local header="Searching my notes and open file in editor..."
-  files=$(find "${note_path}" -type f -name *.md | fzf -m -q "$1" --height=90% --header="$header" --preview="pygmentize {}")
-  if [[ -n $files ]]
-  then
-    echo "$files" | tr '\n' ' ' | xargs nvim
-  fi
-}
-
-# Find note content and open selected line in editor
-fse() {
-  local note_path="${HOME}/Documents/Note"
-  local header="grepping my notes and open in editor..."
-  local line
-  local file
-  local search
-
-  # silent : prevent ag from populating my home with log files
-  search=$(ag --markdown --silent --break --color --number --noheading . "$note_path" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {3..-1} {1} | pygmentize -l md" --preview-window=right:50% --print0)
-  if [[ -n $search ]]
-  then
-    line=$(echo "$search" | cut -d ":" -f 2)
-    file=$(echo "$search" | cut -d ":" -f 1)
-    "$EDITOR" +"$line" "$file"
-  fi
-}
-
-# Find note content and print selected entry with context to stdout
-fs() {
-  local note_path="${HOME}/Documents/Note"
-  local header="grepping my notes and print to stdout..."
-  local match
-  local file
-  local search
-
-  # silent : prevent ag from populating my home with log files
-  search=$(ag --markdown --silent --break --color --number --noheading . "$note_path" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {3..-1} {1} | pygmentize -l md" --preview-window=right:50% --print0)
-  if [[ -n $search ]]
-  then
-    match=$(echo "$search" | cut -d ":" -f 3-)
-    file=$(echo "$search" | cut -d ":" -f 1)
-    # http://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux#5947802
-    DARKGRAY='\033[1;30m'
-    NC='\033[0m' # No Color
-    # echo -e "${DARKGRAY}"${file##*/}"${NC}"
-    echo -e "${DARKGRAY}${file}${NC}"
-    printf "${DARKGRAY}-%.0s${NC}" {1..80}
-    echo "\r"
-    grep --context=5 --color=always -F "$match" "$file" | pygmentize -l md
-    printf "${DARKGRAY}-%.0s${NC}" {1..80}
-    echo "\r"
-  fi
-}
 
   # }}}
 
@@ -362,14 +142,6 @@ _gen_fzf_default_opts
 
 # }}}
 
-# $1 - music archive path (file to extract)
-mextract(){
-  music_loc="/media/debz/93f53fa6-5498-4619-9895-455c59fe361c/music/"
-  mv "$1" "$music_loc"
-  cd "$music_loc"
-  extract -r "$1"
-  mpc update
-}
 
 # Set GPG TTY
 export GPG_TTY=$(tty)
@@ -378,20 +150,15 @@ export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
 
-# configure python-virtualenvwrapper
-# https://virtualenvwrapper.readthedocs.io/en/latest/install.html
-export WORKON_HOME="$HOME/.virtualenvs"
-export VIRTUALENVWRAPPER_HOOK_DIR="$WORKON_HOME/hooks"
-# project are placed here by default when using mkproject
-export PROJECT_HOME="$HOME/Documents/Dev/pyprojects"
-mkdir -p "$PROJECT_HOME"
-# not sure if I can log to /var/log/
-#export VIRTUALENVWRAPPER_LOG_FILE=/var/log/virtualenvwrapper.log
-# these two following lines seems to fix
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
-#source $(which virtualenvwrapper.sh)
-source /usr/bin/virtualenvwrapper.sh
+# Source ------------------------------------------------------------------ {{{
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+# virtualenvwrapper
+[[ -s "/usr/bin/virtualenvwrapper.sh" ]] && source /usr/bin/virtualenvwrapper.sh
+
+# zplug
+[[ -s "${ZPLUG_HOME}/init.zsh" ]] && source "${ZPLUG_HOME}/init.zsh" && zplug load
+
+# rvm
+[[ -s "${XDG_DATA_HOME}/rvm/scripts/rvm" ]] && source "${XDG_DATA_HOME}/rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# }}}
