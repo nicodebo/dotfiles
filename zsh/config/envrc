@@ -10,7 +10,11 @@ export LC_TIME=fr_FR.UTF8
 export PYTHONSTARTUP=~/bin/python_startup_script.py
 
 # default browser, needed for termite url hints amongst other things
-export BROWSER=qutebrowser
+if [ -n "$DISPLAY" ]; then
+    export BROWSER=qutebrowser
+else
+    export BROWSER=w3m
+fi
 
 # Preferred editor for local and remote sessions
  # http://unix.stackexchange.com/questions/4859/visual-vs-editor-whats-the-difference
