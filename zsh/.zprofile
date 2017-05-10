@@ -14,5 +14,5 @@ path=($path ${XDG_DATA_HOME}/rvm/bin)
 
 # start an x session automatically on a login shell (tty1)
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  xinit -- :1 
+  xinit -- :1
 fi
