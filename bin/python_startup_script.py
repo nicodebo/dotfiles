@@ -43,7 +43,7 @@ if env:
     )
     try:
         cmd = cmd.decode('utf8')
-    except:
+    except Exception:
         pass
 
     modules = [
