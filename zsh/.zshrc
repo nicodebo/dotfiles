@@ -142,15 +142,19 @@ _gen_fzf_default_opts
 
 # }}}
 
+# gpg agent --------------------------------------------------------------- {{{
 
-# Set GPG TTY
-export GPG_TTY=$(tty)
+# Start the gpg-agent if not already running
+if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
+  gpg-connect-agent /bye >/dev/null 2>&1
+fi
 
 # Refresh gpg-agent tty in case user switches into an X session
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
+# }}}
 
-# Source ------------------------------------------------------------------ {{{
+# Source some shell programs ---------------------------------------------- {{{
 
 # virtualenvwrapper
 [[ -s "/usr/bin/virtualenvwrapper.sh" ]] && source /usr/bin/virtualenvwrapper.sh
