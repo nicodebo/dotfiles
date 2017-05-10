@@ -11,9 +11,17 @@ pack_path= ~/.local/share/nvim/site/pack
 package = common
 type = start
 
+[https://github.com/autozimu/LanguageClient-neovim]
+package = common
+type = start
+
 [https://github.com/tpope/vim-obsession]
 package = common
 type = start
+
+[https://github.com/hkupty/iron.nvim]
+package = common
+type = start 
 
 [https://github.com/yuttie/comfortable-motion.vim]
 package = common

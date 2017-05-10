@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Mar 20
+" Last Change: 2017 May 10
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -9,69 +9,6 @@
 "          purpose.
 "        * Function not directly called by user can be placed in the autoload
 "          folder
-
-" Plugin management ------------------------------------------------------- {{{
-
-" auto-install vim-plug
-" if empty(glob('~/.config/nvim/autoload/plug.vim'))
-"   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-"     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"   autocmd VimEnter * PlugInstall | source $MYVIMRC
-" endif
-
-" call plug#begin('~/.config/nvim/plugged')
-
-" fonction section
-" function! BuildComposer(info)
-"     if a:info.status != 'unchanged' || a:info.force
-"         !cargo build --release
-"         UpdateRemotePlugins
-"     endif
-" endfunction
-
-" plugin section
-"Plug 'https://github.com/jalvesaq/vimcmdline' "repl
-"Plug 'https://github.com/kassio/neoterm' "repc1ba734
-"Plug 'https://github.com/SirVer/ultisnips' "snippets engine
-"Plug 'https://github.com/honza/vim-snippets' "source snippets
-"Plug 'https://github.com/majutsushi/tagbar' "tag : code navigation
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'https://github.com/zchee/deoplete-jedi' "source autocomplete python
-"Plug 'https://github.com/zchee/deoplete-clang' "source completion for c language
-"Plug 'https://github.com/Shougo/neco-vim' "source completion for vimL commands
-"Plug 'https://github.com/Shougo/neco-syntax' "source completion for vimL group
-" theme section
-    " neovim related project ones
-    "Plug 'https://github.com/joshdick/onedark.vim'
-"Plug 'https://github.com/morhetz/gruvbox'
-" Plug 'https://github.com/mhartington/oceanic-next'
-"Plug 'https://github.com/MaxSt/FlatColor'
-"Plug 'https://github.com/iCyMind/NeoSolarized'
-    "other ones
-"Plug 'https://github.com/zefei/cake16'
-"Plug 'https://github.com/john2x/flatui.vim'
-"Plug 'https://github.com/junegunn/seoul256.vim'
-    "Plug 'https://github.com/reedes/vim-colors-pencil'
-    "Plug 'https://github.com/sosz/vim-darcula-theme'
-"Plug 'https://github.com/zandrmartin/vim-distill'
-"Plug 'https://github.com/Haron-Prime/evening_vim'
-"Plug 'https://github.com/Haron-Prime/Antares'
-"Plug 'https://github.com/Happykat/NeoFlat'
-"Plug 'https://github.com/jacoborus/tender.vim'
-"Plug 'https://github.com/whatyouhide/vim-gotham' " my favorite theme
-"Plug 'https://github.com/frankier/neovim-colors-solarized-truecolor-only'
-"Plug 'https://github.com/freeo/vim-kalisi'
-"Plug 'https://github.com/chriskempson/vim-tomorrow-theme'
-"Plug 'https://github.com/GertjanReynaert/cobalt2-vim-theme'
-"Plug 'https://github.com/nanotech/jellybeans.vim'
-"Plug 'https://github.com/justinmk/molokai'
-"Plug 'https://github.com/w0ng/vim-hybrid'
-"Plug 'https://github.com/AlxHnr/clear_colors'
-"Plug 'https://github.com/daddye/soda.vim'
-"Plug 'https://github.com/Soares/base16.nvim'
-" call plug#end()
-
-" }}}
 
 " Source vimrc files ------------------------------------------------------ {{{
 " Source all configuration file from ~/.config/nvim/vimrc/
@@ -121,7 +58,10 @@ language en_US.UTF-8    " sets the language of the messages / ui (vim)
 
 " neovim specific settings
 if has('nvim')
-    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1 " the cursor is a pipe in insert mode.
+    let guicursor='n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+     \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+     \,sm:block-blinkwait175-blinkoff150-blinkon175'
+    " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1 " the cursor is a pipe in insert mode.
     set inccommand=split
 endif
 
@@ -129,13 +69,6 @@ if (has("termguicolors"))
     set termguicolors            " enable true color in the terminal
 endif
 
-set complete+=k                  " add dictionnary as Completion source.
-set dictionary+=/usr/share/dict/british-english
-"TODO: Set dictionnary only for specific filetype
-"TODO: make this vimrc setup compatible with vim8, see :help vim-differences
-"TODO:Stop using plugin and use build in features https://www.reddit.com/r/vim/comments/4zt02l/why_would_i_use_syntastic_or_neomake/
-"TODO: For documentation use, http://www.vim.org/scripts/script.php?script_id=3893
-set dictionary+=/usr/share/dict/french
 set shell=zsh
 
 " Removed the default text width as, for exemple, the shipped gitcommit.vim
@@ -145,22 +78,24 @@ set shell=zsh
 " default textwidth and identation
 " don't touch to tabstop (8)
 " don't touch to smarttab (on), use shiftwidth instead of tabstop
-"set textwidth=79
 set colorcolumn=+1
-"set expandtab           " enter spaces when tab is pressed
-"set softtabstop=4
-"set shiftwidth=4        " number of spaces to use for auto indent
-
-" Set default filetype for .tex file, in order to have the correct syntay
-" highliting
-let g:tex_flavor = 'latex'
 
 " Leader key mapping
 " map those special key before calling them in mapping command hereafter
 let maplocalleader = ";"         " Used by nvim-r, vimtex.
 let mapleader = ","              " Change the map leader key from / to ,
 
+" allow to syntax highlight code inside ``` ``` in markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'dosini']
+
+" Set default filetype for .tex file, in order to have the correct syntay
+" highliting
+let g:tex_flavor = 'latex'
+
 colorscheme base16-oceanicnext
+
+" Path to the python3 provider
+let g:python3_host_prog = '/home/debz/.local/share/virtualenvs/python3_neovim_provider/bin/python3'
 
 " }}}
 
@@ -404,6 +339,14 @@ nnoremap <leader>d :b#<CR>
 nnoremap <leader>u :call MajBuffers()<cr>
 nnoremap <leader>m :MakeTags<cr>
 
+"clear last search.
+nmap <F3> :let @/ = ""<CR>
+
+" Terminal emulator
+tnoremap c<Esc> <C-\><C-n>
+"TODO: change the mapping. When opening vim inside vim, the c navigation key is
+"inactive.
+
 " }}}
 
 " Learn vimscript the hard way tips --------------------------------------- {{{
@@ -506,56 +449,72 @@ vnoremap <leader>' c''<esc>P
 " NOTE: for the LastMod function to find the pattern, some text must exists at
 " the right of the ':'. (i.e. Last Change: text)
 augroup vimrc
-    autocmd!
-    "write the date
-    autocmd BufWritePre,FileWritePre *.vim,*.vimrc ks|call LastMod()|'s
+  autocmd!
+  "write the date
+  autocmd BufWritePre,FileWritePre *.vim,*.vimrc ks|call LastMod()|'s
 augroup END
 
 augroup statusline
-    autocmd!
-    "recalculate the tab warning flag when idle and after writing
-    autocmd CursorHold,BufWritePost * unlet! b:statusline_tab_warning
-    "recalculate the trailing whitespace warning when idle, and after saving
-    autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+  autocmd!
+  "recalculate the tab warning flag when idle and after writing
+  autocmd CursorHold,BufWritePost * unlet! b:statusline_tab_warning
+  "recalculate the trailing whitespace warning when idle, and after saving
+  autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 augroup END
 
 " set muttrc file type for the mutt configuration file that are not called
 " muttrc as only this one is recognized as muttrc.
 augroup setfiletype
-    autocmd!
-    autocmd BufNewFile,BufRead *.muttrc setlocal filetype=muttrc
+  autocmd!
+  autocmd BufNewFile,BufRead *.muttrc setlocal filetype=muttrc
+  autocmd BufNewFile,BufRead */zsh/zfunction/* setlocal filetype=zsh
+  autocmd BufNewFile,BufRead */zsh/zcompletion/* setlocal filetype=zsh
 augroup END
 
 augroup bepo_clash
   autocmd!
+  " unmap vim-commentary mappings
   autocmd VimEnter * call UnmapCommentary()
+augroup END
+
+augroup ironmapping
+  autocmd!
+  autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
+  autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
+  autocmd Filetype python nmap <buffer> <localleader>p <Plug>(iron-repeat-cmd)
 augroup END
 
 " }}}
 
+" Test -------------------------------------------------------------------- {{{
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['/opt/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ 'python': ['pyls']
+    \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_signColumnAlwaysOn = 1
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+augroup completion
+  autocmd!
+  autocmd FileType python setlocal omnifunc=LanguageClient#complete
+augroup END
+" }}}
+
 " Junk -------------------------------------------------------------------- {{{
+
+" set complete+=k                  " add dictionnary as Completion source.
+" set dictionary+=/usr/share/dict/british-english
+" set dictionary+=/usr/share/dict/french
+" TODO: Set dictionnary only for specific filetype
+" TODO: For documentation use, http://www.vim.org/scripts/script.php?script_id=3893
 "ref https://github.com/tpope/vim-markdown
-" allow to syntax highlight code inside ``` ```
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'dosini']
-" Always display the status line, even if only one window is displayed
-" default on nvim to 2
-"set laststatus=2
-
-
-" Use visual bell instead of beeping when doing something wrong
-"set visualbell
-
-" And reset the terminal code for the visual bell.  If visualbell is set,
-" and
-" this line is also included, vim will neither flash nor beep.  If
-" visualbell
-" is unset, this does nothing.
-" set t_vb=
-
-" Quickly time out on keycodes, but never time out on mappings
-"set notimeout ttimeout ttimeoutlen=200
-
-"let g:indentLine_enabled = 1
 
 " TODO: check if line wrapping slow vim down.
 " TODO: :help g:tex_fold_enabled and implement a tex filetype
@@ -589,32 +548,6 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'dosini']
 " instead. See : vim-differences.
 "TODO: make a mapping for openning a session
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Custom key mapping
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" all the keybinds from the diffent plugin are placed in this configuration
-" file
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Neoterm
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"nnoremap <silent> <C-S> :TREPLSendFile<cr>
-"nnoremap <silent> <C-t> :TREPLSend<cr>
-"vnoremap <silent> <C-t> :TREPLSend<cr>
-
-
-" Useful maps
-" hide/close terminal
-"nnoremap <silent> ,th :call neoterm#close()<cr>
-" clear terminal
-"nnoremap <silent> ,tl :call neoterm#clear()<cr>
-" kills the current job (send a <c-c>)
-"nnoremap <silent> ,tc :call neoterm#kill()<cr>
-
-" Git commands
-"command! -nargs=+ Tg :T git <args>
-
 " https://github.com/kassio/neoterm/issues/74
 " This function allow to run a script directly in the IPython interpreter
 " thanks to the magic commands. In IPython '%run script.py' is equivalent to
@@ -645,44 +578,6 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'dosini']
 "  endif
 "endfunction
 "command! -nargs=* RunExecutable call s:RunExecutable()
-"TODO: see if vimcmdline plugin provide an api like neoterm does.
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" keybind toggle paste
-"nnoremap <F2> :set invpaste paste?<CR>
-"set pastetoggle=<F2>
-"set showmode
-
-"keybinds buffer
-"nmap <F4> :bn<CR>
-
-"clear last search.
-nmap <F3> :let @/ = ""<CR>
-
-" Terminal emulator
-tnoremap c<Esc> <C-\><C-n>
-"TODO: change the mapping. When opening vim inside vim, the c navigation key is
-"inactive.
-
-"tnoremap <A-c> <C-\><C-n><C-w>c
-"tnoremap <A-t> <C-\><C-n><C-w>t
-"tnoremap <A-s> <C-\><C-n><C-w>s
-"tnoremap <A-r> <C-\><C-n><C-w>r
-
-" delete the current line, then paste it below the one we're on now.
-
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-"onoremap <silent> i/ :<C-U>normal! T/vt/<CR> " inside /
-"onoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
-
-"nmap <F10> :TagbarToggle<CR>
-"nmap <F10> :TagbarOpenAutoClose<CR>
-
 
 """""""""""""""""" deoplete clang plugin settings
 "let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-3.8/lib/libclang.so.1'
@@ -690,33 +585,15 @@ tnoremap c<Esc> <C-\><C-n>
 
 """"""""""""""""""""themes
 
-" TODO: set background=dark depending on the colorscheme ?
-" for exemple I don't need it when OceanicNext or gotham
-" TODO: Désactiver également pour les heredocs de bash. Peut être que l'on peut invoquer le mélange d'indentation que pour certain fichier.
 " TODO: fonction Tab2Space : bricoler la fonction pour qu'il y ai une demande
 " de confirmation avant remplacement.
 " TODO: conditional  highlight for the status line: http://got-ravings.blogspot.fr/2008/10/vim-pr0n-conditional-stl-highlighting.html
 
-"""""""""""""""""""""" tagbar settings
-
-"Solve conflict between bépo and tagbar mappings
-"let g:tagbar_map_togglesort = "f"
-"let g:tagbar_map_toggleautoclose = "g"
-"""""""""""""""""""""" end tagbar settings
-" TODO: colorschemen tutorial
-" https://bbkane.github.io/2016/12/18/Vim-Color-Schemes.html
-
-" TODO: completion
-" https://www.reddit.com/r/vim/comments/5qgh91/vim_and_php/
-
 "TODO:* vim8 package manager tuto:
 "https://gist.github.com/manasthakur/ab4cf8d32a28ea38271ac0d07373bb53
 "next level project: https://bitbucket.org/vimcommunity/vim-pi/issues?status=new&status=open
-"https://github.com/rstacruz/vimbower
 
 "TODO: https://www.reddit.com/r/vim/comments/5607lj/how_to_do_90_of_what_plugins_do_with_just_vim/
-
-" For snippets, use :h skeleton, along with ultisnips
 
 " TIPS: Test color  :runtime syntax/colortest.vim
 " TIPS: $time nvim +q : to see start up time of vim.
@@ -724,7 +601,6 @@ tnoremap c<Esc> <C-\><C-n>
 " or https://github.com/hyiltiz/vim-plugins-profile
 " TODO: Have a look at https://github.com/kana/vim-textobj-user
 " TODO: look at https://github.com/editorconfig/editorconfig-vim
-" TODO: look at https://www.reddit.com/r/vim/comments/5bb69l/any_idea_about_a_better_source_code_indexing/
 
 " Reference
 "        * recommandation : https://github.com/romainl/idiomatic-vimrc
@@ -733,15 +609,7 @@ tnoremap c<Esc> <C-\><C-n>
 "        * https://github.com/vim-syntastic/syntastic/tree/master/syntax_checkers
 
 " TODO: see how to enable the matchit.vim. help matchit
-" INFO: problem with formatprg: https://groups.google.com/forum/#!msg/vim_dev/cFK1UjstyAk/mreb2H4VCtoJ
-" see if neovim dev are going to solve this problem ?
-" formatprg is now global-local in vim8: https://github.com/vim/vim/commit/9be7c04e6cd5b0facedcb56b09a5bcfc339efe03
-" see when it will come to neovim
-" see https://github.com/neovim/neovim/wiki/Merging-patches-from-upstream-Vim to
-" understand how vim patch are merge to neovim https://github.com/neovim/neovim/blob/master/runtime/doc/options.txt#L2743
-" to see if formatprg is now global
 
-" TODO: install https://github.com/rhysd/devdocs.vim ?
 
 " TODO: check https://opensource.com/article/17/2/vim-plugins-writers
 
