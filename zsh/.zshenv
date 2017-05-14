@@ -1,25 +1,24 @@
 # environement variables -------------------------------------------------- {{{
 
-  if [[ -r ${ZDOTDIR}/config/envrc ]]; then
-    . ${ZDOTDIR}/config/envrc
-  fi
+if [[ -r ${ZDOTDIR}/config/envrc ]]; then
+  . ${ZDOTDIR}/config/envrc
+fi
 
 # }}}
 
 # shell aliases ----------------------------------------------------------- {{{
 
-  # load alias (needed to be available to the nvim ! command
-  if [[ -r ${ZDOTDIR}/config/aliasrc ]]; then
-    . ${ZDOTDIR}/config/aliasrc
-  fi
+# load alias (needed to be available to the nvim ! command
+if [[ -r ${ZDOTDIR}/config/aliasrc ]]; then
+  . ${ZDOTDIR}/config/aliasrc
+fi
 
 # }}}
 
 # fpath ------------------------------------------------------------------- {{{
 
-  fpath=(${ZDOTDIR}/zfunction $fpath) # add custom function dir to fpath
-  autoload -Uz -- "${ZDOTDIR}"/zfunction/[^_]*(:t)
-  fpath=(${ZDOTDIR}/zcompletion $fpath) # add custom completion dir to fpath
+fpath=(${ZDOTDIR}/zfunction $fpath) # add custom function dir to fpath
+fpath=(${ZDOTDIR}/zcompletion $fpath) # add custom completion dir to fpath
 
 # }}}
 

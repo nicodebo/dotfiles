@@ -1,3 +1,14 @@
+# Load module ------------------------------------------------------------- {{{
+
+# activate advanced zsh autocompletion
+autoload -Uz compinit
+compinit
+
+# Load my custom functions
+autoload -Uz -- "${ZDOTDIR}"/zfunction/[^_]*(:t)
+
+# }}}
+
 # Completion -------------------------------------------------------------- {{{
 
 # The following lines were added by compinstall
@@ -13,16 +24,11 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' list-suffixes true
 zstyle ':completion:*' max-errors 20 numeric
-zstyle ':completion:*' menu select=2  # autocompletion with arrow key driven interface Double <TAB> to enable
+zstyle ':completion:*' menu select=2  # autocompletion with arrow key driven interface Double <TAB> to enable when the number of option is at least 2
 zstyle ':completion:*' original true
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' substitute 1
 zstyle ':completion:*' use-compctl true
-# zstyle :compinstall filename '/home/debz/.zshrc'
-
-autoload -Uz compinit # activate advanced zsh autocompletion
-compinit
-# End of lines added by compinstall
 
 # }}}
 
