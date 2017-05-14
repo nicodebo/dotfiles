@@ -9,7 +9,7 @@ push <show-version>   #get Mutt to show its version on startup
 set editor           = `echo \$EDITOR`
 set header_cache     = $XDG_CACHE_HOME/mutt/headers # where to store headers
 set message_cachedir = $XDG_CACHE_HOME/mutt/bodies  # where to store bodies
-set mailcap_path     = $XDG_CONFIG_HOME/mailcap     # entries for filetypes
+# set mailcap_path     = $XDG_CONFIG_HOME/mailcap     # entries for filetypes
 set tmpdir           = $XDG_CACHE_HOME/mutt/temp    # where to keep temp files
 set signature        = $XDG_CONFIG_HOME/sig         # my signature file
 ###############################################################################
@@ -105,6 +105,6 @@ source $XDG_CONFIG_HOME/mutt/accounts/work.muttrc          # load default accoun
 source $XDG_CONFIG_HOME/mutt/keybinds.muttrc               # load key bindings
 source $XDG_CONFIG_HOME/mutt/theme.muttrc
 
-set query_command = "abook --mutt-query '%s'"
+set query_command = "abook --config $XDG_CONFIG_HOME/abook/abookrc --datafile $XDG_DATA_HOME/abook/addressbook --mutt-query '%s'"
 macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
-macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
+macro index,pager A "<pipe-message>abook --config $XDG_CONFIG_HOME/abook/abookrc --datafile $XDG_DATA_HOME/abook/addressbook --add-email<return>" "add the sender address to abook"
