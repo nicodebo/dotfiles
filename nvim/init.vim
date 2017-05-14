@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 May 10
+" Last Change: 2017 May 14
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -501,10 +501,6 @@ nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
-augroup completion
-  autocmd!
-  autocmd FileType python setlocal omnifunc=LanguageClient#complete
-augroup END
 " }}}
 
 " Junk -------------------------------------------------------------------- {{{
