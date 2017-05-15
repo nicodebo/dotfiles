@@ -17,7 +17,6 @@ metadata = $XDG_DATA_HOME/offlineimap
 [Account Perso]
 localrepository = Perso-Local
 remoterepository = Perso-Remote
-status_backend = sqlite
 postsynchook = notmuch new
 
 [Repository Perso-Local]
@@ -41,7 +40,6 @@ auth_mechanisms = LOGIN
 [Account Work]
 localrepository = Work-Local
 remoterepository = Work-Remote
-status_backend = sqlite
 postsynchook = notmuch new
 
 [Repository Work-Local]
@@ -78,7 +76,6 @@ nametrans = lambda folder: {'[Gmail]/Brouillons': 'drafts',
 [Account Work2]
 localrepository = Work2-Local
 remoterepository = Work2-Remote
-status_backend = sqlite
 postsynchook = notmuch new
 
 [Repository Work2-Local]
