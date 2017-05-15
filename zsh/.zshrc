@@ -46,6 +46,11 @@ bindkey -M vicmd 't' history-substring-search-down
 
 # - General settings ------------------------------------------------------ {{{
 
+# Remove lag when entering normal mode (esc) in zsh-zle
+# https://www.johnhawthorn.com/2012/09/vi-escape-delays/
+# 10ms for key sequences
+KEYTIMEOUT=1
+
 #setopt appendhistory autocd nomatch notify
 unsetopt beep
 bindkey -v # activate vim mode for 'zsh line editor'
