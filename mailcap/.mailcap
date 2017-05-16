@@ -1,0 +1,26 @@
+# Ref: https://www.neomutt.org/guide/mimesupport
+# http://www.spocom.com/users/gjohnson/mutt
+# The autoview of mutt (which use the internal pager) will only look for the
+# entry that contains the copiousoutput keyword. Thus an entry can be
+# duplicated. One for the copiousoutput and one for viewing an attachement
+# interactively spawning a corresponding program.
+
+# NOTE:
+#       - The -I option of w3m doesn't render accentuated characters while it
+#       is the recommanded way of setting w3m with mutt on the mutt archwiki.
+
+# <Content-Type>; <X viewer>; test=RunningX
+# <Content-Type>; <text viewer>
+# <Content-Type>; <text converter>; copiousoutput
+
+text/html; mv %s %s.html && qutebrowser %s.html >/dev/null 2>/dev/null; needsterminal; test=test -n "$DISPLAY"
+text/html;  w3m %s; nametemplate=%s.html
+text/html;  w3m -T text/html -dump %s; nametemplate=%s.html; copiousoutput
+text/*; less '%s'
+
+image/*;  feh -Tautofit %s; test=test -n "$DISPLAY"
+
+video/*;  mpv %s; test=test -n "$DISPLAY"
+
+application/pdf;  zathura %s; test=test -n "$DISPLAY"
+application/pdf;  pdftotext %s -; copiousoutput
