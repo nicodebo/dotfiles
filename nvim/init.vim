@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 May 14
+" Last Change: 2017 May 16
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -25,8 +25,6 @@ set hidden                       " Hide buffers when they are abandoned
 set scrolloff=3                  " set 3 lines between cursor and end of text.
 set foldcolumn=1                 " column of width 1, that show folds
 set cmdheight=1                  " set command line height
-"set cursorline                   " Highlight current cursor line
-"set ruler                        " set cursor position in the status line
 set title                        " terminal title on
 set wildmode=list:longest
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
@@ -61,7 +59,6 @@ if has('nvim')
     let guicursor='n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
      \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
      \,sm:block-blinkwait175-blinkoff150-blinkon175'
-    " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1 " the cursor is a pipe in insert mode.
     set inccommand=split
 endif
 
@@ -88,8 +85,8 @@ let mapleader = ","              " Change the map leader key from / to ,
 " allow to syntax highlight code inside ``` ``` in markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'dosini']
 
-" Set default filetype for .tex file, in order to have the correct syntay
-" highliting
+" Set default filetype for .tex file, in order to have the correct syntax
+" highlighting for .tex file
 let g:tex_flavor = 'latex'
 
 colorscheme base16-oceanicnext
