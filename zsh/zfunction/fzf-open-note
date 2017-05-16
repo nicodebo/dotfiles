@@ -1,8 +1,8 @@
 # find and open one or more note file with preview
 local files
 local header="Searching my notes and open file in editor..."
-files=$(find "${NOTESTOREDIR}" -type f -name *.md | fzf -m -q "$1" --height=90% --header="$header" --preview="pygmentize {}")
+files=$(find "${NOTESTOREDIR}" -type f -name "*.md" | fzf -m -q "$1" --height=90% --header="$header" --preview="pygmentize {}")
 if [[ -n $files ]]
 then
-  echo "$files" | tr '\n' ' ' | xargs nvim
+  echo "$files" | tr '\n' ' ' | xargs "$EDITOR"
 fi
