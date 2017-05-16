@@ -16,7 +16,6 @@
 text/html; mv %s %s.html && qutebrowser %s.html >/dev/null 2>/dev/null; needsterminal; test=test -n "$DISPLAY"
 text/html;  w3m %s; nametemplate=%s.html
 text/html;  w3m -T text/html -dump %s; nametemplate=%s.html; copiousoutput
-text/*; less '%s'
 
 image/*;  feh -Tautofit %s; test=test -n "$DISPLAY"
 
