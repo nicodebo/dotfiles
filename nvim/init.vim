@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 May 16
+" Last Change: 2017 Jun 15
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -495,7 +495,9 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_signColumnAlwaysOn = 1
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+
+" I prefer the ctags solution which allow to move backward using N_CTRL_T
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " }}}
