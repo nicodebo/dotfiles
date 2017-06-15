@@ -1,7 +1,9 @@
 # This function extract an archive to my main music directory
 
 # $1 - music archive path (file to extract)
+local cur_dir=$(pwd)
 mv "$1" "${MUSICSTOREDIR}"
 cd "${MUSICSTOREDIR}"
 extract -r "$1"
 mpc update
+cd "${cur_dir}"
