@@ -97,3 +97,9 @@ export TMUX_TMPDIR="${XDG_RUNTIME_DIR}"
 
 # Set GPG TTY
 export GPG_TTY=$(tty)
+
+# psql follows xdg standard
+export PSQL_HISTORY="${XDG_CACHE_HOME}/psql/hist"
+export PSQLRC="${XDG_CONFIG_HOME}/psql/psqlrc"
+
+export PAGER=less

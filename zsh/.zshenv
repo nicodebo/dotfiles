@@ -25,9 +25,10 @@ fpath=(${ZDOTDIR}/zcompletion $fpath) # add custom completion dir to fpath
 # Create some directories ------------------------------------------------- {{{
 
 mkdir -p "${XDG_DATA_HOME}/zsh" # directory that store zsh cmd history
-mkdir -p "${XDG_CACHE_HOME}/less" # directory that store the less history
 mkdir -p "${XDG_DATA_HOME}/z" # directory that store the z database
-mkdir -p "${PROJECT_HOME}"
-mkdir -p "${XDG_CACHE_HOME}/msmtp"
+mkdir -p "${PROJECT_HOME}" # project dir for virtualenvwrapper
+mkdir -p "${XDG_CACHE_HOME}/less" # directory that store the less history
+mkdir -p "${XDG_CACHE_HOME}/msmtp" # store msmtp log file
+mkdir -p "${XDG_CACHE_HOME}/psql" # directory for storing psql histories
 
 # }}}
