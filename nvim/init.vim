@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Jun 15
+" Last Change: 2017 Jul 07
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -26,8 +26,10 @@ set scrolloff=3                  " set 3 lines between cursor and end of text.
 set foldcolumn=1                 " column of width 1, that show folds
 set cmdheight=1                  " set command line height
 set title                        " terminal title on
-set wildmode=list:longest
+set wildmode=list:full
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+"python ignore
+set wildignore+=*.pyc
 set wrap                         " turn on line wrapping
 set linebreak                    "Wrap lines at convenient points
 " I use a unicode curly array with a <backslash><space> as a wrap symbole
@@ -93,6 +95,20 @@ colorscheme base16-oceanicnext
 
 " Path to the python3 provider
 let g:python3_host_prog = '/home/debz/.local/share/virtualenvs/python3_neovim_provider/bin/python3'
+
+" Use the silver searcher as the external grep tool, from `man ag`
+if executable("ag")
+  set grepprg=ag\ --vimgrep\ $*
+  set grepformat=%f:%l:%c:%m
+endif
+
+" Useful for the find command, allow to search the current directory and
+" downwards its tree
+set path=.,**
+
+" Set Ctrl-z as a wildmenu trigger. I need to define it to be able to press Tab
+" but within a macro. I can now use <C-z> inside a macro to trigger menu
+set wildcharm=<C-z>
 
 " }}}
 
@@ -289,7 +305,7 @@ endfun
 
 " ctags command ----------------------------------------------------------- {{{
 
-command! MakeTags !ctags .
+command! MakeTags ! ag -l | ctags --links=no -L-
 
     " }}}
 
@@ -328,7 +344,7 @@ nnoremap <leader>n :call NumberToggle()<cr>
 
 " Simple command to display open buffer and load the desired one by entering
 " its number and pressing enter.
-nnoremap <leader>p :buffers<CR>:buffer<Space>
+nnoremap gb :buffers<CR>:buffer<Space>
 
 " switch to previous buffer
 nnoremap <leader>d :b#<CR>
@@ -343,6 +359,26 @@ nmap <F3> :let @/ = ""<CR>
 tnoremap c<Esc> <C-\><C-n>
 "TODO: change the mapping. When opening vim inside vim, the c navigation key is
 "inactive.
+
+" Easier completion trigger mappings, from https://www.vi-improved.org/
+inoremap <silent> ,f <C-x><C-f>
+inoremap <silent> ,i <C-x><C-i>
+inoremap <silent> ,l <C-x><C-l>
+inoremap <silent> ,n <C-x><C-n>
+inoremap <silent> ,o <C-x><C-o>
+inoremap <silent> ,t <C-x><C-]>
+inoremap <silent> ,u <C-x><C-u>
+
+" https://stackoverflow.com/questions/16082991/vim-switching-between-files-rapidly-using-vanilla-vim-no-plugins/16084326#16084326
+" project navigation
+nnoremap <leader>f :find *
+
+"buffer navigation
+nnoremap <leader>b :buffer <C-z><S-Tab>
+nnoremap <leader>B :sbuffer <C-z><S-Tab>
+
+" tag searching, / adds regex search
+nnoremap <leader>j :tjump /
 
 " }}}
 
@@ -498,7 +534,7 @@ nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 
 " I prefer the ctags solution which allow to move backward using N_CTRL_T
 " nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 " }}}
 
