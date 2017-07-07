@@ -1,11 +1,6 @@
 # global options
 --recurse=yes
 --exclude=.git
-# exclude all files from the .gitignore
-# It doesn't exclude directory from the gitignore though, ex: .tox/ seems to not be parsed correctly by ctags. It needs to be .tox but .tox is a file for gitignore. The easiest way is to 
-# use the the exclude flags of ctags when I have problems
---exclude=@.gitignore
---exclude=.tox
 
 # python options
 ## turn off generation of files for python import
