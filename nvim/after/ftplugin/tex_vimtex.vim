@@ -23,7 +23,7 @@ if exists('g:vimtex_enabled') && g:vimtex_enabled == 1
   imap <buffer> ]] <plug>(vimtex-delim-close)
 
   " latexmk related mapping
-  nmap <buffer> <localleader>ll <plug>(vimtex-compile-toggle)
+  nmap <buffer> <localleader>ll <plug>(vimtex-compile)
   nmap <buffer> <localleader>lo <plug>(vimtex-compile-output)
   nmap <buffer> <localleader>lL <plug>(vimtex-compile-selected)
   xmap <buffer> <localleader>lL <plug>(vimtex-compile-selected)
