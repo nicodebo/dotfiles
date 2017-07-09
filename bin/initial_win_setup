@@ -20,8 +20,6 @@ sleep 1
 wmctrl -s 0
 termite -t reminder -e 'zsh -c "remind ~/.config/remind/remind; exec zsh"' &
 sleep 1
-firefox &
-sleep 2
 
 wmctrl -s 1
 qutebrowser --backend webengine &
