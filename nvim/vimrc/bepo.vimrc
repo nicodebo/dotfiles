@@ -1,6 +1,6 @@
-" Vimrc source file 
+" Vimrc source file
 " Topic: bepo layout mappings
-" Last Change: 2017 Feb 22
+" Last Change: 2017 Jul 10
 " Maintainer: nicodebo
 "
 " Cette configuration est issue de :
@@ -18,10 +18,14 @@ onoremap aé aw
 onoremap aÉ aW
 onoremap ié iw
 onoremap iÉ iW
+vnoremap aé aw
+vnoremap aÉ aW
+vnoremap ié iw
+vnoremap iÉ iW
 " Pour faciliter les manipulations de fenêtres, on utilise {W} comme un Ctrl+W :
 noremap w <C-w>
 noremap W <C-w><C-w>
- 
+
 
 " [HJKL] -> {CTSR}
 " ————————————————
@@ -40,7 +44,7 @@ noremap S K
 " Corollaire : repli suivant / précédent
 noremap zs zj
 noremap zt zk
- 
+
 " {HJKL} <- [CTSR]
 " ————————————————
 " {J} = « Jusqu'à »            (j = suivant, J = précédant)
@@ -58,7 +62,7 @@ noremap K S
 " Corollaire : correction orthographique
 " noremap ]k ]s
 " noremap [k [s
- 
+
 " Désambiguation de {g}
 " —————————————————————
 " ligne écran précédente / suivante (à l'intérieur d'une phrase)
@@ -73,7 +77,7 @@ noremap gÉ :exe "silent! tablast"<CR>
 " optionnel : {g"} pour aller au début de la ligne écran
 noremap g" g0
 noremap gT <C-]>
- 
+
 " <> en direct
 " ————————————
 noremap « <
