@@ -28,6 +28,7 @@ function main() {
   local conf_dir=${XDG_CONFIG_HOME:-$HOME/.config}
   local data_dir=${XDG_DATA_HOME:-$HOME/.local/share}
 
+  sym_conf "${SCRIPT_DIR}/awesomewm" "${conf_dir}/awesome"
   sym_conf "${SCRIPT_DIR}/bin" "${HOME}/bin"
   sym_conf "${SCRIPT_DIR}/cookiecutter" "${HOME}"
   sym_conf "${SCRIPT_DIR}/ctags" "${HOME}"
