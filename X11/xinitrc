@@ -59,10 +59,6 @@ fi
 xscreensaver -no-splash &
 ## load keybind defined in ~/.xbindkeysrc that enable raise lower and toggle global sound
 xbindkeys -f "${XDG_CONFIG_HOME}/xbindkeys/xbindkeysrc" &
-## autostart the usual applications only if in tty1
-if [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  bash ~/bin/initial_win_setup &
-fi
 
 # Start the window manager. Line following the exec command would be ignored so don't put lines after.
 exec awesome
