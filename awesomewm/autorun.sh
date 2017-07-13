@@ -12,6 +12,7 @@
 # 3: monitor
 # 4: log
 
+# Don't run a program if it is already running
 function run {
   if ! pgrep $1 ;
   then
@@ -21,23 +22,18 @@ function run {
 
 function main {
 
-  # sleep 1
-  wmctrl -s 2
-  run termite -t rss -e 'zsh -c "newsbeuter; exec zsh"'
+  wmctrl -s 1
+  termite -t media -e 'zsh -c "tmuxinator start at_startup"'&
   sleep 1
+
+  # wmctrl -s 0
+  # run termite -t reminder -e 'zsh -c "remind ~/.config/remind/remind; exec zsh"'
+  # sleep 1
 
   wmctrl -s 0
-  run termite -t reminder -e 'zsh -c "remind ~/.config/remind/remind; exec zsh"'
-  sleep 1
-
-  wmctrl -s 1
   run qutebrowser --backend webengine
   sleep 2
 
-  wmctrl -s 2
-  run termite -t mail -e 'zsh -c "offlineimap && mutt; exec zsh"'
-  sleep 1
-  wmctrl -s 0
 }
 
 main

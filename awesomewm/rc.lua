@@ -595,7 +595,9 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 -- Execute autorun.sh at startup
-awful.util.spawn_with_shell(table.concat({conf_dir, "autorun.sh"}, "/"))
+-- Don't use awful.util.spawn_with_shell and instead call the shell inside
+-- autorun.sh
+awful.util.spawn(table.concat({conf_dir, "autorun.sh"}, "/"))
 -- }}}
 
 -- Lain widget {{{
