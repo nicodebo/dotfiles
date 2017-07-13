@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import subprocess
-import sys
+# import sys
 import logging
 import os
 import errno
@@ -47,7 +47,8 @@ def get_pass(account):
         output = subprocess.check_output(cmd, shell=True).splitlines()[0]
     except subprocess.CalledProcessError as e:
         logger.exception("cmd: {} : failed".format(cmd))
-        sys.exit("error getting passwords, see {}".format(log_file))
+        # sys.exit("error getting passwords, see {}".format(log_file))
+        return ""
     else:
         logger.info("cmd: {} : succeed".format(cmd))
         return output.splitlines()[0]
