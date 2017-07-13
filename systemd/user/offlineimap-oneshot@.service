@@ -1,0 +1,14 @@
+[Unit]
+Description=Offlineimap Service for account %i (oneshot)
+Documentation=man:offlineimap(1)
+
+[Service]
+Type=oneshot
+Environment=NOTMUCH_CONFIG=/home/debz/.config/notmuch/notmuchrc
+Environment=PASSWORD_STORE_DIR=/home/debz/.local/share/pass
+ExecStart=/home/debz/.local/bin/offlineimap -o -a %i -u basic
+# Give 120 seconds for offlineimap to gracefully stop before hard killing it.
+TimeoutStopSec=120
+
+[Install]
+WantedBy=default.target

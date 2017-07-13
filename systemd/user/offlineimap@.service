@@ -1,0 +1,13 @@
+[Unit]
+Description=Offlineimap Service for account %i
+Documentation=man:offlineimap(1)
+
+[Service]
+Environment=NOTMUCH_CONFIG=/home/debz/.config/notmuch/notmuchrc
+Environment=PASSWORD_STORE_DIR=/home/debz/.local/share/pass
+ExecStart=/home/debz/.local/bin/offlineimap -a %i -u basic
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=default.target

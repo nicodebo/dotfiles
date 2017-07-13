@@ -52,6 +52,7 @@ function main() {
   sym_conf "${SCRIPT_DIR}/remind" "${conf_dir}/remind"
   sym_conf "${SCRIPT_DIR}/rvm" "${HOME}"
   sym_conf "${SCRIPT_DIR}/ssh" "${HOME}/.ssh"
+  sym_conf "${SCRIPT_DIR}/systemd" "${conf_dir}/systemd"
   sym_conf "${SCRIPT_DIR}/termite" "${conf_dir}/termite"
   sym_conf "${SCRIPT_DIR}/tmux" "${conf_dir}/tmux"
   sym_conf "${SCRIPT_DIR}/taskwarrior" "${conf_dir}/task"
@@ -64,6 +65,9 @@ function main() {
   mkdir -p $(dirname "$LESSKEY")
   lesskey "${SCRIPT_DIR}/less/lesskey"
   #chmod 755 "${HOME}/.offlineimaprc"
+
+  # make systemd aware of the new user units
+  systemctl --user daemon-reload
 }
 
 ###############################################################################
