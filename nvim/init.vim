@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Jul 07
+" Last Change: 2017 Jul 15
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -94,7 +94,7 @@ let g:tex_flavor = 'latex'
 colorscheme base16-oceanicnext
 
 " Path to the python3 provider
-let g:python3_host_prog = '/home/debz/.local/share/virtualenvs/python3_neovim_provider/bin/python3'
+let g:python3_host_prog = $ENV_DIR . "/" . $NVIM_PROVIDER_PYLIB . "/" . "bin/python"
 
 " Use the silver searcher as the external grep tool, from `man ag`
 if executable("ag")
