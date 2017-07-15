@@ -5,6 +5,7 @@ zplug "rupa/z", use:z.sh # manage most frequent directory
 zplug "voronkovich/gitignore.plugin.zsh" # cli to download from gitignore api
 zplug "nojhan/liquidprompt" # zsh prompt with git and python venv support
 zplug "paulirish/git-open", as:command
+zplug "carnager/clerk", as:command, use:clerk_helper,clerk # mpd client based on rofi and mpc
 # Grab binaries from GitHub Releases
 # and rename with the "rename-to:" tag
 zplug "junegunn/fzf-bin", \
