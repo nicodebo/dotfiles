@@ -30,6 +30,7 @@ function main() {
 
   sym_conf "${SCRIPT_DIR}/awesomewm" "${conf_dir}/awesome"
   sym_conf "${SCRIPT_DIR}/bin" "${HOME}/bin"
+  sym_conf "${SCRIPT_DIR}/clerk" "${conf_dir}/clerk"
   sym_conf "${SCRIPT_DIR}/cookiecutter" "${HOME}"
   sym_conf "${SCRIPT_DIR}/ctags" "${HOME}"
   sym_conf "${SCRIPT_DIR}/dreamnote" "${conf_dir}/dreamnote"

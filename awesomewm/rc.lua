@@ -377,7 +377,19 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
     awful.key({ modkey }, "e", zsh_exec,
-        {description = "Execute a zsh code", group = "custom"})
+        {description = "Execute a zsh code", group = "custom"}),
+
+    awful.key({ modkey }, "q", function()
+                                    local cmd="zsh -i -c 'clerk --add album'"
+                                    awful.util.spawn(cmd)
+                                end,
+              {description = "Browse library by album", group = "clerk"}),
+
+    awful.key({ modkey }, "l", function()
+                                    local cmd="zsh -i -c 'clerk --add latest'"
+                                    awful.util.spawn(cmd)
+                                end,
+              {description = "Browse most recent added music", group = "clerk"})
 )
 
 clientkeys = awful.util.table.join(

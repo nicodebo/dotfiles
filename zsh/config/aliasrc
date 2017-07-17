@@ -76,3 +76,8 @@ msmtp () {
 xbindkeys () {
   command xbindkeys -f "${XDG_CONFIG_HOME}/xbindkeys/xbindkeysrc" "$@"
 }
+
+# # xbindkeys follow xdg configuration dir
+clerk () {
+  source "${ENV_DIR}/${MPD2_PYLIB}/bin/activate" && command clerk "$@"
+}
