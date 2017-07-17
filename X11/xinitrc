@@ -54,11 +54,14 @@ fi
 #xterm -geometry 80x20+494-0 &
 #exec xterm -geometry 80x66+0+0 -name login
 
-# Some applications that should run in the background
+# Some applications that require X running and that should run in the background
 ## screensaver and lockscreen
 xscreensaver -no-splash &
 ## load keybind defined in ~/.xbindkeysrc that enable raise lower and toggle global sound
 xbindkeys -f "${XDG_CONFIG_HOME}/xbindkeys/xbindkeysrc" &
+## load composite manager
+compton -b &
+
 
 # Start the window manager. Line following the exec command would be ignored so don't put lines after.
 exec awesome
