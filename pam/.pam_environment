@@ -17,5 +17,6 @@ XDG_DATA_HOME    DEFAULT=@{HOME}/.local/share
 # zsh trick to follow xdg_config_home
 ZDOTDIR    DEFAULT=${XDG_CONFIG_HOME}/zsh
 
+# make ssh use gpg-agent instead of ssh-agent
 SSH_AGENT_PID	DEFAULT=
 SSH_AUTH_SOCK	DEFAULT="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
