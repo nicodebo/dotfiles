@@ -9,6 +9,7 @@ autoload -Uz -- "${ZDOTDIR}"/zfunction/[^_]*(:t)
 
 # }}}
 
+
 # Completion -------------------------------------------------------------- {{{
 
 # The following lines were added by compinstall
@@ -170,10 +171,25 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 # virtualenvwrapper
 [[ -s "/usr/bin/virtualenvwrapper.sh" ]] && source /usr/bin/virtualenvwrapper.sh
 
-# zplug
-[[ -s "${ZPLUG_HOME}/init.zsh" ]] && source "${ZPLUG_HOME}/init.zsh" && zplug load
-
 # rvm
 [[ -s "${XDG_DATA_HOME}/rvm/scripts/rvm" ]] && source "${XDG_DATA_HOME}/rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# }}}
+
+# zplug ------------------------------------------------------------------- {{{
+
+# source init.zsh
+[[ -s "${ZPLUG_HOME}/init.zsh" ]] && source "${ZPLUG_HOME}/init.zsh"
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load
 
 # }}}
