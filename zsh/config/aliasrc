@@ -81,3 +81,14 @@ xbindkeys () {
 clerk () {
   source "${ENV_DIR}/${MPD2_PYLIB}/bin/activate" && command clerk "$@"
 }
+
+# move a file to the music directory and update the mpd database
+# $1 - path of the file to move
+mmv () {
+  if [[ ! "$1" ]]; then
+    echo "description: move a file to \$MUSICSTROREDIR"
+    echo "usage: mmv <file> where file is the thing to move"
+    return 1
+  fi
+  mv "$1" "$MUSICSTOREDIR" && mpc update
+}
