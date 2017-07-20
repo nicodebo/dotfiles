@@ -99,7 +99,7 @@ export ZPLUG_LOADFILE="${ZDOTDIR}/packages.zsh"
 # tmux follows xdg standard
 export TMUX_TMPDIR="${XDG_RUNTIME_DIR}"
 
-# Set GPG TTY
+# Set GPG TTY, see 'man gpg-agent'
 export GPG_TTY=$(tty)
 
 # psql follows xdg standard
