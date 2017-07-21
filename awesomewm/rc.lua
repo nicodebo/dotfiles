@@ -385,7 +385,11 @@ globalkeys = awful.util.table.join(
                                     local cmd="zsh -i -c 'clerk --add latest'"
                                     awful.util.spawn(cmd)
                                 end,
-              {description = "Browse most recent added music", group = "clerk"})
+              {description = "Browse most recent added music", group = "clerk"}),
+    awful.key({ }, "Print", function ()
+      awful.util.spawn("import /tmp/$(date +%F_%H%M%S_%N).png", false)
+                              end,
+              {description = "Take a screenshot to /tmp", group = "custom"})
 )
 
 clientkeys = awful.util.table.join(
