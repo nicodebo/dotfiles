@@ -108,7 +108,7 @@ local function zsh_exec()
         -- Use the default rc.lua prompt (i.e. mypromptbox)
         textbox      = mouse.screen.mypromptbox.widget,
         exe_callback = function(input)
-            local cmd = string.format("zsh -c '%s'", input)
+            local cmd = string.format("zsh -i -c '%s'", input)
             if not input or #input == 0 then return end
             awful.spawn.with_line_callback(cmd, {
                 stdout = function(line)
@@ -136,9 +136,9 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
-                                    { "suspend", term_exec .. "'zsh -c suspend'" },
-                                    { "poweroff", term_exec .. "'zsh -c poweroff'" },
-                                    { "reboot", term_exec .. "'zsh -c reboot'" }
+                                    { "suspend", term_exec .. "'zsh -i -c suspend'" },
+                                    { "poweroff", term_exec .. "'zsh -i -c poweroff'" },
+                                    { "reboot", term_exec .. "'zsh -i -c reboot'" }
                                   }
                         })
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
