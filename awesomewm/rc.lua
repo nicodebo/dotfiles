@@ -11,6 +11,10 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
+-- enable qutebrowser bindings to appear in the hotkey menu
+require("awful.hotkeys_popup.keys.qutebrowser")
+-- enable tmux bindings to appear in the hotkey menu
+require("awful.hotkeys_popup.keys.tmux")
 -- }}}
 
 
