@@ -13,7 +13,6 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 
 -- }}}
 
-local lain = require("lain")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -128,14 +127,11 @@ end
 -- Create a launcher widget and a main menu
 myawesomemenu = {
    { "hotkeys", function() return false, hotkeys_popup.show_help end},
-   { "manual", terminal .. " -e 'man awesome'" },
-   { "edit rc.lua", string.format("%s'%s %s'", term_exec, editor, awesome.conffile)},
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end}
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal },
                                     { "suspend", term_exec .. "'zsh -i -c suspend'" },
                                     { "poweroff", term_exec .. "'zsh -i -c poweroff'" },
                                     { "reboot", term_exec .. "'zsh -i -c reboot'" }
@@ -610,26 +606,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Don't use awful.util.spawn_with_shell and instead call the shell inside
 -- autorun.sh
 awful.util.spawn(table.concat({conf_dir, "autorun.sh"}, "/"))
--- }}}
-
--- Lain widget {{{
--- Cpu
-local cpu = lain.widget.cpu {
-    settings = function()
-        cputextbox:set_markup("Cpu " .. cpu_now.usage)
-    end
-}
-
--- Calendar
-cal = lain.widget.calendar({
-    -- cal = "cal --color=always",
-    cal = "/usr/bin/env TERM=linux /usr/bin/cal --color=always",
-    attach_to = { mytextclock }
-    -- notification_preset = {
-        -- font = "xos4 Terminus 10",
-        -- fg   = theme.fg_normal,
-        -- bg   = theme.bg_normal
-    -- }
-}
-)
 -- }}}
