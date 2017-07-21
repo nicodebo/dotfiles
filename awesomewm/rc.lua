@@ -154,9 +154,9 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
-
--- Create textbox for the cpu
-cputextbox = wibox.widget.textbox()
+-- Create a calendar widget and attach it to mytextclock
+local month_calendar = awful.widget.calendar_popup.month()
+month_calendar:attach(mytextclock, 'tr')
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
