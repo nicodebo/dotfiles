@@ -6,7 +6,26 @@
 -- Additional awesome library
 local lain = require("lain")
 local conf_dir = table.concat({os.getenv("XDG_CONFIG_HOME"), "awesome"}, "/")
+local wallpaper_dir = table.concat({os.getenv("HOME"), "Pictures", "wallpaper"}, "/")
 
+function listPngFiles(dir)
+    local wallpapers = {}
+    local cmd = 'find "'..dir..'" -type f -name "*.png" -o -name "*.jpg"'
+    local p = io.popen(cmd)  --Open directory look for files, save data in p. By giving '-type f' as parameter, it returns all files.     
+    for file in p:lines() do                         --Loop through all files
+        table.insert(wallpapers, file)
+    end
+    return wallpapers
+end
+
+-- This function allow to select a random item from a list
+function selectRandomItem(table)
+    -- Initialize the pseudo random number generator
+    math.randomseed( os.time() )
+    math.random(); math.random(); math.random()
+    -- done. :-)
+    return table[math.random(#table)]
+end
 
 -- define theme
 local theme = {}
@@ -84,7 +103,7 @@ theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/def
 theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = table.concat({conf_dir, "wallpaper", "winterTree.png"}, "/")
+theme.wallpaper = selectRandomItem(listPngFiles(wallpaper_dir))
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
