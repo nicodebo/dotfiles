@@ -86,6 +86,7 @@ awful.layout.layouts = {
 -- Load theme file
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(table.concat({conf_dir, theme_fname}, "/"))
+theme = beautiful.get()
 -- }}}
 
 -- {{{ Helper functions
@@ -125,6 +126,33 @@ local function zsh_exec()
     }
 end
 
+-- Get volume and mute state from alsa
+-- https://github.com/cedlemo/blingbling/blob/master/volume.lua
+local function get_master_infos()
+    local state, volume = nil, nil
+    cmd = "amixer get Master"
+    local f=io.popen(cmd)
+    for line in f:lines() do
+        if string.match(line, "%s%[%d+%%%]%s") ~= nil then
+            volume=string.match(line, "%s%[%d+%%%]%s")
+            volume=string.gsub(volume, "[%[%]%%%s]","")
+        end
+        if string.match(line, "%s%[[%l]+%]$") then
+            state=string.match(line, "%s%[[%l]+%]$")
+            state=string.gsub(state,"[%[%]%%%s]","")
+        end
+    end
+    f:close()
+    if (not state or state == "yes" or state == "off") then
+        state = true  -- output is mute
+    else
+        state = false
+    end
+    if (not volume) then
+        volume = 0
+    end
+    return state, volume
+end
 -- }}}
 
 -- {{{ Menu
@@ -147,8 +175,29 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- Mute state and volume percentage indicator
+local mymaster_info = wibox.widget {
+    {
+        id = "mystate",
+        image  = theme.widget_vol_mute,
+        resize = false,
+        visible = false,
+        -- opacity = 0,
+        widget = wibox.widget.imagebox
+    },
+    {
+        id           = "myvol",
+        markup       = nil,
+        widget       = wibox.widget.textbox,
+    },
+    layout      = wibox.layout.align.horizontal,
+    set_volume = function(self, vol)
+        self.myvol.markup  = '<span foreground="'..theme.gray..'">Vol </span>'..vol
+    end,
+    set_state = function(self, sta)
+            self.mystate.visible = sta
+    end
+}
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -223,8 +272,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     local names = { "1", "2", "3", "4", "5" }
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
-    local layouts = { l.tile, l.tile, l.max, l.tile, l.tile,
-        l.tile, l.tile, l.tile, l.magnifier }
+    local layouts = { l.tile, l.tile, l.tile, l.tile, l.tile }
     awful.tag(names, s, layouts)
 
     -- Create a promptbox for each screen
@@ -250,6 +298,7 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
+            spacing = 2, -- spacing between each herebelow widgets
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
@@ -257,9 +306,9 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            spacing = 5, -- spacing between each herebelow widgets
             wibox.widget.systray(),
-            cputextbox,
+            mymaster_info,
             mytextclock,
             s.mylayoutbox,
         },
@@ -615,6 +664,19 @@ client.connect_signal("unfocus", function(c)
                                 c.border_color = beautiful.border_normal
                                 c.opacity = 0.90
                              end)
+-- }}}
+
+-- Timers
+-- Timer for the volume and sound state
+gears.timer {
+    timeout   = 1,
+    autostart = true,
+    callback  = function()
+        s, v = get_master_infos()
+        mymaster_info.volume = v
+        mymaster_info.state = s
+    end
+}
 -- }}}
 
 -- Execute autorun.sh at startup
