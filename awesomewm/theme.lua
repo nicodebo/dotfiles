@@ -15,6 +15,7 @@ function listPngFiles(dir)
     for file in p:lines() do                         --Loop through all files
         table.insert(wallpapers, file)
     end
+    p:close()
     return wallpapers
 end
 
