@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Push all my important repository to my git server
+# debz@saintpaul:~/srv/mygitserver
+
+rootdir="mygitserver"
+
+git -C "$PASSWORD_STORE_DIR" push -v "$rootdir" master
+printf "\n"
+git -C "${HOME}/Documents/recherche_emploi/curriculum_vitae" push -v "$rootdir" master
+printf "\n"
+git -C "${HOME}/Documents/Mon_Journal_de_Reve" push -v "$rootdir" master
+printf "\n"
+git -C "${HOME}/Documents/Dev/gpg2_key" push -v "$rootdir" master
+printf "\n"
+git -C "${HOME}/Documents/Dev/base16/base16-builder-php/templates/fzf" push -v "$rootdir" master
+printf "\n"
+git -C "${HOME}/Documents/Dev/base16/base16-builder-php/templates/zathura" push -v "$rootdir" master
+printf "\n"
+git -C "${HOME}/Documents/Dev/dream-note" push -v "$rootdir" master
+printf "\n"
+git -C "${HOME}/Documents/Dev/vim-pck" push -v "$rootdir" master
+printf "\n"
+git -C "${HOME}/Documents/Dev/dotfiles" push -v "$rootdir" master
