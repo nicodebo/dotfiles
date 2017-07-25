@@ -1,0 +1,17 @@
+# find and open one or more file with preview from a particular directory
+# $1 - The directory to search file from
+# $2 - The initial fzf query
+local search_dir="$1"
+shift
+local initial_query="$1"
+
+local base=${search_dir##*/}
+local files
+local header="Searching my $base and open file in editor..."
+pushd "$search_dir" > /dev/null
+files=$(ag -l | fzf -m -q "$initial_query" --height=90% --header="$header" --preview="pygmentize {}")
+if [[ -n $files ]]
+then
+  echo "$files" | tr '\n' ' ' | xargs "$EDITOR"
+fi
+popd > /dev/null

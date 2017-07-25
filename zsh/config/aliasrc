@@ -56,7 +56,7 @@ alias fmpc='fzf-mpc-select'
 alias mextract='extract-music'
 alias histats='history-stats'
 alias fh='history-search_cmd'
-alias fn='fzf-open-note'
+# alias fn='fzf-open-note'
 alias fs='fzf-search_print-note'
 alias fse='fzf-search_open-note'
 
@@ -92,4 +92,14 @@ mmv () {
     return 1
   fi
   mv "$1" "$MUSICSTOREDIR" && mpc update
+}
+
+# search for a notefile and open in editor
+fn () {
+  fzf-open-file-in-dir "$NOTESTOREDIR" "$@"
+}
+
+# search for a dotfile and open in editor
+fd () {
+  fzf-open-file-in-dir "${HOME}/Documents/Dev/dotfiles" "$@"
 }
