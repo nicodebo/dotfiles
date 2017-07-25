@@ -1,6 +1,7 @@
 [Unit]
 Description=Offlineimap Service (oneshot)
 Documentation=man:offlineimap(1)
+After=network.target
 
 [Service]
 Type=oneshot
@@ -10,5 +11,5 @@ ExecStart=/home/debz/.local/bin/offlineimap -o -u basic
 # Give 120 seconds for offlineimap to gracefully stop before hard killing it:
 TimeoutStopSec=120
 
-[Install]
-WantedBy=mail.target
+; [Install]
+; WantedBy=mail.target

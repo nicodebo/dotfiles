@@ -2,8 +2,8 @@
 Description=Offlineimap Query Timer
 
 [Timer]
-OnBootSec=1m
+OnBootSec=3m
 OnUnitInactiveSec=15m
 
 [Install]
-WantedBy=default.target
+WantedBy=timers.target
