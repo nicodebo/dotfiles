@@ -9,7 +9,7 @@ rootdir="debz@saintpaul:~/srv/mysyncserver"
 
 documents="${HOME}/Documents"
 pictures="${HOME}/Pictures"
-mail="${HOME}/.mail"
+mail="${MAILSTOREDIR}"
 tmuxinator="${HOME}/.tmuxinator"
 downloads="${HOME}/Downloads"
 gnupg="${HOME}/.gnupg"

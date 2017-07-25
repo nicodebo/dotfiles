@@ -21,7 +21,7 @@ postsynchook = notmuch new
 
 [Repository Perso-Local]
 type = Maildir
-localfolders = ~/.mail/user@email5.com
+localfolders = $MAILSTOREDIR/user@email5.com
 
 [Repository Perso-Remote]
 maxconnections = 1
@@ -44,7 +44,7 @@ postsynchook = notmuch new
 
 [Repository Work-Local]
 type = Maildir
-localfolders = ~/.mail/user@email2.com
+localfolders = $MAILSTOREDIR/user@email2.com
 nametrans = lambda folder: {'drafts':  '[Gmail]/Brouillons',
                             'sent':    '[Gmail]/Messages envoy&AOk-s',
                             'flagged': '[Gmail]/Suivis',
@@ -80,7 +80,7 @@ postsynchook = notmuch new
 
 [Repository Work2-Local]
 type = Maildir
-localfolders = ~/.mail/user@email1.com
+localfolders = $MAILSTOREDIR/user@email1.com
 
 [Repository Work2-Remote]
 maxconnections = 1

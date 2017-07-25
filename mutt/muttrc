@@ -88,10 +88,10 @@ color sidebar_new yellow default
 ###############################################################################
 #                                   Macro                                     #
 ###############################################################################
-# Change account
-macro index <f2> '<change-folder>~/.mail/user@email2.com/INBOX<enter>'
-macro index <f3> '<change-folder>~/.mail/user@email5.com/Inbox<enter>'
-macro index <f4> '<change-folder>~/.mail/user@email1.com/INBOX<enter>'
+
+macro index <f2> "<change-folder>$MAILSTOREDIR/user@email2.com/INBOX<enter>"
+macro index <f3> "<change-folder>$MAILSTOREDIR/user@email5.com/Inbox<enter>"
+macro index <f4> "<change-folder>$MAILSTOREDIR/user@email1.com/INBOX<enter>"
 # sync email
 macro index O "<enter-command>unset wait_key<enter><shell-escape>offlineimap<enter><enter-command>set wait_key<enter>"
 macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"

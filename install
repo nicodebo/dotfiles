@@ -80,5 +80,4 @@ main
 
 #TODO: mkdir ~/.local/share/newsbeuter/ <-- this xdg directory must exist if
 # the configuration files are placed in ~/.config/newsbeuter/
-#TODO: mkdir -p .mail here or in the post install script
 # Ref: http://stackoverflow.com/questions/7470165/how-to-go-to-each-directory-and-execute-a-command

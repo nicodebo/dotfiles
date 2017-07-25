@@ -7,6 +7,7 @@ After=network.target
 Type=oneshot
 Environment=NOTMUCH_CONFIG=/home/debz/.config/notmuch/notmuchrc
 Environment=PASSWORD_STORE_DIR=/home/debz/.local/share/pass
+Environment=MAILSTOREDIR=/home/debz/.mail
 ExecStart=/home/debz/.local/bin/offlineimap -o -u basic
 # Give 120 seconds for offlineimap to gracefully stop before hard killing it:
 TimeoutStopSec=120
