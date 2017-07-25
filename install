@@ -70,7 +70,7 @@ function main() {
   #chmod 755 "${HOME}/.offlineimaprc"
 
   # make systemd aware of the new user units
-  systemctl --user daemon-reload
+  # systemctl --user daemon-reload
 }
 
 ###############################################################################
