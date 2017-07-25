@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# Push all my important repository to my git server
+# debz@saintpaul:~/srv/mysyncserver
+
+# https://stackoverflow.com/questions/18123211/checking-host-availability-by-using-ping-in-bash-scripts#18123399
+
+rootdir="debz@saintpaul:~/srv/mysyncserver"
+
+documents="${HOME}/Documents"
+pictures="${HOME}/Pictures"
+mail="${HOME}/.mail"
+tmuxinator="${HOME}/.tmuxinator"
+downloads="${HOME}/Downloads"
+gnupg="${HOME}/.gnupg"
+ssh="${HOME}/.ssh"
+pass="${XDG_DATA_HOME}/pass"
+task="${XDG_DATA_HOME}/task"
+abook="${XDG_DATA_HOME}/abook"
+clerk="${XDG_DATA_HOME}/clerk"
+newsbeuter="${XDG_DATA_HOME}/newsbeuter"
+
+if ping -c 1 -W 2 saintpaul &> /dev/null
+then
+  rsync -azv --bwlimit=5000 --delete "${documents}" "${rootdir}" || notify-send "rsync" "$documents: failed"
+  rsync -azv --bwlimit=5000 --delete "${mail}" "${rootdir}" || notify-send "rsync" "$mail: failed"
+  rsync -azv --delete "${tmuxinator}" "${rootdir}/tmuxinator" || notify-send "tmuxinator" "$tmuxinator: failed"
+  rsync -azv --bwlimit=5000 --delete "${downloads}" "${rootdir}" || notify-send "rsync" "$downloads: failed"
+  rsync -azv --bwlimit=5000 --delete "${gnupg}" "${rootdir}" || notify-send "rsync" "$gnupg: failed"
+  rsync -azv --bwlimit=5000 --delete "${ssh}" "${rootdir}" || notify-send "rsync" "$ssh: failed"
+  rsync -azv --bwlimit=5000 --delete "${pictures}" "${rootdir}" || notify-send "rsync" "$pictures: failed"
+  rsync -azv --bwlimit=5000 --delete "${pass}" "${rootdir}" || notify-send "rsync" "$pass: failed"
+  rsync -azv --bwlimit=5000 --delete "${task}" "${rootdir}" || notify-send "rsync" "$task: failed"
+  rsync -azv --bwlimit=5000 --delete "${abook}" "${rootdir}" || notify-send "rsync" "$abook: failed"
+  rsync -azv --bwlimit=5000 --delete "${clerk}" "${rootdir}" || notify-send "rsync" "$clerk: failed"
+  rsync -azv --bwlimit=5000 --delete "${newsbeuter}" "${rootdir}" || notify-send "rsync" "$newsbeuter: failed"
+  notify-send "rsync" "finished"
+else
+  notify-send "rsync backup" "the server is down"
+fi
