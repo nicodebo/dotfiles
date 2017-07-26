@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# pipsi upgrade cookiecutter
+pipsi upgrade mutagen
+pipsi upgrade neovim-remote
+pipsi upgrade offlineimap
+pipsi upgrade pipsi
+pipsi upgrade pygments
+pipsi upgrade python-language-server
+# pipsi upgrade vimpck
+pipsi upgrade youtube-dl
+
+notify-send "pipsi upgrade" "Finished upgrading pipsi packages"
