@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# This script is used as a hack to count the number of reminder. Didn't find a
+# native way to do it.
+# This script is to be used with the -kcmd argument of the remind program. This
+# current script is used as a cmd to save each reminder in a file. Files can
+# then be counted to determine the number of reminder.
+# $1 - A temporary directory which must exists
+# $2-n - Whatever strings. The rest is used as a single argument.
+main () {
+  tmp_dir="$1"
+  shift
+  message="$@"
+  tmp_file=$(mktemp "${tmp_dir}/remind_entry.XXXXXXXXX")
+  echo "$message" > "$tmp_file"
+}
+
+main "$@"

@@ -199,6 +199,19 @@ local mymaster_info = wibox.widget {
     end
 }
 
+-- Reminder indicator
+local myreminder_nb = wibox.widget {
+    {
+        id           = "myrmd",
+        markup       = nil,
+        widget       = wibox.widget.textbox,
+    },
+    layout      = wibox.layout.align.horizontal,
+    set_nbreminder = function(self, nb_rmd)
+        self.myrmd.markup  = '<span foreground="'..theme.gray..'">Reminder </span>'..nb_rmd
+    end,
+}
+
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
@@ -306,8 +319,9 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            spacing = 5, -- spacing between each herebelow widgets
+            spacing = 8, -- spacing between each herebelow widgets
             wibox.widget.systray(),
+            myreminder_nb,
             mymaster_info,
             mytextclock,
             s.mylayoutbox,
@@ -677,10 +691,39 @@ gears.timer {
         mymaster_info.state = s
     end
 }
+
+-- Timers for the reminder textbox
+-- The first one is used to initialize the textbox and run only once
+gears.timer {
+    timeout   = 1,
+    autostart = true,
+    single_shot = true,
+    callback  = function()
+        awful.spawn.easy_async(table.concat({conf_dir, "remind.sh"}, "/"),
+            function(stdout, stderr, reason, exit_code)
+                myreminder_nb.nbreminder = stdout
+            end
+        )
+    end
+}
+-- The second one is used to update the reminder number every hour because the
+-- reminder is not something that I modify every minutes.
+gears.timer {
+    timeout   = 3600,
+    autostart = true,
+    callback  = function()
+        awful.spawn.easy_async(table.concat({conf_dir, "remind.sh"}, "/"),
+            function(stdout, stderr, reason, exit_code)
+                myreminder_nb.nbreminder = stdout
+            end
+        )
+    end
+}
 -- }}}
 
 -- Execute autorun.sh at startup
 -- Don't use awful.util.spawn_with_shell and instead call the shell inside
 -- autorun.sh
 awful.util.spawn(table.concat({conf_dir, "autorun.sh"}, "/"))
+--TODO: awful.util.spawn gives me a deprecated warning when running :!awtry
 -- }}}
