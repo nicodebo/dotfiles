@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Save my music into my external hard drive which is connected to my saintpaul
+# server
+# debz@saintpaul:/media/debz/4E1AEA7B1AEA6007/Music\ collection
+
+# https://stackoverflow.com/questions/18123211/checking-host-availability-by-using-ping-in-bash-scripts#18123399
+
+rootdir="debz@saintpaul:/media/debz/4E1AEA7B1AEA6007/Music\ collection"
+
+music="${MUSICSTOREDIR}"
+
+if ping -c 1 -W 2 saintpaul &> /dev/null
+then
+  rsync -azv --bwlimit=5000 "${music}" "${rootdir}" || notify-send "rsync" "$music: failed"
+  notify-send "rsync" "finished"
+else
+  notify-send "rsync backup" "the server is down"
+fi
