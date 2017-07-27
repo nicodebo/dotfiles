@@ -214,7 +214,13 @@ local myreminder_nb = wibox.widget {
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+-- mytextclock = wibox.widget.textclock()
+-- see http://www.lua.org/pil/22.1.html for time format substitution
+-- the default format is " %a %b %d, %H:%M" which add a space. I wanted to
+-- remove the leading space thus defining my own format
+mytextclock = wibox.widget.textclock (
+    "%a %b %d, %H:%M"
+)
 
 -- Create a calendar widget and attach it to mytextclock
 local month_calendar = awful.widget.calendar_popup.month()
@@ -319,7 +325,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            spacing = 8, -- spacing between each herebelow widgets
+            spacing = 10, -- spacing between each herebelow widgets
             wibox.widget.systray(),
             myreminder_nb,
             mymaster_info,
