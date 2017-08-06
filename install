@@ -71,6 +71,10 @@ function main() {
 
   # make systemd aware of the new user units
   # systemctl --user daemon-reload
+
+  # system-dotfiles (dotfiles that requires sudo power)
+  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/systemd/reflector.service" /etc/systemd/system/reflector.service
+  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/systemd/reflector.timer" /etc/systemd/system/reflector.timer
 }
 
 ###############################################################################
