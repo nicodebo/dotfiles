@@ -1,7 +1,7 @@
 " Vim compiler file
 " Compiler: shellcheck, bash syntax checker
 " Maintainer: nicodebo
-" Last Change: 2017 Feb 13
+" Last Change: 2017 Aug 07
 " Ref: https://github.com/koalaman/shellcheck
 " Comment: See github wiki for error description
 " Error Format:
@@ -18,7 +18,7 @@ endif
 let s:save_cpo = &cpo
 set cpo-=C
 
-CompilerSet makeprg=shellcheck\ -f\ gcc\ %
+CompilerSet makeprg=shellcheck\ -x\ -f\ gcc\ %
 CompilerSet errorformat=
        \%f:%l:%c:\ %trror:\ %m,
        \%f:%l:%c:\ %tarning:\ %m,
