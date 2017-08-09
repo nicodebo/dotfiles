@@ -1,0 +1,272 @@
+#!/usr/bin/bash
+
+# plugin fetcher borrowed from: https://github.com/ninrod/dotfiles
+# set -x
+
+# terminal colors
+local TC='\e['
+local Rst="${TC}0m"     # Reset all coloring and style
+local Black="${TC}30m";
+local Red="${TC}31m";
+local Green="${TC}32m";
+local Yellow="${TC}33m";
+local Blue="${TC}34m";
+local Purple="${TC}35m";
+local Cyan="${TC}36m";
+local White="${TC}37m";
+
+build_git_url() {
+  local name="$1"
+  local gitmask='https://github.com/'
+  local url=${gitmask}${name}.git
+  if [[ -n ${urlhash+x} ]] && ((${+urlhash[$name]})); then
+    url=${urlhash[$name]}
+  fi
+  echo $url
+}
+
+git_clone_error_msg() {
+  if [[ ! $1 = 0 ]]; then
+    echo -e "${Red}[ERROR]${Rst} git clone finished with return code: ${Red}${1}${Rst}. ${Yellow}aborting...${Rst}"
+    echo -e "-------------------"
+    return $1
+  fi
+}
+
+# Update all installed packages
+# $1 - name of the package
+# $2 - directory where repo are cloned into
+update() {
+  local name="$1"; shift
+  local repo_dir="$1"; shift
+  local cwd=$(readlink -f .)
+  cd "$repo_dir/$name" || return 1
+  echo -e "-------------------"
+  echo -e "${Yellow}Performing git status${Rst} on [${Green}${name}${Rst}]."
+
+  git fetch -v
+
+  # hack lifted from http://stackoverflow.com/a/3278427/4921402
+  LOCAL=$(git rev-parse @)
+  REMOTE=$(git rev-parse @{u})
+  BASE=$(git merge-base @ @{u})
+  if [[ $LOCAL = $REMOTE ]]; then
+    echo "${Cyan}${name}${Rst} is already ${Blue}Up-to-date${Rst}."
+  elif [[ $LOCAL = $BASE ]]; then
+    echo "${Cyan}${name}${Rst}  ${Yellow}needs a pull${Rst} Performing git pull..."
+    git pull --rebase; rc=$?
+    git_update_sub "$repo_dir/$name"
+    if [[ ! $rc = 0 ]]; then
+      echo -e "${Red}[ERROR]${Rst} git pull returned code: ${Red}${rc}${Rst}. ${Yellow}aborting...${Rst}"
+      echo -e "-------------------"
+      return $rc
+    fi
+    echo -e "${Blue}[Success]${Rst} ${Green}$name${Rst} successfully ${Cyan}updated${Rst}."
+    plug_hook=$( sed "s,$name=,," "$repo_dir/posthooks" )
+    if [[ ! -z "$plug_hook" ]]; then
+      eval "$plug_hook"
+    fi
+  elif [[ $REMOTE = $BASE ]]; then
+    echo "${name} needs to be ${Red}pushed${Rst}. Wait, What? You should not be commiting here. Or perhaps history was rewritten in upstream. You may have to issue a ${Yellow}git reset --hard origin/master.${Rst}"
+  else
+    echo "${name} needs to be ${Red}rebased and pushed${Rst}. Wait, What? You should not be commiting here."
+  fi
+
+  cd $cwd
+  echo -e "-------------------"
+}
+
+# git init submodules only if a .gitmodules is present in the repo
+# $1 - local repo
+git_init_sub() {
+  cd "$1" || exit
+  if [[ -s "$1/.gitmodules" ]]; then
+    git submodule update --init --recursive
+  fi
+}
+
+# git update submodules only if a .gitmodules is present in the repo
+# $1 - local repo
+git_update_sub() {
+  cd "$1" || exit
+  if [[ -s "$1/.gitmodules" ]]; then
+    git submodule update --recursive
+  fi
+}
+
+# Install package from github
+# $1 - name of the package in the following form: user/repo
+# $2 - reference to a specific commit (optional)
+# $3 - directory where repo are cloned into
+# $4 - post install plug_hook, some shell command. Can be multiline
+install() {
+  local name="$1"; shift
+  local ref=$1; shift
+  local repo_dir="$1"; shift
+  local plug_hook="$1"; shift
+  local url=$(build_git_url $name)
+  local cwd=$(readlink -f .)
+  # echo "name of repo"
+  # echo "$name"
+  # echo "ref to checkout"
+  # echo "$ref"
+  # echo "repo dir"
+  # echo "$repo_dir"
+  # echo "the plug_hook"
+  # echo "$plug_hook"
+
+  echo "" && echo "-------------------"
+  if [[ -d "$repo_dir/$name" ]]; then
+    echo -e "[${Green}${name}${Rst}] already cloned from ${Blue}${url}${Rst}"
+  else
+    echo -e "[${Red}${name}${Rst}] not cloned. cloning now from ${Blue}${url}${Rst}"
+    if [[ ! -z "$ref" ]]; then
+      echo -e "the ref: ${Yellow}${ref}${Rst} was passed. Performing ${Blue}full${Rst} clone."
+
+      git clone $url "$repo_dir/$name"; rc=$?; git_clone_error_msg $rc
+      git_init_sub "$repo_dir/$name"
+      if [[ ! $rc = 0 ]]; then
+        return $rc
+      fi
+
+      cd "$repo_dir/$name"
+      git checkout --quiet $ref
+      echo -e "[${Green}performing checkout${Rst}] ${Yellow}$(git branch --no-color --quiet --column=dense)${Rst}"
+      cd $cwd
+    else
+      echo -e "no ref to checkout. ${Yellow}shallow${Rst} cloning."
+      git clone --depth 1 $url "$repo_dir/$name"; rc=$?; git_clone_error_msg $rc
+      git_init_sub "$repo_dir/$name"
+      if [[ ! $rc = 0 ]]; then
+        return $rc
+      fi
+    fi
+    echo -e "[${Green}${name}${Rst}] sucessfully cloned."
+    # post install plug_hook, for example to make a symlink and/or make a symlink
+    if [[ ! -z "$plug_hook" ]]; then
+      cd "$repo_dir/$name" || exit
+      pwd
+      eval "$plug_hook"
+      cd "$cwd" || exit
+      if [[ ! -f "$repo_dir/posthooks" ]]; then
+        touch "$repo_dir/posthooks"
+      fi
+      sed -i "\,^$name,d" "$repo_dir/posthooks"
+      echo "$name=$plug_hook" >> "$repo_dir/posthooks"
+    fi
+  fi
+  echo -e "-------------------"
+}
+
+# The main function
+main() {
+
+  xdg_data="${XDG_DATA_HOME:-$HOME/.local/share}"
+  repo_dir="${xdg_data}/nplug"
+  mkdir -p "$repo_dir"
+  local plug_hook=""
+  local ref=""
+
+  # Parse options to the `nplug` command
+  while getopts ":h" opt; do
+    case ${opt} in
+      h )
+        echo "Usage: nplug [<option>] <command> <args>"
+        echo ""
+        echo "A very simple plugin fetcher based on https://github.com/ninrod/dotfiles"
+        echo ""
+        echo "    option:"
+        echo "        -h                      Display this help message"
+        echo "    <command>:"
+        echo "        install                 Install a package to \$XDG_DATA_HOME/nplug"
+        echo "        update                  Update an installed package"
+        echo ""
+        echo "See nplug <command> -h for <command> usage"
+        # exit 0
+        return 0
+        ;;
+     \? )
+       echo "Invalid Option: -$OPTARG" 1>&2
+       # exit 1
+       return 1
+       ;;
+    esac
+  done
+  shift $((OPTIND -1))
+
+  subcommand=$1; shift  # Remove 'nplug' from the argument list
+  case "$subcommand" in
+    # Parse options to the install sub command
+    install)
+      # Process package options
+      while getopts ":ht:r:" opt; do
+        case ${opt} in
+          h )
+            echo "Usage: nplug install [<option>] <repo>"
+            echo ""
+            echo "Install a <repo> into \$XDG_DATA_HOME"
+            echo "    option:"
+            echo "        -h              Display this help message"
+            echo "        -t <hook>       Run a post install <hook>. The <hook> is stored"
+            echo "        -r <reference>  Clone and checkout a specifc commit reference"
+            echo "    parameter: "
+            echo "        <repo>          A github repository: user/repo"
+            # exit 0
+            return 0
+            ;;
+          t )
+            plug_hook=$OPTARG
+            ;;
+          r )
+            ref=$OPTARG
+            ;;
+          \? )
+            echo "Invalid Option: -$OPTARG" 1>&2
+            # exit 1
+            return 1
+            ;;
+          : )
+            echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+            # exit 1
+            return 1
+            ;;
+        esac
+      done
+      shift $((OPTIND -1))
+      package="$1"
+      install "$package" "$ref" "$repo_dir" "$plug_hook"
+      ;;
+    # Parse options to the update sub command
+    update)
+      while getopts ":hA" opt; do
+        case ${opt} in
+          h )
+            echo "Usage: nplug update <repo>"
+            echo ""
+            echo "Update an existing <repo>"
+            echo "    parameter: "
+            echo "        <repo>          A github repository: user/repo"
+            # exit 0
+            return 0
+            ;;
+          \? )
+            echo "Invalid Option: -$OPTARG" 1>&2
+            # exit 1
+            return 1
+            ;;
+          : )
+            echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+            # exit 1
+            return 1
+            ;;
+        esac
+      done
+      shift $((OPTIND -1))
+      package="$1"
+      update "$package" "$repo_dir"
+      ;;
+  esac
+}
+
+# launch main
+main "$@"

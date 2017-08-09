@@ -9,7 +9,6 @@ autoload -Uz -- "${ZDOTDIR}"/zfunction/[^_]*(:t)
 
 # }}}
 
-
 # Completion -------------------------------------------------------------- {{{
 
 # The following lines were added by compinstall
@@ -30,16 +29,6 @@ zstyle ':completion:*' original true
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' substitute 1
 zstyle ':completion:*' use-compctl true
-
-# }}}
-
-# keybind ----------------------------------------------------------------- {{{
-
-# zsh-history-substring-search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey -M vicmd 's' history-substring-search-up
-bindkey -M vicmd 't' history-substring-search-down
 
 # }}}
 
@@ -176,20 +165,49 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # }}}
 
-# zplug ------------------------------------------------------------------- {{{
+# nplug ------------------------------------------------------------------- {{{
 
-# source init.zsh
-[[ -s "${ZPLUG_HOME}/init.zsh" ]] && source "${ZPLUG_HOME}/init.zsh"
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+# load the extract plugin from oh-my-zsh repo
+if [[ -s "${XDG_DATA_HOME}/nplug/robbyrussell/oh-my-zsh/plugins/extract/extract.plugin.zsh" ]]; then
+  source "${XDG_DATA_HOME}/nplug/robbyrussell/oh-my-zsh/plugins/extract/extract.plugin.zsh"
 fi
 
-# Then, source plugins and add commands to $PATH
-zplug load
+# rupa/z
+if [[ -s "${XDG_DATA_HOME}/nplug/rupa/z/z.sh" ]]; then
+  source "${XDG_DATA_HOME}/nplug/rupa/z/z.sh"
+fi
+
+# voronkovich/gitignore.plugin.zsh
+if [[ -s "${XDG_DATA_HOME}/nplug/voronkovich/gitignore.plugin.zsh/gitignore.plugin.zsh" ]]; then
+  source "${XDG_DATA_HOME}/nplug/voronkovich/gitignore.plugin.zsh/gitignore.plugin.zsh"
+# else
+#   echo "gitignore not loaded"
+fi
+
+# liquidprompt
+if [[ -s "${XDG_DATA_HOME}/nplug/nojhan/liquidprompt/liquidprompt" ]]; then
+  source "${XDG_DATA_HOME}/nplug/nojhan/liquidprompt/liquidprompt"
+fi
+
+# zsh syntax highlighting must be the last sourced plugin
+if [[ -s "${XDG_DATA_HOME}/nplug/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source "${XDG_DATA_HOME}/nplug/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+
+# zsh search, must be the last with zsh syntax highlighting
+if [[ -s "${XDG_DATA_HOME}/nplug/zsh-users/zsh-history-substring-search/zsh-history-substring-search.zsh" ]]; then
+  source "${XDG_DATA_HOME}/nplug/zsh-users/zsh-history-substring-search/zsh-history-substring-search.zsh"
+fi
+
+# }}}
+
+# keybind ----------------------------------------------------------------- {{{
+
+# need to after sourcing the history-substring-search plugin
+# zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 's' history-substring-search-up
+bindkey -M vicmd 't' history-substring-search-down
 
 # }}}
