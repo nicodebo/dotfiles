@@ -1,8 +1,10 @@
-# /home/debz/.dreamrc : dreamnote configuration file
+#
+# dream-note configuration file
+#
+# don't put spaces around =
 
+# Root directory of the python virtual environment
+venv_root=/home/debz/.local/share/dreamnote/venv
 
-# path of the dream note
-dream_note_path=/home/debz/Documents
-
-# name of the dream note
-dream_note_name=Mon_Journal_de_Reve
+# dream note root directory (tex source)
+dn_root=/home/debz/Documents/Mon_Journal_de_Reve
