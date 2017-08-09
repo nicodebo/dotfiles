@@ -459,7 +459,7 @@ globalkeys = awful.util.table.join(
                                 end,
               {description = "Browse most recent added music", group = "clerk"}),
     awful.key({ }, "Print", function ()
-      awful.util.spawn("import /tmp/$(date +%F_%H%M%S_%N).png", false)
+      awful.util.spawn_with_shell("import /tmp/$(date +%F_%H%M%S_%N).png", false)
                               end,
               {description = "Take a screenshot to /tmp", group = "custom"})
 )
