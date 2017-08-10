@@ -2,6 +2,7 @@
 
 The configuration files are organized as follow:
 
+```
 nvim
 ├── after
 │   └── ftplugin
@@ -29,6 +30,7 @@ nvim
 ├── init.vim
 └── vimrc
     └── bepo.vimrc
+```
 
 * `init.vim`: the main configuration file
 * `vimrc/`: files in this folder are sourced from the `init.vim`. This allow to
