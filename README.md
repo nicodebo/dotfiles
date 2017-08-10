@@ -16,3 +16,11 @@ cd dotfiles
 ### neovim ⟹  [goto](nvim)
 
 <https://github.com/neovim/neovim>
+
+### pam_env ⟹  [goto](pam)
+
+<http://www.linux-pam.org/index.html>
+
+### zsh ⟹  [goto](zsh)
+
+<https://github.com/zsh-users/zsh>

@@ -1,6 +1,8 @@
 # neovim
 
-The configuration files are organized as follow:
+## Files
+
+The configuration files are organized as follows:
 
 ```
 nvim
@@ -43,3 +45,10 @@ nvim
   warnings and errors.
 * `after/ftplugin/`: filetype specific settings that are loaded after the
   distributed corresponding filetype plugins.
+
+## References
+
+* <https://github.com/romainl/idiomatic-vimrc>
+* <http://learnvimscriptthehardway.stevelosh.com/>
+* <https://www.reddit.com/r/vim/>
+* <https://www.reddit.com/r/neovim/>
