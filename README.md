@@ -1,28 +1,18 @@
-# Task list
-
-* Pour les permissions, utiliser cette méthode: http://stackoverflow.com/questions/3207728/retaining-file-permissions-with-git
-  * msmtp: `$ chmod 600 .msmtp`
-  * plowshare.conf `$ chmod 600 `
- 
 # My dotfiles
 
+## Installation
+
+```bash
+# store this repository under $HOME directory (or whatever folder)
+cd "$HOME"
+git clone https://github.com/nicodebo/dotfiles/
+cd dotfiles
+# run install script which basically symlink all files into different folders
+./install
 ```
-nvim/
-├── after
-│   └── ftplugin
-│       ├── cpp.vim
-│       ├── help.vim
-│       ├── mail.vim
-│       ├── make.vim
-│       ├── python.vim
-│       ├── sh.vim
-│       └── vim.vim
-├── autoload
-│   └── statusline.vim
-├── compiler
-│   ├── flake8.vim
-│   └── shellcheck.vim
-├── init.vim
-└── vimrc
-    └── bepo.vimrc
-```
+
+## dotfiles
+
+### neovim ⟹  [goto](nvim)
+
+<https://github.com/neovim/neovim>
