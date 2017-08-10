@@ -212,6 +212,22 @@ local myreminder_nb = wibox.widget {
     end,
 }
 
+-- Reminder tooltip that appear when hovering over myreminder_nb widget
+local myreminder_t = awful.tooltip({
+        objects = { myreminder_nb },
+        timer_function = function()
+            awful.spawn.easy_async_with_shell('rmind', function(stdout, stderr, reason, exit_code)
+                local file = io.open("/tmp/async_rmind", "w")
+                file:write(stdout)
+                file:close()
+            end)
+            local file = io.open("/tmp/async_rmind", "r")
+            local stdout = file:read("*a")
+            file:close()
+            return stdout
+        end,
+    })
+
 -- {{{ Wibar
 -- Create a textclock widget
 -- mytextclock = wibox.widget.textclock()
