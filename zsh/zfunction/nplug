@@ -62,7 +62,7 @@ update() {
       return $rc
     fi
     echo -e "${Blue}[Success]${Rst} ${Green}$name${Rst} successfully ${Cyan}updated${Rst}."
-    plug_hook=$( sed "s,$name=,," "$repo_dir/posthooks" )
+    plug_hook=$( grep "^$name" "$repo_dir/posthooks" | sed "s,$name=,," )
     if [[ ! -z "$plug_hook" ]]; then
       eval "$plug_hook"
     fi
