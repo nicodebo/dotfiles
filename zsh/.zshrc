@@ -45,6 +45,9 @@ KEYTIMEOUT=1
 unsetopt beep
 bindkey -v # activate vim mode for 'zsh line editor'
 
+# allow to change directory with the path only (without entering cd)
+setopt autocd
+
 # - }}}
 
 # zsh history ------------------------------------------------------------- {{{
