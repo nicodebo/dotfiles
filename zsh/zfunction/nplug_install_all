@@ -4,7 +4,7 @@
 nplug install -t "mkdir -p $HOME/bin; ln -sfr dreamnote $HOME/bin; make venv" "nicodebo/dream-note"
 
 # ohmyzsh
-ohmyzsh_hook="mkdir -p $ZDOTDIR/zcompletion; "
+local ohmyzsh_hook="mkdir -p $ZDOTDIR/zcompletion; "
 ohmyzsh_hook+="ln -sfr plugins/extract/_extract $ZDOTDIR/zcompletion"
 nplug install -t "$ohmyzsh_hook" "robbyrussell/oh-my-zsh"
 
@@ -18,12 +18,12 @@ nplug install "voronkovich/gitignore.plugin.zsh"
 nplug install "nojhan/liquidprompt"  # zsh prompt with git and python venv support
 
 # open git remote repo from command line
-gitopen_hook="mkdir -p $HOME/bin; "
+local gitopen_hook="mkdir -p $HOME/bin; "
 gitopen_hook+="ln -sfr git-open $HOME/bin"
 nplug install -t "$gitopen_hook" "paulirish/git-open"
 
 # mpd music client
-clerk_hook="mkdir -p $HOME/bin; "
+local clerk_hook="mkdir -p $HOME/bin; "
 clerk_hook+="ln -sfr clerk $HOME/bin; "
 clerk_hook+="ln -sfr clerk_helper $HOME/bin; "
 clerk_hook+="python -m venv $ENV_DIR/$MPD2_PYLIB; "

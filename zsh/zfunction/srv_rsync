@@ -5,20 +5,20 @@
 
 # https://stackoverflow.com/questions/18123211/checking-host-availability-by-using-ping-in-bash-scripts#18123399
 
-rootdir="debz@saintpaul:~/srv/mysyncserver"
+local rootdir="debz@saintpaul:~/srv/mysyncserver"
 
-documents="${HOME}/Documents"
-pictures="${HOME}/Pictures"
-mail="${MAILSTOREDIR}"
-tmuxinator="${HOME}/.tmuxinator"
-downloads="${HOME}/Downloads"
-gnupg="${HOME}/.gnupg"
-ssh="${HOME}/.ssh"
-pass="${XDG_DATA_HOME}/pass"
-task="${XDG_DATA_HOME}/task"
-abook="${XDG_DATA_HOME}/abook"
-clerk="${XDG_DATA_HOME}/clerk"
-newsbeuter="${XDG_DATA_HOME}/newsbeuter"
+local documents="${HOME}/Documents"
+local pictures="${HOME}/Pictures"
+local mail="${MAILSTOREDIR}"
+local tmuxinator="${HOME}/.tmuxinator"
+local downloads="${HOME}/Downloads"
+local gnupg="${HOME}/.gnupg"
+local ssh="${HOME}/.ssh"
+local pass="${XDG_DATA_HOME}/pass"
+local task="${XDG_DATA_HOME}/task"
+local abook="${XDG_DATA_HOME}/abook"
+local clerk="${XDG_DATA_HOME}/clerk"
+local newsbeuter="${XDG_DATA_HOME}/newsbeuter"
 
 if ping -c 1 -W 2 saintpaul &> /dev/null
 then

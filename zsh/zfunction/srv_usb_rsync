@@ -6,9 +6,9 @@
 
 # https://stackoverflow.com/questions/18123211/checking-host-availability-by-using-ping-in-bash-scripts#18123399
 
-rootdir="debz@saintpaul:/media/debz/4E1AEA7B1AEA6007/Music\ collection"
+local rootdir="debz@saintpaul:/media/debz/4E1AEA7B1AEA6007/Music\ collection"
 
-music="${MUSICSTOREDIR}"
+local music="${MUSICSTOREDIR}"
 
 if ping -c 1 -W 2 saintpaul &> /dev/null
 then

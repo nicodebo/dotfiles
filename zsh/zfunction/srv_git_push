@@ -4,7 +4,7 @@
 # debz@saintpaul:/srv/mygitserver
 
 # The alias of the the remote url set in all the following repo
-remote_alias="mygitserver"
+local remote_alias="mygitserver"
 
 if ping -c 1 -W 2 saintpaul &> /dev/null
 then
