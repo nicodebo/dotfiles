@@ -75,6 +75,8 @@ function main() {
   # system-dotfiles (dotfiles that requires sudo power)
   sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/systemd/reflector.service" /etc/systemd/system/reflector.service
   sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/systemd/reflector.timer" /etc/systemd/system/reflector.timer
+  sudo mkdir -p "/etc/pacman.d/hooks"
+  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/pacman-hooks/neovimupgrade.hook" /etc/pacman.d/hooks
 }
 
 ###############################################################################
