@@ -12,7 +12,7 @@ local music="${MUSICSTOREDIR}"
 
 if ping -c 1 -W 2 saintpaul &> /dev/null
 then
-  rsync -azv --bwlimit=5000 "${music}" "${rootdir}" || notify-send "rsync" "$music: failed"
+  rsync -azv --bwlimit=5000 --delete "${music}" "${rootdir}" || notify-send "rsync" "$music: failed"
   notify-send "rsync" "finished"
 else
   notify-send "rsync backup" "the server is down"
