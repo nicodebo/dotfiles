@@ -9,7 +9,7 @@ local base=${search_dir##*/}
 local files
 local header="Searching my $base and open file in editor..."
 pushd "$search_dir" > /dev/null
-files=$(ag -l | fzf -m -q "$initial_query" --height=90% --header="$header" --preview="pygmentize {}")
+files=$(ag -l --hidden --ignore .git | fzf -m -q "$initial_query" --height=90% --header="$header" --preview="pygmentize {}")
 if [[ -n $files ]]
 then
   echo "$files" | tr '\n' ' ' | xargs "$EDITOR"
