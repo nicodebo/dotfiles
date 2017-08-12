@@ -21,6 +21,11 @@ cd dotfiles
 
 <http://www.linux-pam.org/index.html>
 
+### system-dotfiles ⟹  [goto](system-dotfiles)
+
+This folder contains configuration files that are to be installed outside of my
+$HOME directory.
+
 ### zsh ⟹  [goto](zsh)
 
 <https://github.com/zsh-users/zsh>
