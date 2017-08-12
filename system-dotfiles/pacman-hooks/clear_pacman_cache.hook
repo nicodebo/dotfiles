@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Removing old cached packages...
+When = PostTransaction
+Exec = /usr/bin/env bash -c "/usr/bin/paccache -rk2 && /usr/bin/paccache -ruk0"

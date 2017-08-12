@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Removing old aur cached packages...
+When = PostTransaction
+Exec = /usr/bin/sudo -u debz /usr/bin/env bash -c "find $XDG_CACHE_HOME/pacaur/ -maxdepth 1 -type d -exec paccache -r -c {} \;"

@@ -27,6 +27,7 @@ function main() {
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   local conf_dir=${XDG_CONFIG_HOME:-$HOME/.config}
   local data_dir=${XDG_DATA_HOME:-$HOME/.local/share}
+  local pacman_hook_dir="/etc/pacman.d/hooks/"
 
   sym_conf "${SCRIPT_DIR}/awesomewm" "${conf_dir}/awesome"
   sym_conf "${SCRIPT_DIR}/bin" "${HOME}/bin"
@@ -73,10 +74,14 @@ function main() {
   # systemctl --user daemon-reload
 
   # system-dotfiles (dotfiles that requires sudo power)
+  ## systemd
   sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/systemd/reflector.service" /etc/systemd/system/reflector.service
   sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/systemd/reflector.timer" /etc/systemd/system/reflector.timer
-  sudo mkdir -p "/etc/pacman.d/hooks"
-  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/pacman-hooks/neovimupgrade.hook" /etc/pacman.d/hooks
+  ## pacman hooks
+  sudo mkdir -p "$pacman_hook_dir"
+  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/pacman-hooks/nvim_install_upgrade.hook" "$pacman_hook_dir"
+  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/pacman-hooks/clear_pacman_cache.hook" "$pacman_hook_dir"
+  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/pacman-hooks/clear_pacaur_cache.hook" "$pacman_hook_dir"
 }
 
 ###############################################################################
