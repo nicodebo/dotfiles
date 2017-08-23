@@ -34,6 +34,9 @@ set wrap                         " turn on line wrapping
 set linebreak                    "Wrap lines at convenient points
 " I use a unicode curly array with a <backslash><space> as a wrap symbole
 set showbreak=↪>\ 
+" search a tags file in the current directory of the buffer first, then in the
+" under the pwd
+set tags=./tags,tags
 
 " Modelines have historically been a source of security vulnerabilities.  As
 " such, it may be a good idea to disable them and use the securemodelines
