@@ -9,27 +9,52 @@
 local conf_dir = table.concat({os.getenv("XDG_CONFIG_HOME"), "awesome"}, "/")
 local wallpaper_dir = table.concat({os.getenv("HOME"), "Pictures", "wallpaper"}, "/")
 
--- helper functions
+-- https://stackoverflow.com/questions/1340230/check-if-directory-exists-in-lua
+-- Check if a file or directory exists in this path
+function exists(file)
+   local ok, err, code = os.rename(file, file)
+   if not ok then
+      if code == 13 then
+         -- Permission denied, but it exists
+         return true
+      end
+   end
+   return ok, err
+end
+
+-- Check if a directory exists in this path
+function isdir(path)
+   -- "/" works on both Unix and Windows
+   return exists(path.."/")
+end
+
 -- list image files in dir
 function listPngFiles(dir)
     local wallpapers = {}
     local cmd = 'find "'..dir..'" -type f -name "*.png" -o -name "*.jpg"'
-    local p = io.popen(cmd)  --Open directory look for files, save data in p. By giving '-type f' as parameter, it returns all files.
-    for file in p:lines() do                         --Loop through all files
-        table.insert(wallpapers, file)
+    if isdir(wallpaper_dir) then
+        local p = io.popen(cmd)  --Open directory look for files, save data in p. By giving '-type f' as parameter, it returns all files.
+        for file in p:lines() do                         --Loop through all files
+            table.insert(wallpapers, file)
+        end
+        p:close()
     end
-    p:close()
     return wallpapers
 end
 
 -- This function allow to select a random item from a list
 function selectRandomItem(table)
-    -- Initialize the pseudo random number generator
-    math.randomseed( os.time() )
-    math.random(); math.random(); math.random()
-    -- done. :-)
-    return table[math.random(#table)]
+    local wallpaper = ""
+    if not (next(table) == nil) then -- check if table is not empty
+        -- Initialize the pseudo random number generator
+        math.randomseed( os.time() )
+        math.random(); math.random(); math.random()
+        -- done. :-)
+        wallpaper = table[math.random(#table)]
+    end
+    return wallpaper
 end
+
 
 -- define theme
 local theme = {}
@@ -44,9 +69,11 @@ theme.border_width  = 1 -- client border width
 theme.border_normal = "#3F3F3F" -- default client's border color
 theme.border_focus  = "#6F6F6F" -- focused client's border color
 theme.border_marked = "#CC9393" -- marked client's border color
+
 theme.wallpaper = selectRandomItem(listPngFiles(wallpaper_dir)) -- wallpaper path
--- TODO: fallback to a default wallpaper if no wallpaper is found in
--- ~/Pictures/wallpaper
+if theme.wallpaper == '' then
+  theme.wallpaper = "/usr/share/awesome/themes/default/background.png"
+end
 
 theme.fg_normal     = "#FEFEFE"
 theme.fg_focus      = "#32D6FF"
