@@ -330,7 +330,14 @@ endfunction
 
 " tags generation with ctags ---------------------------------------------- {{{
 
-command! MakeTags ! ag -l | ctags --links=no -L-
+" asynchronous ctags, might be a bad idea, system() safer ?
+function! UnivCtags()
+  if IsGitWorkTree() == 0
+    call jobstart(['bash', '-c', 'git ls-files | ctags --links=no -L-'])
+  else
+    call jobstart(['bash', '-c', 'ctags --links=no -R .'])
+  endif
+endfunction
 
     " }}}
 
@@ -374,8 +381,8 @@ nnoremap gb :buffers<CR>:buffer<Space>
 " switch to previous buffer
 nnoremap <leader>d :b#<CR>
 
-nnoremap <leader>u :call MajBuffers()<cr>
-nnoremap <leader>m :MakeTags<cr>
+" call ctags
+nnoremap <leader>m :call UnivCtags()<cr>
 
 "clear last search.
 nmap <F3> :let @/ = ""<CR>
