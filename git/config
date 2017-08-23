@@ -16,6 +16,8 @@
         name = nicodebo
         email = user@email1.com
 
-; use meld gui tool for resolving git merge conflict
 [merge]
-    tool = meld
+    tool = kdiff3
+
+[difftool "kdiff3"]
+    guitool = kdiff3
