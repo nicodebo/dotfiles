@@ -6,7 +6,7 @@
 # Sig: georezo
 [general]
 ui = ttyui
-accounts = Perso, Work, Work2, Sig
+accounts = Perso, Work, Sig
 pythonfile=$HOME/bin/offlineimap.py
 fsync = False
 metadata = $XDG_DATA_HOME/offlineimap
