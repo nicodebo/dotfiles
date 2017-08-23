@@ -3,12 +3,13 @@
 ###############################################################################
 
 # for all possible options, see: https://github.com/OfflineIMAP/offlineimap/blob/master/offlineimap.conf
+# Sig: georezo
 [general]
 ui = ttyui
-accounts = Perso, Work, Work2
+accounts = Perso, Work, Work2, Sig
 pythonfile=$HOME/bin/offlineimap.py
 fsync = False
-metadata = $XDG_DATA_HOME/offlineimap 
+metadata = $XDG_DATA_HOME/offlineimap
 
 ###############################################################################
 #                                user@email5.com                                #
@@ -26,7 +27,7 @@ localfolders = $MAILSTOREDIR/user@email5.com
 [Repository Perso-Remote]
 maxconnections = 1
 type = IMAP
-remotehost = imap-mail.outlook.com 
+remotehost = imap-mail.outlook.com
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = user@email5.com
 remotepasseval = get_pass("user@email5.com")
@@ -89,5 +90,27 @@ remotehost = imap.openmailbox.org
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = user@email1.com
 remotepasseval = get_pass("user@email1.com")
+realdelete = no
+auth_mechanisms = LOGIN
+
+###############################################################################
+#                          user@email6.com                           #
+###############################################################################
+
+[Account Sig]
+localrepository = Sig-Local
+remoterepository = Sig-Remote
+postsynchook = notmuch new
+
+[Repository Sig-Local]
+type = Maildir
+localfolders = $MAILSTOREDIR/user@email6.com
+[Repository Sig-Remote]
+maxconnections = 1
+type = IMAP
+remotehost = mail.net-c.com
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = user@email6.com
+remotepasseval = get_pass("user@email6.com")
 realdelete = no
 auth_mechanisms = LOGIN
