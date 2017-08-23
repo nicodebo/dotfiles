@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Aug 22
+" Last Change: 2017 Aug 23
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -110,6 +110,23 @@ set wildcharm=<C-z>
 " }}}
 
 " Plugin settings --------------------------------------------------------- {{{
+
+" vim-surround ------------------------------------------------------------ {{{
+
+" fix bépo clash
+let g:surround_no_mappings=1
+nmap ds  <Plug>Dsurround
+nmap ls  <Plug>Csurround
+nmap lS  <Plug>CSurround
+nmap ys  <Plug>Ysurround
+nmap yS  <Plug>YSurround
+nmap yss <Plug>Yssurround
+nmap ySs <Plug>YSsurround
+nmap ySS <Plug>YSsurround
+xmap K   <Plug>VSurround
+xmap gK  <Plug>VgSurround
+
+  " }}}
 
 " vim-commentary ---------------------------------------------------------- {{{
 
@@ -634,7 +651,7 @@ let g:LanguageClient_serverCommands = {
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_signColumnAlwaysOn = 1
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 
 " I prefer the ctags solution which allow to move backward using N_CTRL_T
 " nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>

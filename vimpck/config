@@ -11,6 +11,10 @@ pack_path= ~/.local/share/nvim/site/pack
 package = common
 type = start
 
+[https://github.com/tpope/vim-surround]
+package = common
+type = start
+
 [https://github.com/autozimu/LanguageClient-neovim]
 package = common
 type = start
