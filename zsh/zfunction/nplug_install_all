@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 # my dreamnote
-nplug install -t "mkdir -p $HOME/bin; ln -sfr dreamnote $HOME/bin; make venv" "nicodebo/dream-note"
+local dreamnote_hook="mkdir -p $HOME/bin; "
+dreamnote_hook+="ln -sfr dreamnote $HOME/bin; "
+dreamnote_hook+="make venv"
+nplug install -t "$dreamnote_hook" "nicodebo/dream-note"
 
 # ohmyzsh
 local ohmyzsh_hook="mkdir -p $ZDOTDIR/zcompletion; "
@@ -27,7 +30,7 @@ local clerk_hook="mkdir -p $HOME/bin; "
 clerk_hook+="ln -sfr clerk $HOME/bin; "
 clerk_hook+="ln -sfr clerk_helper $HOME/bin; "
 clerk_hook+="python -m venv $ENV_DIR/$MPD2_PYLIB; "
-clerk_hook+="$ENV_DIR/$MPD2_PYLIB/bin/pip install python-mpd2"
+clerk_hook+="$ENV_DIR/$MPD2_PYLIB/bin/pip install python-mpd2 -U"
 nplug install -t "$clerk_hook" "carnager/clerk"
 
 # zsh-syntax-highlighting
