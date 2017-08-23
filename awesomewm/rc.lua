@@ -461,17 +461,17 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey }, "q", function()
                                     local cmd="zsh -i -c 'clerk --add album'"
-                                    awful.util.spawn(cmd)
+                                    awful.spawn(cmd)
                                 end,
               {description = "Browse library by album", group = "clerk"}),
 
     awful.key({ modkey }, "l", function()
                                     local cmd="zsh -i -c 'clerk --add latest'"
-                                    awful.util.spawn(cmd)
+                                    awful.spawn(cmd)
                                 end,
               {description = "Browse most recent added music", group = "clerk"}),
     awful.key({ }, "Print", function ()
-      awful.util.spawn_with_shell("import /tmp/$(date +%F_%H%M%S_%N).png", false)
+      awful.spawn("zsh -c 'import /tmp/$(date +%F_%H%M%S_%N).png'", false)
                               end,
               {description = "Take a screenshot to /tmp", group = "custom"})
 )
@@ -740,8 +740,5 @@ gears.timer {
 -- }}}
 
 -- Execute autorun.sh at startup
--- Don't use awful.util.spawn_with_shell and instead call the shell inside
--- autorun.sh
-awful.util.spawn(table.concat({conf_dir, "autorun.sh"}, "/"))
---TODO: awful.util.spawn gives me a deprecated warning when running :!awtry
+awful.spawn(table.concat({conf_dir, "autorun.sh"}, "/"))
 -- }}}
