@@ -341,6 +341,71 @@ endfunction
 
     " }}}
 
+" Autocomplete, get the tag of the current buffer only -------------------- {{{
+
+" new implementation to find tag of current buffer by autocomplete
+" http://andrewradev.com/2011/10/15/vim-and-ctags-finding-tag-definitions/
+function! FindTagNamesByPrefix(prefix)
+  let tag_set = {}
+  let tags = taglist('^'.a:prefix)
+  " filter tags to keep current only those from the current buffer
+  let tags = filter(tags, '"' . expand('%:p') . '" =~# v:val["filename"]')
+  for entry in tags
+    if index(keys(tag_set), entry.name) == -1
+      let tag_set[entry.name] = 1
+    endif
+  endfor
+  echo keys(tag_set)
+  return keys(tag_set)
+endfunction
+
+function! CompleteFindBufTag(lead, command_line, cursor_pos)
+  if len(a:lead) > 0
+    let tag_prefix = a:lead
+  else
+    let tag_prefix = '.'
+  endif
+  return sort(FindTagNamesByPrefix(tag_prefix))
+endfunction
+
+command! -buffer -nargs=1 -complete=customlist,CompleteFindBufTag FindBufTag :tag <args>
+
+  " }}}
+
+" populate loclist with tags of the current buffer only ------------------- {{{
+
+" my implementation of
+" http://andrewradev.com/2011/06/08/vim-and-ctags/
+function! s:Function(name)
+  " get all tags
+  let tags = taglist('^.*')
+  " filter tags to keep current only those from the current buffer
+  let tags = filter(tags, '"' . a:name . '" =~# v:val["filename"]')
+  " echo len(tags)
+
+  " Prepare them for inserting in the quickfix window
+  let loc_taglist = []
+  for entry in tags
+    let entry['cmd'] = substitute(entry['cmd'], '^/^\(.*\)$/$', '^\\V\1\\$', "")
+    call add(loc_taglist, {
+          \ 'text': entry['name'],
+          \ 'pattern': entry['cmd'],
+          \ 'filename': entry['filename'],
+          \ })
+  endfor
+  " Place the tags in the location list of the current window, if possible
+  if len(loc_taglist) > 0
+    " call setloclist(0, loc_taglist, 'r', {'title': 'cur tag buffer'})
+    call setloclist(0, loc_taglist)
+    lopen
+  else
+    echo "No tags found for ".a:name
+  endif
+endfunction
+command! TagFileLoc call s:Function(expand('%:p'))
+
+  " }}}
+
 " }}}
 
 " Status line ------------------------------------------------------------- {{{
@@ -411,6 +476,8 @@ nnoremap <leader>B :sbuffer <C-z><S-Tab>
 
 " tag searching, / adds regex search
 nnoremap <leader>j :tjump /
+" tag of the current buffer
+nnoremap <leader>u :FindBufTag <C-z><S-Tab>
 
 " }}}
 
