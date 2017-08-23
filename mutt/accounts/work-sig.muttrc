@@ -1,8 +1,8 @@
 set from      = "user@email6.com"
 # set sendmail  = "/usr/bin/msmtp -a omb_nico_debo"
 set sendmail  = "/usr/bin/msmtp -C $XDG_CONFIG_HOME/msmtp/msmtprc -a sig_netcourrier"
-set realname  = "Nicodebo"
-set folder    = $MAILSTOREDIR/user@email1.com
+set realname  = "Nicolas Débonnaire"
+set folder    = $MAILSTOREDIR/user@email6.com
 set spoolfile = "+inbox"
 unset mbox
 # set record    = "+Sent"
