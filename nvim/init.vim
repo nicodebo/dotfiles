@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Jul 15
+" Last Change: 2017 Aug 22
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -95,12 +95,6 @@ colorscheme base16-oceanicnext
 
 " Path to the python3 provider
 let g:python3_host_prog = $ENV_DIR . "/" . $NVIM_PROVIDER_PYLIB . "/" . "bin/python"
-
-" Use the silver searcher as the external grep tool, from `man ag`
-if executable("ag")
-  set grepprg=ag\ --vimgrep\ $*
-  set grepformat=%f:%l:%c:%m
-endif
 
 " Useful for the find command, allow to search the current directory and
 " downwards its tree
@@ -303,7 +297,35 @@ endfun
 
     " }}}
 
-" ctags command ----------------------------------------------------------- {{{
+" Check if inside a git work dir ------------------------------------------ {{{
+
+function! IsGitWorkTree()
+  " Check if the current directory is a git worktree
+  "return 0 if inside git worktree, 1 otherwise (outside git worktree or inside
+  ".git
+  let l:git=1
+  " https://stackoverflow.com/questions/2180270/check-if-current-directory-is-a-git-repository#2180367
+  let l:stdout = system("git rev-parse --git-dir 2> /dev/null")
+  if l:stdout =~# '\.git' "I'm using regex and not equality because there is a newline char or whatever after 't' of '.git'
+    let l:git=0
+  endif
+  return l:git
+endfunction
+
+    " }}}
+
+" Set the grepprg  -------------------------------------------------------- {{{
+
+function! SetGrepPrg()
+  " keep default grepprg if not inside git dir, otherwise switch to git grep
+  if IsGitWorkTree() == 0
+    set grepprg=git\ grep\ -n\ $*
+  endif
+endfunction
+
+    " }}}
+
+" tags generation with ctags ---------------------------------------------- {{{
 
 command! MakeTags ! ag -l | ctags --links=no -L-
 
@@ -515,6 +537,11 @@ augroup ironmapping
   autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
   autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
   autocmd Filetype python nmap <buffer> <localleader>p <Plug>(iron-repeat-cmd)
+augroup END
+
+augroup startup
+  autocmd!
+  autocmd VimEnter * call SetGrepPrg()
 augroup END
 
 " }}}
