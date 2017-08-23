@@ -6,7 +6,7 @@
 # Sig: georezo
 [general]
 ui = ttyui
-accounts = Perso, Work, Sig
+accounts = Perso, Work, Sig, mailing
 pythonfile=$HOME/bin/offlineimap.py
 fsync = False
 metadata = $XDG_DATA_HOME/offlineimap
@@ -112,5 +112,27 @@ remotehost = mail.net-c.com
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = user@email6.com
 remotepasseval = get_pass("user@email6.com")
+realdelete = no
+auth_mechanisms = LOGIN
+
+###############################################################################
+#                          user@email7.com                                #
+###############################################################################
+
+[Account mailing]
+localrepository = mailing-Local
+remoterepository = mailing-Remote
+postsynchook = notmuch new
+
+[Repository mailing-Local]
+type = Maildir
+localfolders = $MAILSTOREDIR/user@email7.com
+[Repository mailing-Remote]
+maxconnections = 1
+type = IMAP
+remotehost = mail.net-c.com
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = user@email7.com
+remotepasseval = get_pass("user@email7.com")
 realdelete = no
 auth_mechanisms = LOGIN

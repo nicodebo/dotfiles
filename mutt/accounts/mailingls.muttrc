@@ -1,0 +1,21 @@
+set from      = "user@email7.com"
+set sendmail  = "/usr/bin/msmtp -C $XDG_CONFIG_HOME/msmtp/msmtprc -a mailing_netcourrier"
+set realname  = "nd"
+set folder    = $MAILSTOREDIR/user@email7.com
+set spoolfile = "+inbox"
+unset mbox
+# set record    = "+Sent"
+# set postponed = "+Drafts"
+# set trash     = "+Trash"
+set status_format = "────[ user@email7.com ]───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+unmailboxes *
+mailboxes +inbox \
+          # +Sent \
+          # +Drafts \
+          # +Trash \
+          # +Spam \
+
+# macro index S \
+    # "<save-message>+Spam<enter>"  \
+        # "mark message as spam"
