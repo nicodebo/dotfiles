@@ -33,6 +33,33 @@ git_clone_error_msg() {
   fi
 }
 
+# list all installed packages
+# $1 - directory where repo are cloned into
+# $2 - if not empty display hooks
+# $3 - path of the hook file
+list() {
+  local repo_dir="$1"; shift
+  local hook_file="$1"; shift
+  local hook_display="$1"; shift
+  local cwd=$(readlink -f .)
+  local plug_list=""
+  plug_list=$(find "$repo_dir" -maxdepth 2 -mindepth 2 -type d -exec bash -c "echo {} | sed 's,${repo_dir}/,,'" \;)
+  while read -r line
+  do
+    echo "[${Green}${line}${Rst}]"
+    if [[ ! -z "$hook_display" ]]; then
+      if [[ -s "$repo_dir/posthooks" ]]; then
+        local posthook=$(grep "^$line" "$repo_dir/posthooks" | sed "s,$line=,,")
+          if [[ ! -z "$posthook" ]]; then
+            echo "${Cyan}${posthook}${Rst}\n"
+          else
+            echo "${Blue}no hook defined${Rst}\n"
+          fi
+      fi
+    fi
+  done <<<$plug_list
+}
+
 # Update all installed packages
 # $1 - name of the package
 # $2 - directory where repo are cloned into
@@ -166,6 +193,7 @@ main() {
   mkdir -p "$repo_dir"
   local plug_hook=""
   local ref=""
+  local display_hook=""
 
   # Parse options to the `nplug` command
   while getopts ":h" opt; do
@@ -180,6 +208,7 @@ main() {
         echo "    <command>:"
         echo "        install                 Install a package to \$XDG_DATA_HOME/nplug"
         echo "        update                  Update an installed package"
+        echo "        list                    Update an installed package"
         echo ""
         echo "See nplug <command> -h for <command> usage"
         # exit 0
@@ -238,7 +267,7 @@ main() {
       ;;
     # Parse options to the update sub command
     update)
-      while getopts ":hA" opt; do
+      while getopts ":h" opt; do
         case ${opt} in
           h )
             echo "Usage: nplug update <repo>"
@@ -264,6 +293,40 @@ main() {
       shift $((OPTIND -1))
       package="$1"
       update "$package" "$repo_dir"
+      ;;
+    # list sub command
+    list)
+      while getopts ":ha" opt; do
+        case ${opt} in
+          h )
+            echo "Usage: nplug list [<options>]"
+            echo ""
+            echo "list installed repositories"
+            echo "    option:"
+            echo "        -h              Display this help message"
+            echo "        -a              Also display the associated hook"
+            # exit 0
+            return 0
+            ;;
+          a)
+            display_hook="yes"
+            :
+            ;;
+          \? )
+            echo "Invalid Option: -$OPTARG" 1>&2
+            # exit 1
+            return 1
+            ;;
+          : )
+            echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+            # exit 1
+            return 1
+            ;;
+        esac
+      done
+      shift $((OPTIND -1))
+      package="$1"
+      list "$repo_dir" "$hook_file" "$display_hook"
       ;;
   esac
 }
