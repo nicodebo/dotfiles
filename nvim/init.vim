@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Aug 23
+" Last Change: 2017 Aug 24
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -251,55 +251,6 @@ function! NumberToggle()
     set relativenumber
   endif
 endfunc
-
-    " }}}
-
-" Update buffer when git branch invoked ----------------------------------- {{{
-
-" This function allows to update (:checktime) all the listed buffers. The
-" buffers that have disappeared from the disque (outside of vim) are unloaded
-" while keeping the corresponding windows split.
-" A typical used case is when doing a git checkout from inside an embeded
-" terminal. The buffer have to be updated to reflect the current branch.
-"http://vi.stackexchange.com/questions/2587/using-a-variable-in-a-regex-pattern
-"http://stackoverflow.com/questions/17931507/vimscript-number-of-listed-buffers
-"http://unix.stackexchange.com/questions/320121/how-to-get-the-file-path-of-a-buffer
-"http://stackoverflow.com/questions/3098521/vimscript-how-to-detect-if-specific-file-exists
-
-function! MajBuffers()
-  let l:current_win = winnr()
-  silent! execute 'checktime'
-  " All 'possible' buffers that may exist
-  for n in filter(range(1, bufnr('$')), 'buflisted(v:val)')
-    "echo print on a new line, echon does and is needed.
-    echo n
-    redir => l:filepath
-    silent! execute "echon expand('#" . n . ":p')"
-    redir END
-    echo '----------------------------------------------------'
-    echo l:filepath
-    echo '----------------------------------------------------'
-    if filereadable(fnameescape(l:filepath))
-      echo 'file readable'
-    else
-      if l:filepath=~#"^term://\."
-        echo 'this is a terminal'
-      else
-        echo 'file not readable'
-        let l:bufn_win=bufwinnr(n)
-        if l:bufn_win > 0
-          execute l:bufn_win . "wincmd w"
-          execute 'bp|bd! #'
-        endif
-      endif
-    endif
-  endfor
-  execute l:current_win . "wincmd w"
-endfunction
-
-"TODO: Doesn't take into account tabs
-"TODO: See if the fact that a buffer can be a directory can cause unwanted
-"behaviour
 
     " }}}
 
@@ -668,7 +619,6 @@ let g:LanguageClient_signColumnAlwaysOn = 1
 " TODO: For documentation use, http://www.vim.org/scripts/script.php?script_id=3893
 "ref https://github.com/tpope/vim-markdown
 
-" TODO: check if line wrapping slow vim down.
 " TODO: :help g:tex_fold_enabled and implement a tex filetype
 
 "set foldmethod=syntax
@@ -678,72 +628,12 @@ let g:LanguageClient_signColumnAlwaysOn = 1
 "let g:php_folding = 1
 "let g:perl_fold = 1
 
-" Note: The markdown previewer does not support pandoc engine
-" see https://github.com/euclio/vim-markdown-composer/issues/21
-" same for other plugin:
-" see https://github.com/suan/vim-instant-markdown/issues/48
-" essayer de convertir un ft=pandoc en html avec pandoc et voir si ça render
-" bien dans firefox.
-
-" TODO: faire un keybind pour switcher entre le dictionnaire anglais et le
-" dictionnaire français.
-" TODO:  intégrer ispell correction orthographique. peut être en couple avec le
-" todo sur le dictionnaire
-
-
-"Save a session
-" nnoremap <leader>mk :mksession! ~/.vim_sessions/
-"TODO: make a function that only take the name of the session and automatically
-"save it inside ~/.vim_session, And create the .vim_session dir if does not
-"exists
-" TODO: nvim has a default vim session directory. See if I can use that
-" instead. See : vim-differences.
-"TODO: make a mapping for openning a session
-
-" https://github.com/kassio/neoterm/issues/74
-" This function allow to run a script directly in the IPython interpreter
-" thanks to the magic commands. In IPython '%run script.py' is equivalent to
-" 'python script.py' or 'ipython script.py' executed inside the
-" gnome-terminal.
-" function! s:RunIPython()
-"   if g:neoterm.has_any()
-"     "silent! T %reset -f
-"         let cmd = "%reset -f"."\n"
-"         silent! call neoterm#exec(cmd)
-"   else
-"     let cmd = "ipython -i --no-banner --no-confirm-exit --quick --quiet"
-"     silent! call neoterm#do(cmd)
-"   endif
-"   let cmd = "%run " . expand('%') . "\n"
-"   silent! call neoterm#exec(cmd)
-" endfunction
-" command! -nargs=* RunIPython call s:RunIPython()
-"autocmd FileType python nnoremap <Leader>r :RunIPython<cr>
-
-"function! s:RunExecutable()
-"  if g:neoterm.has_any()
-"        let cmd = "ls" . "\n"
-"        silent! call neoterm#exec(cmd)
-"  else
-"    let cmd = "ls" . "\n"
-"    silent! call neoterm#exec(cmd)
-"  endif
-"endfunction
-"command! -nargs=* RunExecutable call s:RunExecutable()
-
-"""""""""""""""""" deoplete clang plugin settings
-"let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-3.8/lib/libclang.so.1'
-"let g:deoplete#sources#clang#clang_header='/usr/lib/llvm-3.8/lib/clang'
-
-""""""""""""""""""""themes
-
 " TODO: fonction Tab2Space : bricoler la fonction pour qu'il y ai une demande
 " de confirmation avant remplacement.
 " TODO: conditional  highlight for the status line: http://got-ravings.blogspot.fr/2008/10/vim-pr0n-conditional-stl-highlighting.html
 
 "TODO:* vim8 package manager tuto:
 "https://gist.github.com/manasthakur/ab4cf8d32a28ea38271ac0d07373bb53
-"next level project: https://bitbucket.org/vimcommunity/vim-pi/issues?status=new&status=open
 
 "TODO: https://www.reddit.com/r/vim/comments/5607lj/how_to_do_90_of_what_plugins_do_with_just_vim/
 
@@ -754,16 +644,9 @@ let g:LanguageClient_signColumnAlwaysOn = 1
 " TODO: Have a look at https://github.com/kana/vim-textobj-user
 " TODO: look at https://github.com/editorconfig/editorconfig-vim
 
-" Reference
-"        * recommandation : https://github.com/romainl/idiomatic-vimrc
-"        * http://www.moolenaar.net/habits.html
 "        * https://gist.github.com/ajh17
-"        * https://github.com/vim-syntastic/syntastic/tree/master/syntax_checkers
 
 " TODO: see how to enable the matchit.vim. help matchit
-
-
-" TODO: check https://opensource.com/article/17/2/vim-plugins-writers
 
 " * vimscript guidelines : https://google.github.io/styleguide/vimscriptguide.xml
 " * don't modify tabstop, instead use shiftwidth. shiftwidth will be used instead of tabstop since smartab in on by defaut anyway.
