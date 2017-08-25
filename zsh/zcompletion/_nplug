@@ -1,0 +1,44 @@
+#compdef nplug
+
+local curcontext="$curcontext" state line ret=1
+typeset -A opt_args
+
+_arguments \
+  '1: :->option'\
+  '*: :->args' && ret=0
+
+case $state in
+  option)
+    _arguments -S \
+      "-h[output help message]"
+    _values 'nplug subcommand' \
+      'install[install a plugin from github]' \
+      'update[update an installed plugin]' \
+      'list[list installed plugin]'
+    ret=0
+    ;;
+  args)
+    case $words[2] in
+      install)
+        _values "install options" \
+          "-h[output help message]" \
+          "-t[specify hooks command]" \
+          "-r[commit reference]"
+        ret=0
+        ;;
+      update)
+        _values "update options" \
+          "-h[output help message]"
+        ret=0
+        ;;
+      list)
+        _values "list options" \
+          "-h[output help message]" \
+          "-a[display associated hook]"
+        ret=0
+        ;;
+    esac
+    ;;
+esac
+
+return ret
