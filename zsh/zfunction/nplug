@@ -273,6 +273,8 @@ main() {
             echo "Usage: nplug update <repo>"
             echo ""
             echo "Update an existing <repo>"
+            echo "    option:"
+            echo "        -h              Display this help message"
             echo "    parameter: "
             echo "        <repo>          A github repository: user/repo"
             # exit 0
