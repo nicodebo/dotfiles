@@ -37,13 +37,35 @@ git_clone_error_msg() {
 # $1 - directory where repo are cloned into
 # $2 - if not empty display hooks
 # $3 - path of the hook file
+# $4 - if not empty display raw plugin list without any escape sequence only
+remove() {
+  local repo_dir="$1"; shift
+  for arg in "$@"
+  do
+    command mv -f "${repo_dir}/${arg}" /tmp \
+      && echo "${Green}${arg}${Rst} removed" \
+      || echo "${Red}Can't remove ${arg}${Rst}"
+  if [[ ! -z "$repo_dir/posthooks" ]]; then
+    sed -i "\,^$arg,d" "$repo_dir/posthooks"
+  fi
+  done
+}
+# list all installed packages
+# $1 - directory where repo are cloned into
+# $2 - if not empty display hooks
+# $3 - path of the hook file
+# $4 - if not empty display raw plugin list without any escape sequence only
 list() {
   local repo_dir="$1"; shift
   local hook_file="$1"; shift
   local hook_display="$1"; shift
+  local compl_list="$1"; shift
   local cwd=$(readlink -f .)
   local plug_list=""
   plug_list=$(find "$repo_dir" -maxdepth 2 -mindepth 2 -type d -exec bash -c "echo {} | sed 's,${repo_dir}/,,'" \;)
+  if [[ ! -z "$compl_list" ]]; then
+    echo "$plug_list" && return
+  fi
   while read -r line
   do
     echo "[${Green}${line}${Rst}]"
@@ -194,6 +216,7 @@ main() {
   local plug_hook=""
   local ref=""
   local display_hook=""
+  local compl_list=""
 
   # Parse options to the `nplug` command
   while getopts ":h" opt; do
@@ -298,7 +321,7 @@ main() {
       ;;
     # list sub command
     list)
-      while getopts ":ha" opt; do
+      while getopts ":had" opt; do
         case ${opt} in
           h )
             echo "Usage: nplug list [<options>]"
@@ -307,11 +330,17 @@ main() {
             echo "    option:"
             echo "        -h              Display this help message"
             echo "        -a              Also display the associated hook"
+            echo "        -d              Display plugin list without escape sequences and quit"
+            echo "                        This option is used for the completion script"
             # exit 0
             return 0
             ;;
           a)
             display_hook="yes"
+            :
+            ;;
+          d)
+            compl_list="yes"
             :
             ;;
           \? )
@@ -328,7 +357,36 @@ main() {
       done
       shift $((OPTIND -1))
       package="$1"
-      list "$repo_dir" "$hook_file" "$display_hook"
+      list "$repo_dir" "$hook_file" "$display_hook" "$compl_list"
+      ;;
+    remove)
+      while getopts ":h" opt; do
+        case ${opt} in
+          h )
+            echo "Usage: nplug remove <repo>..."
+            echo ""
+            echo "remove installed repositories"
+            echo "    option:"
+            echo "        -h              Display this help message"
+            echo "    parameter: "
+            echo "        <repo>          A github repository: user/repo"
+            # exit 0
+            return 0
+            ;;
+          \? )
+            echo "Invalid Option: -$OPTARG" 1>&2
+            # exit 1
+            return 1
+            ;;
+          : )
+            echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+            # exit 1
+            return 1
+            ;;
+        esac
+      done
+      shift $((OPTIND -1))
+      remove "$repo_dir" "$@"
       ;;
   esac
 }
