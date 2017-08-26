@@ -7,6 +7,7 @@
 typeset -U path # Only unique values in $PATH
 path=($path ~/.local/bin) # user installed program (pip install -user for example)
 path=($path ~/bin) # my custom script directory
+path=($path ~/.luarocks/bin) # path of the binary for the user rock tree
 
 # configure ruby environement manager, (rvm)
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
