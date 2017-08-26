@@ -1,13 +1,16 @@
 [Unit]
 Description=Offlineimap Service (oneshot)
 Documentation=man:offlineimap(1)
-After=network.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=oneshot
 Environment=NOTMUCH_CONFIG=/home/debz/.config/notmuch/notmuchrc
 Environment=PASSWORD_STORE_DIR=/home/debz/.local/share/pass
 Environment=MAILSTOREDIR=/home/debz/.mail
+Environment=IMAPFILTER_HOME=/home/debz/.config/imapfilter
+ExecStart=/usr/bin/imapfilter
 ExecStart=/home/debz/.local/bin/offlineimap -o -u basic
 # Give 120 seconds for offlineimap to gracefully stop before hard killing it:
 TimeoutStopSec=120
