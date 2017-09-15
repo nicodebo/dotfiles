@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Aug 24
+" Last Change: 2017 Sep 13
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -592,15 +592,24 @@ augroup END
 " }}}
 
 " Test -------------------------------------------------------------------- {{{
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'javascript': ['/opt/javascript-typescript-langserver/lib/language-server-stdio.js'],
-    \ 'python': ['pyls']
-    \ }
+ let g:LanguageClient_serverCommands = {
+     \ 'python': ['pyls'],
+     \ 'java': ['java',
+           \   '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044',
+           \   '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+           \   '-Dosgi.bundles.defaultStartLevel=4',
+           \   '-Declipse.product=org.eclipse.jdt.ls.core.product',
+           \   '-Dlog.protocol=true',
+           \   '-Dlog.level=ALL',
+           \   '-noverify',
+           \   '-Xmx1G',
+           \   '-jar', '/home/debz/.local/share/java-language-server/plugins/org.eclipse.equinox.launcher_1.4.0.v20161219-1356.jar',
+           \   '-configuration', '/home/debz/.local/share/java-language-server/config_linux',
+           \   '-data', '/home/debz/Documents/Dev/java_project']
+     \ }
 
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
-let g:LanguageClient_signColumnAlwaysOn = 1
 
 " nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 
