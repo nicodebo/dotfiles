@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Sep 13
+" Last Change: 2017 Sep 14
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -171,6 +171,11 @@ let g:vimtex_latexmk_progname='nvr'
 let g:vimtex_mappings_enabled=0
 
   " }}}
+
+" Iron.nvim --------------------------------------------------------------- {{{
+" deactivate default mappings
+let g:iron_map_defaults=0
+"   }}}
 
 " }}}
 
