@@ -7,7 +7,7 @@
 [general]
 ui = ttyui
 accounts = Perso, Work, Sig, mailing
-pythonfile=$HOME/bin/offlineimap.py
+pythonfile=$XDG_CONFIG_HOME/offlineimap/offlineimap.py
 fsync = False
 metadata = $XDG_DATA_HOME/offlineimap
 
@@ -105,6 +105,7 @@ postsynchook = notmuch new
 [Repository Sig-Local]
 type = Maildir
 localfolders = $MAILSTOREDIR/user@email6.com
+
 [Repository Sig-Remote]
 maxconnections = 1
 type = IMAP
@@ -127,6 +128,7 @@ postsynchook = notmuch new
 [Repository mailing-Local]
 type = Maildir
 localfolders = $MAILSTOREDIR/user@email7.com
+
 [Repository mailing-Remote]
 maxconnections = 1
 type = IMAP

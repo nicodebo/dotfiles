@@ -1,0 +1,15 @@
+# -*- muttrc -*-
+#
+# List of mailing lists I'm subscribed to.
+
+lists zsh-workers@zsh.org
+subscribe zsh-workers@zsh.org
+
+lists vim-announce@vim.org
+subscribe vim-announce@vim.org
+
+lists vim@vim.org
+subscribe vim@vim.org
+
+lists vim-fr@yahoogroupes.fr
+subscribe vim-fr@yahoogroupes.fr

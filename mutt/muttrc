@@ -1,19 +1,19 @@
 ###############################################################################
 #                                   Startup                                   #
 ###############################################################################
-push <show-version>   #get Mutt to show its version on startup
+push <show-version>  # get Mutt to show its version on startup
 #push <first-entry>
 ###############################################################################
 #                                    Paths                                    #
 ###############################################################################
 set editor           = `echo \$EDITOR`
-set header_cache     = $XDG_CACHE_HOME/mutt/headers # where to store headers
-set message_cachedir = $XDG_CACHE_HOME/mutt/bodies  # where to store bodies
-# set mailcap_path     = $XDG_CONFIG_HOME/mailcap     # entries for filetypes
-set tmpdir           = $XDG_CACHE_HOME/mutt/temp    # where to keep temp files
-set signature        = $XDG_CONFIG_HOME/sig         # my signature file
+set header_cache     = $XDG_CACHE_HOME/mutt/headers  # where to store headers
+set message_cachedir = $XDG_CACHE_HOME/mutt/bodies   # where to store bodies
+set mailcap_path     = $XDG_CONFIG_HOME/mutt/mailcap # entries for filetypes
+set tmpdir           = $XDG_CACHE_HOME/mutt/temp     # where to keep temp files
+# set signature        = $XDG_CONFIG_HOME/mutt/sig     # my signature file
 ###############################################################################
-#                               Basic options                                 #
+#                                   Options                                   #
 ###############################################################################
 set mbox_type = Maildir  # mailbox type
 set timeout = 3          # idle time before scanning
@@ -28,6 +28,7 @@ set pipe_decode          # strip headers and eval mimes when piping
 set thorough_search      # strip headers and eval mimes before searching
 set arrow_cursor         # set an arrow as a cursor for the index view
 set text_flowed = yes
+set query_command = "abook --config $XDG_CONFIG_HOME/abook/abookrc --datafile $XDG_DATA_HOME/abook/addressbook --mutt-query '%s'"
 ###############################################################################
 #                                Sidebar patch                                #
 ###############################################################################
@@ -67,7 +68,6 @@ set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 ###############################################################################
 #                                   Pager                                     #
 ###############################################################################
-
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
 set pager_context = 3      # number of context lines to show
@@ -84,13 +84,11 @@ auto_view text/html
 # prefer text/plain first and text/html only if needed
 alternative_order text/plain text/enriched text/html
 
-
 # color of folders with new mail
 color sidebar_new yellow default
 ###############################################################################
 #                                   Macro                                     #
 ###############################################################################
-
 macro index <f2> "<change-folder>$MAILSTOREDIR/user@email2.com/INBOX<enter>"
 macro index <f3> "<change-folder>$MAILSTOREDIR/user@email5.com/Inbox<enter>"
 macro index <f4> "<change-folder>$MAILSTOREDIR/user@email1.com/INBOX<enter>"
@@ -100,15 +98,12 @@ macro index <f6> "<change-folder>$MAILSTOREDIR/user@email7.com/inbox<enter>"
 macro index O "<enter-command>unset wait_key<enter><shell-escape>offlineimap<enter><enter-command>set wait_key<enter>"
 macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
 
-macro index \cb |urlview\n
-macro pager \cb |urlview\n
+macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
+macro index,pager A "<pipe-message>abook --config $XDG_CONFIG_HOME/abook/abookrc --datafile $XDG_DATA_HOME/abook/addressbook --add-email<return>" "add the sender address to abook"
 ###############################################################################
 #                                Source files                                 #
 ###############################################################################
 source $XDG_CONFIG_HOME/mutt/accounts/work.muttrc          # load default account user@email2.com
 source $XDG_CONFIG_HOME/mutt/keybinds.muttrc               # load key bindings
 source $XDG_CONFIG_HOME/mutt/theme.muttrc
-
-set query_command = "abook --config $XDG_CONFIG_HOME/abook/abookrc --datafile $XDG_DATA_HOME/abook/addressbook --mutt-query '%s'"
-macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
-macro index,pager A "<pipe-message>abook --config $XDG_CONFIG_HOME/abook/abookrc --datafile $XDG_DATA_HOME/abook/addressbook --add-email<return>" "add the sender address to abook"
+source $XDG_CONFIG_HOME/mutt/subscriptions.muttrc              # Define the list of subscribed mailing lists.

@@ -1,5 +1,4 @@
 set from      = "user@email5.com"
-# set sendmail  = "/usr/bin/msmtp -a win_phone"
 set sendmail  = "/usr/bin/msmtp -C $XDG_CONFIG_HOME/msmtp/msmtprc -a win_phone"
 set realname  = "debz"
 set folder    = $MAILSTOREDIR/user@email5.com
@@ -16,8 +15,4 @@ mailboxes +Inbox \
           +Deleted \
           +Drafts \
           +Archive \
-          +Junk \
-
-macro index S \
-    "<save-message>+Junk<enter>"  \
-        "mark message as spam"
+          +Junk
