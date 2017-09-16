@@ -52,6 +52,7 @@ function main() {
   sym_conf "${SCRIPT_DIR}/offlineimap" "${conf_dir}/offlineimap"
   sym_conf "${SCRIPT_DIR}/pam" "${HOME}"
   sym_conf "${SCRIPT_DIR}/plowshare" "${conf_dir}/plowshare"
+  sym_conf "${SCRIPT_DIR}/pypi" "${HOME}"
   sym_conf "${SCRIPT_DIR}/qutebrowser" "${conf_dir}/qutebrowser"
   sym_conf "${SCRIPT_DIR}/rofi" "${conf_dir}/rofi"
   sym_conf "${SCRIPT_DIR}/remind" "${conf_dir}/remind"
