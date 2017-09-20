@@ -224,6 +224,19 @@ myreminder_nb:connect_signal("mouse::enter", function()
     end)
 end)
 
+-- screen brightness indicator
+local myscreenbright_val = wibox.widget {
+    {
+        id           = "mybright",
+        markup       = nil,
+        widget       = wibox.widget.textbox,
+    },
+    layout      = wibox.layout.align.horizontal,
+    set_scrn_brightness = function(self, bright_val)
+        self.mybright.markup  = '<span foreground="'..theme.gray..'">Lum </span>'..bright_val
+    end,
+}
+
 -- {{{ Wibar
 -- Create a textclock widget
 -- mytextclock = wibox.widget.textclock()
@@ -340,6 +353,7 @@ awful.screen.connect_for_each_screen(function(s)
             spacing = 10, -- spacing between each herebelow widgets
             wibox.widget.systray(),
             myreminder_nb,
+            myscreenbright_val,
             mymaster_info,
             mytextclock,
             s.mylayoutbox,
@@ -733,6 +747,48 @@ gears.timer {
         awful.spawn.easy_async(table.concat({conf_dir, "remind.sh"}, "/"),
             function(stdout, stderr, reason, exit_code)
                 myreminder_nb.nbreminder = stdout
+            end
+        )
+    end
+}
+
+-- Timer for the screen brightness
+-- as before the first one is used to initialize the textbox
+gears.timer {
+    timeout = 1,
+    autostart = true,
+    single_shot = true,
+    callback  = function()
+        local cmd = 'ddcutil getvcp 10 --nodetect --bus 1'
+        local brightness
+        awful.spawn.easy_async(cmd,
+            function(stdout, stderr, reason, exit_code)
+                if string.match(stdout, "^VCP%s+code%s+0x10.*") ~= nil then
+                    brightness = string.match(stdout, '.*current%s+value%s+=%s+(%d+).*')
+                else
+                    brightness = "Error"
+                end
+                myscreenbright_val.scrn_brightness = brightness
+            end
+        )
+    end
+}
+-- the second one update the textbox every minutes. I don't need it to be real
+-- time so 1 minutes seems enough.
+gears.timer {
+    timeout = 60,
+    autostart = true,
+    callback  = function()
+        local cmd = 'ddcutil getvcp 10 --nodetect --bus 1'
+        local brightness
+        awful.spawn.easy_async(cmd,
+            function(stdout, stderr, reason, exit_code)
+                if string.match(stdout, "^VCP%s+code%s+0x10.*") ~= nil then
+                    brightness = string.match(stdout, '.*current%s+value%s+=%s+(%d+).*')
+                else
+                    brightness = "Error"
+                end
+                myscreenbright_val.scrn_brightness = brightness
             end
         )
     end

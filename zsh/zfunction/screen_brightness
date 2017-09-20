@@ -1,0 +1,29 @@
+# Change screen brightness with ddcutil
+local cur_val
+local max_val
+local min_val=0
+local new_val
+local step="$1"
+
+sleep 0.5
+out_cmd=$(ddcutil getvcp 10 --nodetect --bus 1)
+cur_val=$( echo "$out_cmd" | sed 's/.*current value = *\([[:digit:]]\+\).*/\1/' )
+max_val=$( echo "$out_cmd" | sed 's/.*max value = *\([[:digit:]]\+\).*/\1/' )
+new_val=$(( cur_val + step ))
+
+if [ "$new_val" -gt "$max_val" ]; then
+  new_val="$max_val"
+fi
+
+if [ "$new_val" -lt "$min_val" ]; then
+  new_val="$min_val"
+fi
+
+echo "$cur_val"
+echo "$new_val"
+# Don't call ddcutil if decreasing brightness from 0 (min) or increasing from
+# 100 (max brightness)
+
+if [ "$new_val" != "$cur_val" ]; then
+  ddcutil setvcp 10 "$new_val" --nodetect --bus 1
+fi

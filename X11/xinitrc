@@ -61,6 +61,8 @@ xscreensaver -no-splash &
 xbindkeys -f "${XDG_CONFIG_HOME}/xbindkeys/xbindkeysrc" &
 ## load composite manager
 compton -b &
+## reduce screen luminosity
+ddcutil setvcp 10 20 --bus 1
 
 
 # Start the window manager. Line following the exec command would be ignored so don't put lines after.

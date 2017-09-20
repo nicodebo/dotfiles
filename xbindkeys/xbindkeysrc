@@ -39,7 +39,7 @@
 
 # Examples of commands:
 
-# "xbindkeys_show" 
+# "xbindkeys_show"
 #   control+shift + q
 
 # set directly keycode (here control + f with my keyboard)
@@ -96,3 +96,11 @@
 # Previous song
 "mpc prev"
    XF86AudioPrev
+
+# increase screen brightness
+"zsh -i -c 'screen_brightness 10'"
+   Mod4 + F3
+
+# decrease screen brightness
+"zsh -i -c 'screen_brightness -10'"
+   Mod4 + F2

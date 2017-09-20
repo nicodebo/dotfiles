@@ -28,6 +28,8 @@ function main() {
   local conf_dir=${XDG_CONFIG_HOME:-$HOME/.config}
   local data_dir=${XDG_DATA_HOME:-$HOME/.local/share}
   local pacman_hook_dir="/etc/pacman.d/hooks/"
+  local modules_dir="/etc/modules-load.d/"
+  local udev_rule_dir="/etc/udev/rules.d/"
 
   sym_conf "${SCRIPT_DIR}/awesomewm" "${conf_dir}/awesome"
   sym_conf "${SCRIPT_DIR}/bin" "${HOME}/bin"
@@ -84,6 +86,10 @@ function main() {
   sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/pacman-hooks/nvim_install_upgrade.hook" "$pacman_hook_dir"
   sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/pacman-hooks/clear_pacman_cache.hook" "$pacman_hook_dir"
   sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/pacman-hooks/clear_pacaur_cache.hook" "$pacman_hook_dir"
+  ## enable module at boot
+  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/kernel-modules/i2c-dev.conf" "$modules_dir"
+  ## rule for controling i2c bus as $USER
+  sudo ln -sf "${SCRIPT_DIR}/system-dotfiles/udev-rules/45-ddcutil-i2c.rules" "$udev_rule_dir"
 }
 
 ###############################################################################
