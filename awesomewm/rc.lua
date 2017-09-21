@@ -126,35 +126,6 @@ local function zsh_exec()
     }
 end
 
--- Get volume and mute state from alsa
--- https://github.com/cedlemo/blingbling/blob/master/volume.lua
-local function get_master_infos()
-    local state, volume = nil, nil
-    cmd = "amixer get Master"
-    local f=io.popen(cmd)
-    for line in f:lines() do
-        if string.match(line, "%s%[%d+%%%]%s") ~= nil then
-            volume=string.match(line, "%s%[%d+%%%]%s")
-            volume=string.gsub(volume, "[%[%]%%%s]","")
-        end
-        if string.match(line, "%s%[[%l]+%]$") then
-            state=string.match(line, "%s%[[%l]+%]$")
-            state=string.gsub(state,"[%[%]%%%s]","")
-        end
-    end
-    f:close()
-    if (not state or state == "yes" or state == "off") then
-        state = true  -- output is mute
-    else
-        state = false
-    end
-    if (not volume) then
-        volume = 0
-    end
-    return state, volume
-end
--- }}}
-
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -714,13 +685,34 @@ client.connect_signal("unfocus", function(c)
 
 -- Timers
 -- Timer for the volume and sound state
+-- https://github.com/cedlemo/blingbling/blob/master/volume.lua
 gears.timer {
     timeout   = 1,
     autostart = true,
     callback  = function()
-        s, v = get_master_infos()
-        mymaster_info.volume = v
-        mymaster_info.state = s
+        local cmd = "amixer get Master"
+        awful.spawn.with_line_callback(cmd, {
+            stdout = function(line)
+                if string.match(line, "%s%[%d+%%%]%s") ~= nil then
+                    volume=string.match(line, "%s%[%d+%%%]%s")
+                    volume=string.gsub(volume, "[%[%]%%%s]","")
+                    if (not volume) then
+                        volume = 0
+                    end
+                    mymaster_info.volume = volume
+                end
+                if string.match(line, "%s%[[%l]+%]$") then
+                    state=string.match(line, "%s%[[%l]+%]$")
+                    state=string.gsub(state,"[%[%]%%%s]","")
+                    if (not state or state == "yes" or state == "off") then
+                        state = true  -- output is mute
+                    else
+                        state = false
+                    end
+                    mymaster_info.state = state
+                end
+            end,
+        })
     end
 }
 
