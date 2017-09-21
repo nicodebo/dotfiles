@@ -179,7 +179,7 @@ local myreminder_nb = wibox.widget {
     },
     layout      = wibox.layout.align.horizontal,
     set_nbreminder = function(self, nb_rmd)
-        self.myrmd.markup  = '<span foreground="'..theme.gray..'">Reminder </span>'..nb_rmd
+        self.myrmd.markup  = '<span foreground="'..theme.gray..'">Rem </span>'..nb_rmd
     end,
 }
 
