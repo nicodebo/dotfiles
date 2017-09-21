@@ -5,7 +5,6 @@ local min_val=0
 local new_val
 local step="$1"
 
-sleep 0.5
 out_cmd=$(ddcutil getvcp 10 --nodetect --bus 1)
 cur_val=$( echo "$out_cmd" | sed 's/.*current value = *\([[:digit:]]\+\).*/\1/' )
 max_val=$( echo "$out_cmd" | sed 's/.*max value = *\([[:digit:]]\+\).*/\1/' )
