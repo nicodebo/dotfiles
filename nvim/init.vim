@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Sep 14
+" Last Change: 2017 Oct 10
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -341,7 +341,7 @@ function! CompleteFindBufTag(lead, command_line, cursor_pos)
   return sort(FindTagNamesByPrefix(tag_prefix))
 endfunction
 
-command! -buffer -nargs=1 -complete=customlist,CompleteFindBufTag FindBufTag :tag <args>
+command! -nargs=1 -complete=customlist,CompleteFindBufTag FindBufTag :tag <args>
 
   " }}}
 
