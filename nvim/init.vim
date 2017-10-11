@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Oct 10
+" Last Change: 2017 Oct 11
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -452,6 +452,9 @@ nnoremap <leader>j :tjump /
 " tag of the current buffer
 nnoremap <leader>u :FindBufTag <C-z><S-Tab>
 
+" save a buffer
+nnoremap <leader>s :w<CR>
+
 " }}}
 
 " Learn vimscript the hard way tips --------------------------------------- {{{
@@ -468,10 +471,10 @@ nnoremap <leader>u :FindBufTag <C-z><S-Tab>
 "nnoremap <c-u> viwU
 
 "Edit my vimrc file
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 "Source my vimrc file
-nnoremap <leader>sv :source $MYVIMRC<cr>
+" nnoremap <leader>sv :source $MYVIMRC<cr>
 
 "Double quote around the current word in normal mode
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
