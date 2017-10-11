@@ -43,7 +43,6 @@ function main() {
   sym_conf "${SCRIPT_DIR}/gpg" "${HOME}/.gnupg"
   sym_conf "${SCRIPT_DIR}/imapfilter" "${conf_dir}/imapfilter"
   sym_conf "${SCRIPT_DIR}/liquidprompt" "${conf_dir}"
-  sym_conf "${SCRIPT_DIR}/mailcap" "${HOME}"
   sym_conf "${SCRIPT_DIR}/mpd" "${conf_dir}/mpd"
   sym_conf "${SCRIPT_DIR}/mpv" "${conf_dir}/mpv"
   sym_conf "${SCRIPT_DIR}/msmtp" "${conf_dir}/msmtp"
