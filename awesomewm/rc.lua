@@ -445,13 +445,13 @@ globalkeys = awful.util.table.join(
         {description = "Execute a zsh code", group = "custom"}),
 
     awful.key({ modkey }, "q", function()
-                                    local cmd="zsh -i -c 'clerk --add album'"
+                                    local cmd="termite -e clerk"
                                     awful.spawn(cmd)
                                 end,
-              {description = "Browse library by album", group = "clerk"}),
+              {description = "Open clerk UI", group = "clerk"}),
 
     awful.key({ modkey }, "l", function()
-                                    local cmd="zsh -i -c 'clerk --add latest'"
+                                    local cmd="clerk -l"
                                     awful.spawn(cmd)
                                 end,
               {description = "Browse most recent added music", group = "clerk"}),
