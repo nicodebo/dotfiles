@@ -34,7 +34,7 @@ windows:
   - mail:
       layout: main-vertical
       panes:
-        - mutt
+        - neomutt
   - rss:
       layout: main-vertical
       panes:

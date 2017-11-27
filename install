@@ -46,7 +46,7 @@ function main() {
   sym_conf "${SCRIPT_DIR}/mpd" "${conf_dir}/mpd"
   sym_conf "${SCRIPT_DIR}/mpv" "${conf_dir}/mpv"
   sym_conf "${SCRIPT_DIR}/msmtp" "${conf_dir}/msmtp"
-  sym_conf "${SCRIPT_DIR}/mutt" "${conf_dir}/mutt"
+  sym_conf "${SCRIPT_DIR}/neomutt" "${conf_dir}/neomutt"
   sym_conf "${SCRIPT_DIR}/newsboat" "${conf_dir}/newsboat"
   sym_conf "${SCRIPT_DIR}/notmuch" "${conf_dir}/notmuch"
   sym_conf "${SCRIPT_DIR}/nvim" "${conf_dir}/nvim"

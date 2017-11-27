@@ -7,11 +7,11 @@ push <show-version>  # get Mutt to show its version on startup
 #                                    Paths                                    #
 ###############################################################################
 set editor           = `echo \$EDITOR`
-set header_cache     = $XDG_CACHE_HOME/mutt/headers  # where to store headers
-set message_cachedir = $XDG_CACHE_HOME/mutt/bodies   # where to store bodies
-set mailcap_path     = $XDG_CONFIG_HOME/mutt/mailcap # entries for filetypes
-set tmpdir           = $XDG_CACHE_HOME/mutt/temp     # where to keep temp files
-# set signature        = $XDG_CONFIG_HOME/mutt/sig     # my signature file
+set header_cache     = $XDG_CACHE_HOME/neomutt/headers  # where to store headers
+set message_cachedir = $XDG_CACHE_HOME/neomutt/bodies   # where to store bodies
+set mailcap_path     = $XDG_CONFIG_HOME/neomutt/mailcap # entries for filetypes
+set tmpdir           = $XDG_CACHE_HOME/neomutt/temp     # where to keep temp files
+# set signature        = $XDG_CONFIG_HOME/neomutt/sig     # my signature file
 ###############################################################################
 #                                   Options                                   #
 ###############################################################################
@@ -49,11 +49,11 @@ hdr_order from: to: cc: date: subject:  # and in this order
 ###############################################################################
 #                                Folder hook                                  #
 ###############################################################################
-folder-hook user@email5.com/* source $XDG_CONFIG_HOME/mutt/accounts/personal.muttrc
-folder-hook user@email2.com/* source $XDG_CONFIG_HOME/mutt/accounts/work.muttrc
-folder-hook user@email1.com* source $XDG_CONFIG_HOME/mutt/accounts/work2.muttrc
-folder-hook user@email6.com* source $XDG_CONFIG_HOME/mutt/accounts/work-sig.muttrc
-folder-hook user@email7.com* source $XDG_CONFIG_HOME/mutt/accounts/mailingls.muttrc
+folder-hook user@email5.com/* source $XDG_CONFIG_HOME/neomutt/accounts/personal.muttrc
+folder-hook user@email2.com/* source $XDG_CONFIG_HOME/neomutt/accounts/work.muttrc
+folder-hook user@email1.com* source $XDG_CONFIG_HOME/neomutt/accounts/work2.muttrc
+folder-hook user@email6.com* source $XDG_CONFIG_HOME/neomutt/accounts/work-sig.muttrc
+folder-hook user@email7.com* source $XDG_CONFIG_HOME/neomutt/accounts/mailingls.muttrc
 ###############################################################################
 #                                    Index                                    #
 ###############################################################################
@@ -103,7 +103,7 @@ macro index,pager A "<pipe-message>abook --config $XDG_CONFIG_HOME/abook/abookrc
 ###############################################################################
 #                                Source files                                 #
 ###############################################################################
-source $XDG_CONFIG_HOME/mutt/accounts/work.muttrc          # load default account user@email2.com
-source $XDG_CONFIG_HOME/mutt/keybinds.muttrc               # load key bindings
-source $XDG_CONFIG_HOME/mutt/theme.muttrc
-source $XDG_CONFIG_HOME/mutt/subscriptions.muttrc              # Define the list of subscribed mailing lists.
+source $XDG_CONFIG_HOME/neomutt/accounts/work.muttrc          # load default account user@email2.com
+source $XDG_CONFIG_HOME/neomutt/keybinds.muttrc               # load key bindings
+source $XDG_CONFIG_HOME/neomutt/theme.muttrc
+source $XDG_CONFIG_HOME/neomutt/subscriptions.muttrc              # Define the list of subscribed mailing lists.
