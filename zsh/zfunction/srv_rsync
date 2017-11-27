@@ -18,7 +18,7 @@ local pass="${XDG_DATA_HOME}/pass"
 local task="${XDG_DATA_HOME}/task"
 local abook="${XDG_DATA_HOME}/abook"
 local clerk="${XDG_DATA_HOME}/clerk"
-local newsbeuter="${XDG_DATA_HOME}/newsbeuter"
+local newsboat="${XDG_DATA_HOME}/newsboat"
 
 if ping -c 1 -W 2 saintpaul &> /dev/null
 then
@@ -33,7 +33,7 @@ then
   rsync -azv --bwlimit=5000 --delete "${task}" "${rootdir}" || notify-send "rsync" "$task: failed"
   rsync -azv --bwlimit=5000 --delete "${abook}" "${rootdir}" || notify-send "rsync" "$abook: failed"
   rsync -azv --bwlimit=5000 --delete "${clerk}" "${rootdir}" || notify-send "rsync" "$clerk: failed"
-  rsync -azv --bwlimit=5000 --delete "${newsbeuter}" "${rootdir}" || notify-send "rsync" "$newsbeuter: failed"
+  rsync -azv --bwlimit=5000 --delete "${newsboat}" "${rootdir}" || notify-send "rsync" "$newsboat: failed"
   notify-send "rsync" "finished"
 else
   notify-send "rsync backup" "the server is down"
