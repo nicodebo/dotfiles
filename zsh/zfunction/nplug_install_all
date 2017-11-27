@@ -25,14 +25,6 @@ local gitopen_hook="mkdir -p $HOME/bin; "
 gitopen_hook+="ln -sfr git-open $HOME/bin"
 nplug install -t "$gitopen_hook" "paulirish/git-open"
 
-# mpd music client
-local clerk_hook="mkdir -p $HOME/bin; "
-clerk_hook+="ln -sfr clerk $HOME/bin; "
-clerk_hook+="ln -sfr clerk_helper $HOME/bin; "
-clerk_hook+="python -m venv $ENV_DIR/$MPD2_PYLIB; "
-clerk_hook+="$ENV_DIR/$MPD2_PYLIB/bin/pip install python-mpd2 -U"
-nplug install -t "$clerk_hook" "carnager/clerk"
-
 # zsh-syntax-highlighting
 nplug install "zsh-users/zsh-syntax-highlighting"
 # zsh search
