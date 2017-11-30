@@ -31,7 +31,7 @@ function main {
   # sleep 1
 
   wmctrl -s 0
-  run qutebrowser --backend webengine
+  run qutebrowser
   sleep 2
 
 }
