@@ -45,10 +45,6 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
-# tmuxinator
-alias tmuxinator='rvm 2.4@tmuxinator do tmuxinator'
-alias mux='tmuxinator'
-
 # zsh autoload function
 alias j='fzf-z'
 alias ampc='fzf-mpc-add'

@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+
+# kitty session manager and launcher
+# $1 - the directory containing the scripts
+list_script() {
+  local repo_dir="$1"; shift
+  find "$repo_dir" -maxdepth 1 -type f -printf "%f\n"
+}
+
+# source a script
+# $1 - the script to be sourced
+# $2 - the directory containing the scripts
+start_script() {
+  kitty --session "$2/$1"
+}
+
+# The main function
+main() {
+
+  xdg_data="${XDG_DATA_HOME:-$HOME/.local/share}"
+  repo_dir="${xdg_data}/kitman"
+  mkdir -p "$repo_dir"
+
+  # Parse options to the `nplug` command
+  while getopts ":h" opt; do
+    case ${opt} in
+      h )
+        echo "Usage: kitman [<option>] <command> <args>"
+        echo ""
+        echo "A very simple kitty session manager"
+        echo ""
+        echo "    option:"
+        echo "        -h                      Display this help message"
+        echo "    <command>:"
+        echo "        start                   Start a session"
+        echo "        list                    List sessions"
+        echo ""
+        echo "See kitman <command> -h for <command> usage"
+        # exit 0
+        return 0
+        ;;
+     \? )
+       echo "Invalid Option: -$OPTARG" 1>&2
+       # exit 1
+       return 1
+       ;;
+    esac
+  done
+  shift $((OPTIND -1))
+
+  subcommand=$1; shift  # Remove 'kitman' from the argument list
+  case "$subcommand" in
+    # Parse options to the install sub command
+    start)
+      # Process package options
+      while getopts ":h" opt; do
+        case ${opt} in
+          h )
+            echo "Usage: nplug start [<option>] <script>"
+            echo ""
+            echo "Start a tmux session from <script> file "
+            echo "    option:"
+            echo "        -h              Display this help message"
+            echo "    parameter: "
+            echo "        <script>        A bash script with tmux commands"
+            # exit 0
+            return 0
+            ;;
+          \? )
+            echo "Invalid Option: -$OPTARG" 1>&2
+            # exit 1
+            return 1
+            ;;
+          : )
+            echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+            # exit 1
+            return 1
+            ;;
+        esac
+      done
+      shift $((OPTIND -1))
+      session="$1"
+      start_script "$1" "$repo_dir"
+      ;;
+    # list sub command
+    list)
+      while getopts ":h" opt; do
+        case ${opt} in
+          h )
+            echo "Usage: nplug list [<options>]"
+            echo ""
+            echo "list script"
+            echo "    option:"
+            echo "        -h              Display this help message"
+            # exit 0
+            return 0
+            ;;
+          \? )
+            echo "Invalid Option: -$OPTARG" 1>&2
+            # exit 1
+            return 1
+            ;;
+          : )
+            echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+            # exit 1
+            return 1
+            ;;
+        esac
+      done
+      shift $((OPTIND -1))
+      list_script "$repo_dir"
+      ;;
+  esac
+}
+
+# launch main
+main "$@"

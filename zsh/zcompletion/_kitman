@@ -1,0 +1,36 @@
+#compdef kitman
+
+local curcontext="$curcontext" state line ret=1
+typeset -A opt_args
+
+_get_sessions() {
+  _values 'available kitty sessions' $(kitman list)
+}
+
+_arguments \
+  '1: :->option'\
+  '*: :->args' && ret=0
+
+case $state in
+  option)
+    local -a subcommands
+    subcommands=(
+      "start:start a kitty session" \
+      "list:list kitty sessions"
+    )
+    _describe -t commands 'kitman' subcommands
+    _arguments : \
+      "-h[Output help message]"
+    ret=0
+    ;;
+  args)
+    case $words[2] in
+      start)
+        _get_sessions
+        ret=0
+        ;;
+    esac
+    ;;
+esac
+
+return ret

@@ -176,9 +176,6 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 # virtualenvwrapper
 [[ -s "/usr/bin/virtualenvwrapper_lazy.sh" ]] && source /usr/bin/virtualenvwrapper_lazy.sh
 
-# rvm
-[[ -s "${XDG_DATA_HOME}/rvm/scripts/rvm" ]] && source "${XDG_DATA_HOME}/rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 # }}}
 
 # nplug ------------------------------------------------------------------- {{{

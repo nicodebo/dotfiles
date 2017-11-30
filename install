@@ -58,7 +58,6 @@ function main() {
   sym_conf "${SCRIPT_DIR}/qutebrowser" "${conf_dir}/qutebrowser"
   sym_conf "${SCRIPT_DIR}/rofi" "${conf_dir}/rofi"
   sym_conf "${SCRIPT_DIR}/remind" "${conf_dir}/remind"
-  sym_conf "${SCRIPT_DIR}/rvm" "${HOME}"
   sym_conf "${SCRIPT_DIR}/sqlite" "${HOME}"
   sym_conf "${SCRIPT_DIR}/ssh" "${HOME}/.ssh"
   sym_conf "${SCRIPT_DIR}/systemd" "${conf_dir}/systemd"

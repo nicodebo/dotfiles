@@ -23,7 +23,8 @@ function run {
 function main {
 
   wmctrl -s 1
-  termite -t media -e 'zsh -c "tmuxinator start at_startup"'&
+  kitty newsboat &
+  kitty neomutt &
   sleep 1
 
   # wmctrl -s 0
