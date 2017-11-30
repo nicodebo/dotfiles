@@ -1,9 +1,0 @@
-# my dreamnote
-nplug update "nicodebo/dream-note"
-nplug update "robbyrussell/oh-my-zsh"
-nplug update "rupa/z"
-nplug update "voronkovich/gitignore.plugin.zsh"
-nplug update "nojhan/liquidprompt"
-nplug update "paulirish/git-open"
-nplug update "zsh-users/zsh-syntax-highlighting"
-nplug update "zsh-users/zsh-history-substring-search"

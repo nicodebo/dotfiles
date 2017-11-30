@@ -58,6 +58,8 @@ remove() {
 list() {
   local repo_dir="$1"; shift
   local hook_file="$1"; shift
+  # TODO: hook_file variable useless
+  # TODO: can't combine raw list with hook on the command line
   local hook_display="$1"; shift
   local compl_list="$1"; shift
   local cwd=$(readlink -f .)
@@ -82,7 +84,7 @@ list() {
   done <<<$plug_list
 }
 
-# Update all installed packages
+# Update a package
 # $1 - name of the package
 # $2 - directory where repo are cloned into
 update() {
@@ -123,6 +125,15 @@ update() {
 
   cd $cwd
   echo -e "-------------------"
+}
+
+# update all packages
+# $2 - repo directory
+update_all() {
+  local repo_dir="$1"; shift
+  list "$repo_dir" "" "" "yes" | while read -r line; do
+    update "$line" "$repo_dir"
+  done
 }
 
 # git init submodules only if a .gitmodules is present in the repo
@@ -230,8 +241,8 @@ main() {
         echo "        -h                      Display this help message"
         echo "    <command>:"
         echo "        install                 Install a package to \$XDG_DATA_HOME/nplug"
-        echo "        update                  Update an installed package"
-        echo "        list                    Update an installed package"
+        echo "        update                  Update package"
+        echo "        list                    List installed packaged"
         echo ""
         echo "See nplug <command> -h for <command> usage"
         # exit 0
@@ -295,11 +306,13 @@ main() {
           h )
             echo "Usage: nplug update <repo>"
             echo ""
-            echo "Update an existing <repo>"
+            echo "Update an existing [<repo>]"
             echo "    option:"
             echo "        -h              Display this help message"
             echo "    parameter: "
             echo "        <repo>          A github repository: user/repo"
+            echo ""
+            echo " if <repo> is not specified, all packages are updated"
             # exit 0
             return 0
             ;;
@@ -317,7 +330,11 @@ main() {
       done
       shift $((OPTIND -1))
       package="$1"
-      update "$package" "$repo_dir"
+      if [[ ! -z "$package" ]]; then
+        update "$package" "$repo_dir"
+      else
+        update_all "$repo_dir"
+      fi
       ;;
     # list sub command
     list)

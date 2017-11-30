@@ -3,9 +3,8 @@
 local curcontext="$curcontext" state line ret=1
 typeset -A opt_args
 
-_nplug_complete_remove_plugin () {
+_get_plugin () {
   _values 'installed plugins' $(nplug list -d)
-
 }
 
 _arguments \
@@ -33,8 +32,7 @@ case $state in
         ret=0
         ;;
       update)
-        _values "update options" \
-          "-h[output help message]"
+        _get_plugin
         ret=0
         ;;
       list)
@@ -45,7 +43,7 @@ case $state in
         ret=0
         ;;
       remove)
-        _nplug_complete_remove_plugin
+        _get_plugin
         ret=0
         ;;
     esac
