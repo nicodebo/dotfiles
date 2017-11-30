@@ -47,8 +47,8 @@ end
 
 -- This is used later as the default terminal and editor to run.
 local conf_dir = table.concat({os.getenv("XDG_CONFIG_HOME"), "awesome"}, "/")
-local terminal = "termite"
-local term_exec = terminal .. " -e "
+local terminal = "kitty"
+local term_exec = terminal .. " "
 local editor = os.getenv("EDITOR") or "nano"
 local theme_fname = "theme.lua"
 -- Default modkey.
@@ -444,8 +444,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "e", zsh_exec,
         {description = "Execute a zsh code", group = "custom"}),
 
-    awful.key({ modkey }, "q", function()
-                                    local cmd="termite -e clerk"
+    awful.key({ modkey }, "c", function()
+                                    local cmd=term_exec .. "clerk"
                                     awful.spawn(cmd)
                                 end,
               {description = "Open clerk UI", group = "clerk"}),
