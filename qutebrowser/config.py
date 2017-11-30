@@ -655,7 +655,7 @@ c.colors.webpage.bg = '#1B2B34'
 ## A list of user stylesheet filenames to use.
 ## Type: List of File, or File
 # c.content.user_stylesheets = []
-c.content.user_stylesheets = ['/tmp/solarized-everything-css/css/solarized-all-sites-dark.css']
+c.content.user_stylesheets = [str(config.configdir / 'solarized-all-sites-dark.css')]
 
 ## Enables or disables WebGL.
 ## Type: Bool
