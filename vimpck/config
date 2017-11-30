@@ -11,6 +11,10 @@
     [[https://github.com/tpope/vim-commentary]]
         package = common
         type = start
+
+    [[https://github.com/mattn/emmet-vim]]
+        package = common
+        type = start
     
     [[https://github.com/tpope/vim-surround]]
         package = common
