@@ -444,7 +444,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "e", zsh_exec,
         {description = "Execute a zsh code", group = "custom"}),
 
-    awful.key({ modkey }, "c", function()
+    awful.key({ modkey }, "v", function()
                                     local cmd=term_exec .. "clerk"
                                     awful.spawn(cmd)
                                 end,
