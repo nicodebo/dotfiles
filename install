@@ -68,7 +68,6 @@ function main() {
   sym_conf "${SCRIPT_DIR}/systemd" "${conf_dir}/systemd"
   sym_conf "${SCRIPT_DIR}/termite" "${conf_dir}/termite"
   sym_conf "${SCRIPT_DIR}/tmux" "${conf_dir}/tmux"
-  sym_conf "${SCRIPT_DIR}/tmuxinator" "${conf_dir}/tmuxinator"
   sym_conf "${SCRIPT_DIR}/taskwarrior" "${conf_dir}/task"
   sym_conf "${SCRIPT_DIR}/vimpck" "${conf_dir}/vimpck"
   sym_conf "${SCRIPT_DIR}/X11" "${conf_dir}/X11"
