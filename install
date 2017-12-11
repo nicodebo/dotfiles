@@ -3,12 +3,16 @@
 ###############################################################################
 #                                  functions                                  #
 ###############################################################################
+# Symlink recursively a directory to another location
+# $1 - dotfile directory source
+# $2 - dotfile directory destination
 function sym_conf() {
 
   local src_dir="$1"
   shift
   local tar_dir="$1"
   shift
+  local tmp_var
 
   # Don't scan for broken symlink in my home directory
   if [ "$tar_dir" != "$HOME" ]; then
@@ -16,8 +20,10 @@ function sym_conf() {
     find "$tar_dir" -xtype l -exec rm -v {} \;
   fi
 
-  # http://askubuntu.com/questions/86822/how-can-i-copy-the-contents-of-a-folder-to-another-folder-in-a-different-directo
-  cp -sRvf "$src_dir/." "$tar_dir"
+  while IFS='' read -r -d '' filename; do
+    tmp_var="$tar_dir${filename##$src_dir}"
+    mkdir -p "${tmp_var%/*}" && cp -sfv "$filename" "$tmp_var"
+  done < <(find "$src_dir" -mindepth 1 -type f ! -name "README.md" -print0)
 }
 ###############################################################################
 #                               main function                                 #
