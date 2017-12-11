@@ -32,6 +32,11 @@ zstyle ':completion:*' use-compctl true
 
 # }}}
 
+# Pure prompt ------------------------------------------------------------- {{{
+autoload -U promptinit; promptinit
+prompt pure
+# }}}
+
 # zsh settings ------------------------------------------------------------ {{{
 
 # - General settings ------------------------------------------------------ {{{
@@ -195,11 +200,6 @@ if [[ -s "${XDG_DATA_HOME}/nplug/voronkovich/gitignore.plugin.zsh/gitignore.plug
   source "${XDG_DATA_HOME}/nplug/voronkovich/gitignore.plugin.zsh/gitignore.plugin.zsh"
 # else
 #   echo "gitignore not loaded"
-fi
-
-# liquidprompt
-if [[ -s "${XDG_DATA_HOME}/nplug/nojhan/liquidprompt/liquidprompt" ]]; then
-  source "${XDG_DATA_HOME}/nplug/nojhan/liquidprompt/liquidprompt"
 fi
 
 # zsh syntax highlighting must be the last sourced plugin

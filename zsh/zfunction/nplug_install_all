@@ -17,9 +17,6 @@ nplug install "rupa/z"
 # gitignore plugin
 nplug install "voronkovich/gitignore.plugin.zsh"
 
-# zsh prompt
-nplug install "nojhan/liquidprompt"  # zsh prompt with git and python venv support
-
 # open git remote repo from command line
 local gitopen_hook="mkdir -p $HOME/bin; "
 gitopen_hook+="ln -sfr git-open $HOME/bin"
@@ -29,3 +26,9 @@ nplug install -t "$gitopen_hook" "paulirish/git-open"
 nplug install "zsh-users/zsh-syntax-highlighting"
 # zsh search
 nplug install "zsh-users/zsh-history-substring-search"
+
+# pure prompt
+local pure_hook="mkdir -p $ZDOTDIR/zfunction; "
+pure_hook+="ln -sfr pure.zsh $ZDOTDIR/zfunction/prompt_pure_setup; "
+pure_hook+="ln -sfr async.zsh $ZDOTDIR/zfunction/async"
+nplug install -t "$pure_hook" "sindresorhus/pure"
