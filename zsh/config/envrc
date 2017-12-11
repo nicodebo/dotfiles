@@ -50,6 +50,10 @@ export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
 # imapfilter follows xdg standard
 export IMAPFILTER_HOME="${XDG_CONFIG_HOME}/imapfilter"
 
+# npm follows xdg standard
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+
+
 ## personal env variable
 # music storage directory
 export MUSICSTOREDIR="/media/debz/93f53fa6-5498-4619-9895-455c59fe361c/music/"
