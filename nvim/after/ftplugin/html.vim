@@ -6,3 +6,7 @@ setlocal textwidth=79  " lines longer than 79 columns will be broken
 if executable("htmlhint")
     compiler htmlhint
 endif
+
+" autoclose html tags
+" ref: https://stackoverflow.com/questions/130734/how-can-one-close-html-tags-in-vim-quickly
+imap <buffer> ,/ </<C-X><C-O>
