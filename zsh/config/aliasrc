@@ -73,6 +73,13 @@ xbindkeys () {
   command xbindkeys -f "${XDG_CONFIG_HOME}/xbindkeys/xbindkeysrc" "$@"
 }
 
+# abcde follows xdg configuration dir
+abcde () {
+  command abcde -c "${XDG_CONFIG_HOME}/abcde/abcde.conf" "$@"
+}
+
+
+
 
 # move a file to the music directory and update the mpd database
 # $1 - path of the file to move

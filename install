@@ -37,6 +37,7 @@ function main() {
   local modules_dir="/etc/modules-load.d/"
   local udev_rule_dir="/etc/udev/rules.d/"
 
+  sym_conf "${SCRIPT_DIR}/abcde" "${conf_dir}/abcde"
   sym_conf "${SCRIPT_DIR}/awesomewm" "${conf_dir}/awesome"
   sym_conf "${SCRIPT_DIR}/bin" "${HOME}/bin"
   sym_conf "${SCRIPT_DIR}/clerk" "${conf_dir}/clerk"
