@@ -8,6 +8,7 @@ reload-time 10
 max-items 100
 text-width 100
 browser $BROWSER 
+bookmark-cmd "~/.config/newsboat/bookmark-plugin.sh"
 
 # NOTE: Default prefix key for macro ','
 # macro
