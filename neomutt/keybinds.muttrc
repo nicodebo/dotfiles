@@ -39,7 +39,7 @@ bind browser T next-entry
 bind browser S previous-entry
 bind pager t next-line
 bind pager s previous-line
-bind index,attach j tag-entry
+bind index,attach,browser j tag-entry
 bind index J tag-pattern
 bind index ^J untag-pattern
 bind index <Esc>j tag-thread
