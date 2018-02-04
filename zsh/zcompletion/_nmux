@@ -1,10 +1,10 @@
-#compdef kitman
+#compdef nmux
 
 local curcontext="$curcontext" state line ret=1
 typeset -A opt_args
 
 _get_sessions() {
-  _values 'available kitty sessions' $(kitman list)
+  _values 'available tmux sessions' $(nmux list)
 }
 
 _arguments \
@@ -15,10 +15,10 @@ case $state in
   option)
     local -a subcommands
     subcommands=(
-      "start:start a kitty session" \
-      "list:list kitty sessions"
+      "start:start a tmux session" \
+      "list:list tmux sessions"
     )
-    _describe -t commands 'kitman' subcommands
+    _describe -t commands 'nmux' subcommands
     _arguments : \
       "-h[Output help message]"
     ret=0

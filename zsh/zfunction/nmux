@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# kitty session manager and launcher
+# tmux session manager and launcher
 # $1 - the directory containing the scripts
 list_script() {
   local repo_dir="$1"; shift
@@ -11,23 +11,23 @@ list_script() {
 # $1 - the script to be sourced
 # $2 - the directory containing the scripts
 start_script() {
-  kitty --session "$2/$1"
+  source "$2/$1"
 }
 
 # The main function
 main() {
 
   xdg_data="${XDG_DATA_HOME:-$HOME/.local/share}"
-  repo_dir="${xdg_data}/kitman"
+  repo_dir="${xdg_data}/nmux"
   mkdir -p "$repo_dir"
 
-  # Parse options to the `nplug` command
+  # Parse options to the `nmux` command
   while getopts ":h" opt; do
     case ${opt} in
       h )
-        echo "Usage: kitman [<option>] <command> <args>"
+        echo "Usage: nmux [<option>] <command> <args>"
         echo ""
-        echo "A very simple kitty session manager"
+        echo "A very simple tmux session manager"
         echo ""
         echo "    option:"
         echo "        -h                      Display this help message"
@@ -35,7 +35,7 @@ main() {
         echo "        start                   Start a session"
         echo "        list                    List sessions"
         echo ""
-        echo "See kitman <command> -h for <command> usage"
+        echo "See nmux <command> -h for <command> usage"
         # exit 0
         return 0
         ;;
@@ -48,7 +48,7 @@ main() {
   done
   shift $((OPTIND -1))
 
-  subcommand=$1; shift  # Remove 'kitman' from the argument list
+  subcommand=$1; shift  # Remove 'nmux' from the argument list
   case "$subcommand" in
     # Parse options to the install sub command
     start)

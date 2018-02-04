@@ -47,8 +47,8 @@ end
 
 -- This is used later as the default terminal and editor to run.
 local conf_dir = table.concat({os.getenv("XDG_CONFIG_HOME"), "awesome"}, "/")
-local terminal = "kitty"
-local term_exec = terminal .. " "
+local terminal = "termite"
+local term_exec = terminal .. " -e "
 local editor = os.getenv("EDITOR") or "nano"
 local theme_fname = "theme.lua"
 -- Default modkey.

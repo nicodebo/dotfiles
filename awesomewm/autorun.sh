@@ -23,8 +23,8 @@ function run {
 function main {
 
   wmctrl -s 1
-  kitty newsboat &
-  kitty neomutt &
+  termite -t rssfeed -e 'zsh -c "newsboat"'&
+  termite -t email -e 'zsh -c "neomutt"'&
   sleep 1
 
   # wmctrl -s 0

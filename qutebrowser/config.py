@@ -711,7 +711,7 @@ c.colors.webpage.bg = '#1B2B34'
 ## The editor (and arguments) to use for the `open-editor` command. `{}`
 ## gets replaced by the filename of the file to be edited.
 ## Type: ShellCommand
-c.editor.command = ['kitty', 'nvim', '{}']
+c.editor.command = ['termite', '-e', 'nvim {file}']
 
 ## Encoding to use for the editor.
 ## Type: Encoding

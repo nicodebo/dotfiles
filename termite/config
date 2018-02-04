@@ -1,6 +1,7 @@
 [options]
-font = DejaVu Sans Mono 11
+font = Hack 11.5
 scrollback_lines = 10000
+mouse_autohide = true
 
 [colors]
 # Base16 OceanicNext

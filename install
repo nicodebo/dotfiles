@@ -49,7 +49,6 @@ function main() {
   sym_conf "${SCRIPT_DIR}/git" "${conf_dir}/git"
   sym_conf "${SCRIPT_DIR}/gpg" "${HOME}/.gnupg"
   sym_conf "${SCRIPT_DIR}/imapfilter" "${conf_dir}/imapfilter"
-  sym_conf "${SCRIPT_DIR}/kitty" "${conf_dir}/kitty"
   sym_conf "${SCRIPT_DIR}/mpd" "${conf_dir}/mpd"
   sym_conf "${SCRIPT_DIR}/mpv" "${conf_dir}/mpv"
   sym_conf "${SCRIPT_DIR}/npm" "${conf_dir}/npm"
