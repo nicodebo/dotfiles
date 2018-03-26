@@ -101,3 +101,11 @@ fn () {
 fd () {
   fzf-open-file-in-dir "${HOME}/Documents/Dev/dotfiles" "$@"
 }
+
+# easier man page
+cheat.sh()
+{
+    # replace native with the color scheme you want
+    # curl cheat.sh/:styles-demo to show the available color schemes
+    curl -s cheat.sh/"$1"?style=native
+}
