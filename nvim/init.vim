@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2017 Oct 11
+" Last Change: 2018 Mar 26
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -624,6 +624,40 @@ let g:LanguageClient_autoStart = 1
 " I prefer the ctags solution which allow to move backward using N_CTRL_T
 " nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 " nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" ino <silent> <c-x><c-z> <c-r>=<sid>ulti_complete()<cr>
+" let g:UltiSnipsSnippetDirectories=$HOME . '/Documents/Dev/dotfiles/nvim/ultisnips'
+let g:UltiSnipsSnippetDirectories=['ultisnips']
+" let g:UltiSnipsSnippetDirectories=$HOME . '.config/nvim/ultisnips'
+
+ino <silent> ,z <c-r>=<sid>ulti_complete()<cr>
+
+fu! s:ulti_complete() abort
+    if empty(UltiSnips#SnippetsInCurrentScope(1))
+        return ''
+    endif
+    let word_to_complete = matchstr(strpart(getline('.'), 0, col('.') - 1), '\S\+$')
+    let contain_word = 'stridx(v:val, word_to_complete)>=0'
+    let candidates = map(filter(keys(g:current_ulti_dict_info), contain_word),
+                   \  "{
+                   \      'word': v:val,
+                   \      'menu': '[snip] '. g:current_ulti_dict_info[v:val]['description'],
+                   \      'dup' : 1,
+                   \   }")
+    let from_where = col('.') - len(word_to_complete)
+    if !empty(candidates)
+        call complete(from_where, candidates)
+    endif
+    return ''
+endfu
 
 " }}}
 
