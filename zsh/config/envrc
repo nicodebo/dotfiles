@@ -101,4 +101,7 @@ export GPG_TTY=$(tty)
 export PSQL_HISTORY="${XDG_CACHE_HOME}/psql/hist"
 export PSQLRC="${XDG_CONFIG_HOME}/psql/psqlrc"
 
+# cookiecutter follows xdg standard
+export COOKIECUTTER_CONFIG="${XDG_CONFIG_HOME}/cookiecutter/cookiecutterrc.yaml"
+
 export PAGER=less
