@@ -1,0 +1,9 @@
+{
+	"project_root_name": "php_project",
+	"mysqlport": "3306",
+	"host": "marie-clara",
+	"db_name": "mydb",
+	"db_user": "nicodebo",
+	"db_pwd": "secretpwd",
+	"db_root_pwd": "secretpwd"
+}

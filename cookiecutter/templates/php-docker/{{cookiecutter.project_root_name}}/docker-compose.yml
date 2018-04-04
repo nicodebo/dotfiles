@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  webserver:
+    build: ./docker/webserver
+    image: web_stack
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - currentdirectory/www/:/var/www/html
+    links:
+      - db
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "{{cookiecutter.mysqlport}}:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE={{cookiecutter.db_name}}
+      - MYSQL_ROOT_PASSWORD={{cookiecutter.db_root_pwd}}
+      - MYSQL_USER={{cookiecutter.db_user}}
+      - MYSQL_PASSWORD={{cookiecutter.db_pwd}}
+
+  gui:
+    image: phpmyadmin/phpmyadmin
+    volumes:
+      - /sessions
+    ports:
+      - "8090:80"
+    links:
+      - db
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT={{cookiecutter.mysqlport}}
+      - PMA_USER={{cookiecutter.db_user}}
+      - PMA_PASSWORD={{cookiecutter.db_pwd}}
+
+  mail:
+    image: djfarrelly/maildev
+    ports:
+      - "1080:80"
+      - "1025:25"
