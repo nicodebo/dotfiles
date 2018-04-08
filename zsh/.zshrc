@@ -181,6 +181,9 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 # virtualenvwrapper
 [[ -s "/usr/bin/virtualenvwrapper_lazy.sh" ]] && source /usr/bin/virtualenvwrapper_lazy.sh
 
+# fzf keybindings
+[[ -s "/usr/share/fzf/key-bindings.zsh" ]] && source /usr/share/fzf/key-bindings.zsh
+
 # }}}
 
 # nplug ------------------------------------------------------------------- {{{
