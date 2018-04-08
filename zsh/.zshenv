@@ -32,5 +32,6 @@ mkdir -p "${XDG_CACHE_HOME}/less" # directory that store the less history
 mkdir -p "${XDG_CACHE_HOME}/msmtp" # store msmtp log file
 mkdir -p "${XDG_CACHE_HOME}/psql" # directory for storing psql histories
 mkdir -p "${MAILSTOREDIR}" # directory where the mail are stored
+mkdir -p "$XDG_CACHE_HOME"/vim/{undo,swap,backup} # directories for vim files
 
 # }}}

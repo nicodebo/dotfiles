@@ -15,10 +15,10 @@ export BROWSER=qutebrowser
 # Preferred editor for local and remote sessions
  # http://unix.stackexchange.com/questions/4859/visual-vs-editor-whats-the-difference
 if [[ -n $SSH_CONNECTION ]]; then
-    export VISUAL='nvim'
+    export VISUAL='vim'
     export EDITOR="$VISUAL"
 else
-    export VISUAL='nvim'
+    export VISUAL='vim'
     export EDITOR="$VISUAL"
 fi
 
@@ -93,6 +93,10 @@ export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
 
 # tmux follows xdg standard
 export TMUX_TMPDIR="${XDG_RUNTIME_DIR}"
+
+# vim follows xdg standard
+# Set vimrc's location and source it on vim startup
+export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
 
 # Set GPG TTY, see 'man gpg-agent'
 export GPG_TTY=$(tty)

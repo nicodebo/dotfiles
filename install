@@ -70,6 +70,7 @@ function main() {
   sym_conf "${SCRIPT_DIR}/termite" "${conf_dir}/termite"
   sym_conf "${SCRIPT_DIR}/tmux" "${conf_dir}/tmux"
   sym_conf "${SCRIPT_DIR}/taskwarrior" "${conf_dir}/task"
+  sym_conf "${SCRIPT_DIR}/vim" "${conf_dir}/vim"
   sym_conf "${SCRIPT_DIR}/vimpck" "${conf_dir}/vimpck"
   sym_conf "${SCRIPT_DIR}/X11" "${conf_dir}/X11"
   sym_conf "${SCRIPT_DIR}/xbindkeys" "${conf_dir}/xbindkeys"
