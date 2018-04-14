@@ -2,5 +2,5 @@ default_context:
     full_name: "Nicolas D."
     email: "user@email1.com"
     github_username: "nicodebo"
-cookiecutters_dir: "/home/debz/.cache/cookiecutters"
-replay_dir: "/home/debz/.cache/cookiecutter_replay"
+cookiecutters_dir: "$XDG_CACHE_HOME/cookiecutters"
+replay_dir: "$XDG_CACHE_HOME/cookiecutter_replay"
