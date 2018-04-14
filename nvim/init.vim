@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2018 Mar 26
+" Last Change: 2018 Apr 14
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -10,6 +10,41 @@
 "        * Function not directly called by user can be placed in the autoload
 "          folder
 
+" Minpac ------------------------------------------------------------------ {{{
+
+if empty(glob('~/.local/share/nvim/site/pack/minpac'))
+  silent !git clone https://github.com/k-takata/minpac.git ~/.local/share/nvim/site/pack/minpac/opt/minpac
+endif
+
+if exists('*minpac#init')
+  " minpac is loaded.
+  call minpac#init({'dir': $XDG_DATA_HOME . '/nvim/site'})
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+  " Additional plugins here.
+  " common
+  call minpac#add('tpope/vim-commentary')
+  call minpac#add('tpope/vim-surround')
+  call minpac#add('tpope/vim-obsession')
+  call minpac#add('yuttie/comfortable-motion.vim')
+  call minpac#add('wellle/targets.vim')
+  call minpac#add('SirVer/ultisnips')
+  " lang server client
+  call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next', 'do': {-> system('bash install.sh')}})
+  " web
+  call minpac#add('mattn/emmet-vim')
+  call minpac#add('captbaritone/better-indent-support-for-php-with-html')
+  " LaTeX
+  call minpac#add('lervag/vimtex')
+  " colorscheme
+  call minpac#add('fxn/vim-monochrome', {'type': 'opt'})
+endif
+
+command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update()
+command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
+
+" }}}
+
 " Source vimrc files ------------------------------------------------------ {{{
 " Source all configuration file from ~/.config/nvim/vimrc/
 runtime! vimrc/**/*.vimrc
@@ -17,6 +52,7 @@ runtime! vimrc/**/*.vimrc
 
 " Vim settings ---------------------------------------------------- {{{
 
+set mouse=a                      " enable mouse support
 set number                       " Line numbers are good
 set showcmd                      " Show incomplete cmds down the bottom
 set showmode                     " Show current mode down the bottom
@@ -94,7 +130,12 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'dosini']
 " highlighting for .tex file
 let g:tex_flavor = 'latex'
 
-colorscheme base16-oceanicnext
+try
+  let g:monochrome_italic_comments = 1
+  colorscheme monochrome
+catch /.*E185:.*/
+  colorscheme darkblue
+endtry
 
 " Path to the python3 provider
 let g:python3_host_prog = $ENV_DIR . "/" . $NVIM_PROVIDER_PYLIB . "/" . "bin/python"
@@ -414,7 +455,7 @@ nnoremap <leader>n :call NumberToggle()<cr>
 
 " Simple command to display open buffer and load the desired one by entering
 " its number and pressing enter.
-nnoremap gb :buffers<CR>:buffer<Space>
+" nnoremap gb :buffers<CR>:buffer<Space>
 
 " switch to previous buffer
 nnoremap <leader>d :b#<CR>
@@ -571,7 +612,7 @@ augroup statusline
 augroup END
 
 " set muttrc file type for the mutt configuration file that are not called
-" muttrc as only this one is recognized as muttrc.
+" muttrc as only this one is recognized as muttrc
 augroup setfiletype
   autocmd!
   autocmd BufNewFile,BufRead *.muttrc setlocal filetype=muttrc
@@ -582,7 +623,7 @@ augroup END
 augroup bepo_clash
   autocmd!
   " unmap vim-commentary mappings
-  autocmd VimEnter * call UnmapCommentary()
+  autocmd VimEnter * if exists(":Commentary") | call UnmapCommentary() | endif
 augroup END
 
 augroup ironmapping
@@ -602,18 +643,7 @@ augroup END
 " Test -------------------------------------------------------------------- {{{
  let g:LanguageClient_serverCommands = {
      \ 'python': ['pyls'],
-     \ 'java': ['java',
-           \   '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044',
-           \   '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-           \   '-Dosgi.bundles.defaultStartLevel=4',
-           \   '-Declipse.product=org.eclipse.jdt.ls.core.product',
-           \   '-Dlog.protocol=true',
-           \   '-Dlog.level=ALL',
-           \   '-noverify',
-           \   '-Xmx1G',
-           \   '-jar', '/home/debz/.local/share/java-language-server/plugins/org.eclipse.equinox.launcher_1.4.0.v20161219-1356.jar',
-           \   '-configuration', '/home/debz/.local/share/java-language-server/config_linux',
-           \   '-data', '/home/debz/Documents/Dev/java_project']
+     \ 'php': ['php', '/home/debz/.config/composer/vendor/bin/php-language-server.php']
      \ }
 
 " Automatically start language servers.
