@@ -44,11 +44,10 @@ then
     echo -e "local awful = require(\"awful\")\nawful.client.focus.byidx(1)" | awesome-client' C-m
   tmux split-window -v -p 70 -t "$sess":4
   tmux send-keys -t "$sess":4.2 'cd {{cookiecutter.project_directory}} && sleep 2' C-m
-  tmux send-keys -t "$sess":4.2 'while true; do ls
-  **/*.{{cookiecutter.file_extensions}} 2> /dev/null | entr -d reload-browser Firefox; done' C-m
+  tmux send-keys -t "$sess":4.2 'while true; do ls **/*.{{cookiecutter.file_extensions}} 2> /dev/null | entr -d reload-browser Firefox; done' C-m
 
   # Select the editor window
-  tmux select-window -t "$sess":3
+  tmux select-window -t "$sess":1
 
   # end if statement and attach "$sess" if it existed
 fi
