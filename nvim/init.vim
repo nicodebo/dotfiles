@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2018 Apr 14
+" Last Change: 2018 Apr 15
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -29,6 +29,8 @@ if exists('*minpac#init')
   call minpac#add('yuttie/comfortable-motion.vim')
   call minpac#add('wellle/targets.vim')
   call minpac#add('SirVer/ultisnips')
+  call minpac#add('honza/vim-snippets')
+
   " lang server client
   call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next', 'do': {-> system('bash install.sh')}})
   " web
