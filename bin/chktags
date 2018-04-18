@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+main () {
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  local activate
+  pybin="$MPD2_PYLIB/bin/python"
+  if ! [[ -s "$pybin" ]]; then
+    python -m venv "$MPD2_PYLIB"
+    "$MPD2_PYLIB/bin/pip" install python-mpd2 -U
+  fi
+  "$MPD2_PYLIB/bin/python" "$SCRIPT_DIR/check_tags.py"
+}
+
+main
