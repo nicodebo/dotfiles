@@ -13,8 +13,7 @@ bookmark-cmd "~/.config/newsboat/bookmark-plugin.sh"
 # NOTE: Default prefix key for macro ','
 # macro
 ## open youtube rss feed with mpv instead of qutebrowser
-# macro o set browser "mpv %u" ; open-in-browser ; set browser $BROWSER
-macro o set browser "~/.config/newsbeuter/browser-mpv %u"; open-in-browser ; set browser $BROWSER
+macro o set browser "~/.config/newsboat/browser-mpv %u"; open-in-browser ; set browser $BROWSER
 
 # Binding pour BÉPO
 # unbind-key e
@@ -51,8 +50,6 @@ bind-key ^S random-unread
 # unbind-key o
 # unbind-key O
  
-# bind-key o open-in-browser-and-mark-read
-# bind-key O open-in-browser
  
  
 # bind-key è set-tag
