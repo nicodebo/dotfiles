@@ -1,0 +1,32 @@
+snippet pdo "pdo sql connection"
+try
+{
+	$this->pdo = new \PDO('mysql:host=localhost;dbname=blog', "root", "", array(
+				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+				\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC, // permet de recupérer des tableaux
+				\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING // permet d'afficher les erreurs
+				));
+}
+catch (\PDOException $e)
+{
+
+
+	echo 'Erreur de connexion : ' . $e->getMessage();
+}
+
+endsnippet
+
+snippet autol "autoload class"
+class Autoloader
+{
+    static function register()
+    {
+        spl_autoload_register(array(__CLASS__, 'autoload'));
+    }
+
+    static function autoload($class_name) {
+        $class_name = str_replace('\\\', '/', $class_name);
+        require 'class/' . $class_name . '.php';
+    }
+}
+endsnippet

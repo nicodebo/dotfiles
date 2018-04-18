@@ -8,6 +8,5 @@ setlocal textwidth=79  " lines longer than 79 columns will be broken
 
 " if python language server is installed, then use it as a completion engine
 if executable("pyls")
-  setlocal omnifunc=LanguageClient#complete
   setlocal signcolumn=yes
 endif

@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2018 Apr 15
+" Last Change: 2018 Apr 16
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -40,6 +40,7 @@ if exists('*minpac#init')
   call minpac#add('lervag/vimtex')
   " colorscheme
   call minpac#add('fxn/vim-monochrome', {'type': 'opt'})
+  call minpac#add('whatyouhide/vim-gotham', {'type': 'opt'})
 endif
 
 command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update()
@@ -133,8 +134,9 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'dosini']
 let g:tex_flavor = 'latex'
 
 try
-  let g:monochrome_italic_comments = 1
-  colorscheme monochrome
+  " let g:monochrome_italic_comments = 1
+  " colorscheme monochrome
+  colorscheme gotham
 catch /.*E185:.*/
   colorscheme darkblue
 endtry
@@ -691,6 +693,8 @@ fu! s:ulti_complete() abort
     return ''
 endfu
 
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
 " }}}
 
 " Junk -------------------------------------------------------------------- {{{
