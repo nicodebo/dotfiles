@@ -36,6 +36,7 @@ if exists('*minpac#init')
   " web
   call minpac#add('mattn/emmet-vim')
   call minpac#add('captbaritone/better-indent-support-for-php-with-html')
+  call minpac#add('lumiliet/vim-twig') " syntax highlighting for twig files
   " LaTeX
   call minpac#add('lervag/vimtex')
   " colorscheme
