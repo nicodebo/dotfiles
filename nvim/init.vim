@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2018 Apr 16
+" Last Change: 2018 Apr 23
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -288,6 +288,16 @@ command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
 "vnoremap <S-F12>   :TrimSpaces<CR>
 " }}}
 
+" Replace Nbsp with space ------------------------------------------------- {{{
+
+function! NbspToSpaces()
+  %s/\%xa0/ /gc
+endfunction
+
+command! NbspToSpaces call NbspToSpaces()
+
+" }}}
+
 " Absolute/Relative number toggle ------------------------------------- {{{
 
 "Toggle between absolute number and relative number
@@ -442,6 +452,7 @@ set statusline+=%y      "filetype
 "set statusline+=%#Error# " set error highlight color
 set statusline+=%{statusline#TabWarning()} " warning if &et wrong or mixedindent
 set statusline+=%{statusline#TrailingSpaceWarning()}
+set statusline+=%{statusline#NbspWarning()}
 "set statusline+=%*      " go back to default highlight color
 set statusline+=%=      "left/right separator
 set statusline+=%v,     "cursor column
@@ -613,6 +624,8 @@ augroup statusline
   autocmd CursorHold,BufWritePost * unlet! b:statusline_tab_warning
   "recalculate the trailing whitespace warning when idle, and after saving
   autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+  "recalculate the nbsp warning when idle, and after saving
+  autocmd cursorhold,bufwritepost * unlet! b:statusline_nbsp_warning
 augroup END
 
 " set muttrc file type for the mutt configuration file that are not called

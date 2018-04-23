@@ -31,3 +31,17 @@ function! statusline#TrailingSpaceWarning()
     endif
     return b:statusline_trailing_space_warning
 endfunction
+
+"return '[\nbsp]' if non breaking space is detected
+"return '' otherwise
+function! statusline#NbspWarning()
+    if !exists("b:statusline_nbsp_warning")
+        " if search('\%x00a0', 'nw') != 0
+        if search('\%xa0', 'nw') != 0
+            let b:statusline_nbsp_warning = '[\nbsp]'
+        else
+            let b:statusline_nbsp_warning = ''
+        endif
+    endif
+    return b:statusline_nbsp_warning
+endfunction
