@@ -219,8 +219,41 @@ let g:vimtex_mappings_enabled=0
   " }}}
 
 " Iron.nvim --------------------------------------------------------------- {{{
+
 " deactivate default mappings
 let g:iron_map_defaults=0
+
+"   }}}
+
+" LanguageClient-neovim --------------------------------------------------- {{{
+
+ let g:LanguageClient_serverCommands = {
+     \ 'python': ['pyls'],
+     \ 'php': ['php', '/home/debz/.config/composer/vendor/bin/php-language-server.php']
+     \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+"   }}}
+
+" Ultisnips --------------------------------------------------------------- {{{
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" ino <silent> <c-x><c-z> <c-r>=<sid>ulti_complete()<cr>
+" let g:UltiSnipsSnippetDirectories=$HOME . '/Documents/Dev/dotfiles/nvim/ultisnips'
+let g:UltiSnipsSnippetDirectories=['ultisnips']
+" let g:UltiSnipsSnippetDirectories=$HOME . '.config/nvim/ultisnips'
+
+
+
 "   }}}
 
 " }}}
@@ -228,6 +261,7 @@ let g:iron_map_defaults=0
 " User defined functions -------------------------------------------------- {{{
 
 " Convert spaces to tabs and vice versa ----------------------------------- {{{
+
 " Ref: http://vim.wikia.com/wiki/VimTip1592
 " Return indent (all whitespace at start of a line), converted from
 " tabs to spaces if what = 1, or from spaces to tabs otherwise.
@@ -257,6 +291,7 @@ endfunction
 command! -nargs=? -range=% Space2Tab call IndentConvert(<line1>,<line2>,0,<q-args>)
 command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,<q-args>)
 command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)
+
 " }}}
 
 " Remove/show unwanted spaces --------------------------------------------- {{{
@@ -273,8 +308,6 @@ function! ShowSpaces(...)
   end
   return oldhlsearch
 endfunction
-"TODO: This function does not seem to work but I don't use it a lot anyway. I'm
-"using TrimSpaces
 
 function! TrimSpaces() range
   let oldhlsearch=ShowSpaces(1)
@@ -284,15 +317,13 @@ endfunction
 
 command! -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
 command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
-"nnoremap <F12>     :ShowSpaces 1<CR>
-"nnoremap <S-F12>   m`:TrimSpaces<CR>``
-"vnoremap <S-F12>   :TrimSpaces<CR>
+
 " }}}
 
 " Replace Nbsp with space ------------------------------------------------- {{{
 
 function! NbspToSpaces()
-  %s/\%xa0/ /gc
+  %s/\%xa0/ /gce
 endfunction
 
 command! NbspToSpaces call NbspToSpaces()
@@ -434,6 +465,29 @@ endfunction
 command! TagFileLoc call s:Function(expand('%:p'))
 
   " }}}
+ 
+" Get Snippets candidates ------------------------------------------------- {{{
+
+function! s:ulti_complete() abort
+    if empty(UltiSnips#SnippetsInCurrentScope(1))
+        return ''
+    endif
+    let word_to_complete = matchstr(strpart(getline('.'), 0, col('.') - 1), '\S\+$')
+    let contain_word = 'stridx(v:val, word_to_complete)>=0'
+    let candidates = map(filter(keys(g:current_ulti_dict_info), contain_word),
+                   \  "{
+                   \      'word': v:val,
+                   \      'menu': '[snip] '. g:current_ulti_dict_info[v:val]['description'],
+                   \      'dup' : 1,
+                   \   }")
+    let from_where = col('.') - len(word_to_complete)
+    if !empty(candidates)
+        call complete(from_where, candidates)
+    endif
+    return ''
+endfunction
+
+    " }}}
 
 " }}}
 
@@ -469,10 +523,6 @@ nnoremap <leader>l :set list!<CR>
 
 nnoremap <leader>n :call NumberToggle()<cr>
 
-" Simple command to display open buffer and load the desired one by entering
-" its number and pressing enter.
-" nnoremap gb :buffers<CR>:buffer<Space>
-
 " switch to previous buffer
 nnoremap <leader>d :b#<CR>
 
@@ -495,6 +545,8 @@ inoremap <silent> ,n <C-x><C-n>
 inoremap <silent> ,o <C-x><C-o>
 inoremap <silent> ,t <C-x><C-]>
 inoremap <silent> ,u <C-x><C-u>
+" snippets completion trigger menu
+inoremap <silent> ,z <c-r>=<sid>ulti_complete()<cr>
 
 " https://stackoverflow.com/questions/16082991/vim-switching-between-files-rapidly-using-vanilla-vim-no-plugins/16084326#16084326
 " project navigation
@@ -514,105 +566,10 @@ nnoremap <leader>s :w<CR>
 
 " }}}
 
-" Learn vimscript the hard way tips --------------------------------------- {{{
-"move current line down
-"noremap - ddp
-
-"move current line up
-"noremap - dd2sp
-
-"in insert mode convert to current word to uppercase
-"inoremap <c-u> <esc>viwU
-
-"in normal mode convert to current word to uppercase
-"nnoremap <c-u> viwU
-
-"Edit my vimrc file
-" nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-
-"Source my vimrc file
-" nnoremap <leader>sv :source $MYVIMRC<cr>
-
-"Double quote around the current word in normal mode
-nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-
-"Single quote around the current word in normal mode
-nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
-
-"Double quote around the selection in visual mode
-vnoremap <leader>" c""<esc>P
-
-"Single quote around the selection in visual mode
-vnoremap <leader>' c''<esc>P
-
-"Go to the beginning of the current line
-"Override going to top of window
-"see :help H
-"nnoremap C 0
-
-"Go to the end of the current line
-"Override going to bottom of window
-"see :help L
-"nnoremap R $
-
-"inside next parenthesis
-"type 'lin(' or 'din(' in normal mode to use
-" onoremap in( :<c-u>normal! f(vi(<cr>
-
-"inside last parenthesis
-" onoremap il( :<c-u>normal! F)vi(<cr>
-
-"around next parenthesis
-" onoremap an( :<c-u>normal! f(va(<cr>
-
-"around last parenthesis
-" onoremap al( :<c-u>normal! F)va(<cr>
-
-"inside next curly brackets
-"type 'lin{' or 'din{' in normal mode to use
-" onoremap in{ :<c-u>normal! f{vi{<cr>
-
-"inside last curly brackets
-" onoremap il{ :<c-u>normal! F{vi{<cr>
-
-"around next curly brackets
-" onoremap an{ :<c-u>normal! f{va{<cr>
-
-"around last curly brackets
-" onoremap al{ :<c-u>normal! F{va{<cr>
-
-"inside next quote
-"type 'lin'' or 'din'' in normal mode to use
-" onoremap in' :<c-u>normal! f'vi'<cr>
-
-"inside last quote
-" onoremap il' :<c-u>normal! F'vi'<cr>
-
-"around next quote
-" onoremap an' :<c-u>normal! f'va'<cr>
-
-"around last quote
-" onoremap al' :<c-u>normal! F'va'<cr>
-
-"inside next double quote
-"type 'lin"' or 'din"' in normal mode to use
-" onoremap in" :<c-u>normal! f"vi"<cr>
-
-"inside last double quote
-" onoremap il" :<c-u>normal! F"vi"<cr>
-
-"around next double quote
-" onoremap an" :<c-u>normal! f"va"<cr>
-
-"around last double quote
-" onoremap al" :<c-u>normal! F"va"<cr>
-
-" }}}
-
 " Autocommands ------------------------------------------------------------ {{{
 
-" NOTE: for the LastMod function to find the pattern, some text must exists at
-" the right of the ':'. (i.e. Last Change: text)
+" NOTE: for the LastMod function to find the pattern, some text must exists on
+" the right hand side of the ':'. (i.e. Last Change: <some_text>)
 augroup vimrc
   autocmd!
   "write the date
@@ -656,103 +613,8 @@ augroup startup
   autocmd VimEnter * call SetGrepPrg()
 augroup END
 
-" }}}
-
-" Test -------------------------------------------------------------------- {{{
- let g:LanguageClient_serverCommands = {
-     \ 'python': ['pyls'],
-     \ 'php': ['php', '/home/debz/.config/composer/vendor/bin/php-language-server.php']
-     \ }
-
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
-
-" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-
-" I prefer the ctags solution which allow to move backward using N_CTRL_T
-" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-" ino <silent> <c-x><c-z> <c-r>=<sid>ulti_complete()<cr>
-" let g:UltiSnipsSnippetDirectories=$HOME . '/Documents/Dev/dotfiles/nvim/ultisnips'
-let g:UltiSnipsSnippetDirectories=['ultisnips']
-" let g:UltiSnipsSnippetDirectories=$HOME . '.config/nvim/ultisnips'
-
-ino <silent> ,z <c-r>=<sid>ulti_complete()<cr>
-
-fu! s:ulti_complete() abort
-    if empty(UltiSnips#SnippetsInCurrentScope(1))
-        return ''
-    endif
-    let word_to_complete = matchstr(strpart(getline('.'), 0, col('.') - 1), '\S\+$')
-    let contain_word = 'stridx(v:val, word_to_complete)>=0'
-    let candidates = map(filter(keys(g:current_ulti_dict_info), contain_word),
-                   \  "{
-                   \      'word': v:val,
-                   \      'menu': '[snip] '. g:current_ulti_dict_info[v:val]['description'],
-                   \      'dup' : 1,
-                   \   }")
-    let from_where = col('.') - len(word_to_complete)
-    if !empty(candidates)
-        call complete(from_where, candidates)
-    endif
-    return ''
-endfu
-
-" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
-" }}}
-
-" Junk -------------------------------------------------------------------- {{{
-
-" set complete+=k                  " add dictionnary as Completion source.
-" set dictionary+=/usr/share/dict/british-english
-" set dictionary+=/usr/share/dict/french
-" TODO: Set dictionnary only for specific filetype
-" TODO: For documentation use, http://www.vim.org/scripts/script.php?script_id=3893
-"ref https://github.com/tpope/vim-markdown
-
-" TODO: :help g:tex_fold_enabled and implement a tex filetype
-
-"set foldmethod=syntax
-"let g:tex_fold_enabled=1
-"let g:vimsyn_folding='af'
-"let g:xml_syntax_folding = 1
-"let g:php_folding = 1
-"let g:perl_fold = 1
-
-" TODO: fonction Tab2Space : bricoler la fonction pour qu'il y ai une demande
-" de confirmation avant remplacement.
-" TODO: conditional  highlight for the status line: http://got-ravings.blogspot.fr/2008/10/vim-pr0n-conditional-stl-highlighting.html
-
-"TODO:* vim8 package manager tuto:
-"https://gist.github.com/manasthakur/ab4cf8d32a28ea38271ac0d07373bb53
-
-"TODO: https://www.reddit.com/r/vim/comments/5607lj/how_to_do_90_of_what_plugins_do_with_just_vim/
-
-" TIPS: Test color  :runtime syntax/colortest.vim
-" TIPS: $time nvim +q : to see start up time of vim.
-" TIPS: see https://github.com/bchretien/vim-profiler: for detailed startuptime
-" or https://github.com/hyiltiz/vim-plugins-profile
-" TODO: Have a look at https://github.com/kana/vim-textobj-user
-" TODO: look at https://github.com/editorconfig/editorconfig-vim
-
-"        * https://gist.github.com/ajh17
-
-" TODO: see how to enable the matchit.vim. help matchit
-
-" * vimscript guidelines : https://google.github.io/styleguide/vimscriptguide.xml
-" * don't modify tabstop, instead use shiftwidth. shiftwidth will be used instead of tabstop since smartab in on by defaut anyway.
-" * many shipped filetype plugin define a 'sane' tw only if tw==0, that is when the user hasn't modify the tw in is vimrc. Thus don't set tw here but only in after dir and only when it isn't already defined in $VIMRUNTIME/ftplugin/language.vim
-"http://www.vex.net/~x/python_and_vim.html
-" * if vim warn me about language not available for spell and doesn't want to download. Type the command :set spelllang=fr and turn on spell, set spell It should work prompt me to download language file.
+augroup popupmenu
+  autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
+augroup END
 
 " }}}
