@@ -30,6 +30,7 @@ if exists('*minpac#init')
   call minpac#add('wellle/targets.vim')
   call minpac#add('SirVer/ultisnips')
   call minpac#add('honza/vim-snippets')
+  call minpac#add('junegunn/fzf.vim')
 
   " lang server client
   call minpac#add('autozimu/LanguageClient-neovim', {'branch': 'next', 'do': {-> system('bash install.sh')}})
@@ -253,6 +254,26 @@ let g:UltiSnipsSnippetDirectories=['ultisnips']
 " let g:UltiSnipsSnippetDirectories=$HOME . '.config/nvim/ultisnips'
 
 
+
+"   }}}
+
+" fzf.vim ----------------------------------------------------------------- {{{
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 "   }}}
 
@@ -550,14 +571,17 @@ inoremap <silent> ,z <c-r>=<sid>ulti_complete()<cr>
 
 " https://stackoverflow.com/questions/16082991/vim-switching-between-files-rapidly-using-vanilla-vim-no-plugins/16084326#16084326
 " project navigation
-nnoremap <leader>f :find *
+" nnoremap <leader>f :find *
+nnoremap <leader>f :Files<CR>
 
 "buffer navigation
-nnoremap <leader>b :buffer <C-z><S-Tab>
+" nnoremap <leader>b :buffer <C-z><S-Tab>
+nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>B :sbuffer <C-z><S-Tab>
 
 " tag searching, / adds regex search
-nnoremap <leader>j :tjump /
+" nnoremap <leader>j :tjump /
+nnoremap <leader>j :Tags<CR>
 " tag of the current buffer
 nnoremap <leader>u :FindBufTag <C-z><S-Tab>
 
