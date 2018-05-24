@@ -42,6 +42,7 @@ function main() {
   sym_conf "${SCRIPT_DIR}/bin" "${HOME}/bin"
   sym_conf "${SCRIPT_DIR}/clerk" "${conf_dir}/clerk"
   sym_conf "${SCRIPT_DIR}/cookiecutter" "${conf_dir}/cookiecutter"
+  sym_conf "${SCRIPT_DIR}/conky" "${conf_dir}/conky"
   sym_conf "${SCRIPT_DIR}/ctags" "${HOME}"
   sym_conf "${SCRIPT_DIR}/dreamnote" "${conf_dir}/dreamnote"
   sym_conf "${SCRIPT_DIR}/feh" "${conf_dir}/feh"

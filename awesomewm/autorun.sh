@@ -30,6 +30,9 @@ function main {
   # wmctrl -s 0
   # run termite -t reminder -e 'zsh -c "remind ~/.config/remind/remind; exec zsh"'
   # sleep 1
+  wmctrl -s 4
+  conky -d
+  sleep 2
 
   wmctrl -s 0
   run qutebrowser
