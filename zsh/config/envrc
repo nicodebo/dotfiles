@@ -66,7 +66,7 @@ export ENV_DIR="${XDG_DATA_HOME}/python_venv"
 export NVIM_PROVIDER_PYLIB="python3_neovim_provider"
 
 # colorized less and man pages
-export LESS=-R
+export LESS=-RFX
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
 # export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
 export LESS_TERMCAP_md=$'\E[1;31m'     # begin blink
