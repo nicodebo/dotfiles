@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2018 Apr 23
+" Last Change: 2018 Sep 09
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -142,9 +142,6 @@ try
 catch /.*E185:.*/
   colorscheme darkblue
 endtry
-
-" Path to the python3 provider
-let g:python3_host_prog = $ENV_DIR . "/" . $NVIM_PROVIDER_PYLIB . "/" . "bin/python"
 
 " Useful for the find command, allow to search the current directory and
 " downwards its tree
