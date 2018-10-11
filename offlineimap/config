@@ -71,29 +71,6 @@ nametrans = lambda folder: {'[Gmail]/Brouillons': 'drafts',
                             }.get(folder, folder)
 #folderfilter = lambda folder: folder not in ['[Gmail]/Tous les messages']
 ###############################################################################
-#                          user@email1.com                          #
-###############################################################################
-
-[Account Work2]
-localrepository = Work2-Local
-remoterepository = Work2-Remote
-postsynchook = notmuch new
-
-[Repository Work2-Local]
-type = Maildir
-localfolders = $MAILSTOREDIR/user@email1.com
-
-[Repository Work2-Remote]
-maxconnections = 1
-type = IMAP
-remotehost = imap.openmailbox.org
-sslcacertfile = /etc/ssl/certs/ca-certificates.crt
-remoteuser = user@email1.com
-remotepasseval = get_pass("user@email1.com")
-realdelete = no
-auth_mechanisms = LOGIN
-
-###############################################################################
 #                          user@email6.com                           #
 ###############################################################################
 

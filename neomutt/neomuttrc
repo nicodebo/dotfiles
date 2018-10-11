@@ -51,7 +51,6 @@ hdr_order from: to: cc: date: subject:  # and in this order
 ###############################################################################
 folder-hook user@email5.com/* source $XDG_CONFIG_HOME/neomutt/accounts/personal.muttrc
 folder-hook user@email2.com/* source $XDG_CONFIG_HOME/neomutt/accounts/work.muttrc
-folder-hook user@email1.com* source $XDG_CONFIG_HOME/neomutt/accounts/work2.muttrc
 folder-hook user@email6.com* source $XDG_CONFIG_HOME/neomutt/accounts/work-sig.muttrc
 folder-hook user@email7.com* source $XDG_CONFIG_HOME/neomutt/accounts/mailingls.muttrc
 ###############################################################################
@@ -91,9 +90,8 @@ color sidebar_new yellow default
 ###############################################################################
 macro index <f2> "<change-folder>$MAILSTOREDIR/user@email2.com/INBOX<enter>"
 macro index <f3> "<change-folder>$MAILSTOREDIR/user@email5.com/Inbox<enter>"
-macro index <f4> "<change-folder>$MAILSTOREDIR/user@email1.com/INBOX<enter>"
-macro index <f5> "<change-folder>$MAILSTOREDIR/user@email6.com/inbox<enter>"
-macro index <f6> "<change-folder>$MAILSTOREDIR/user@email7.com/inbox<enter>"
+macro index <f4> "<change-folder>$MAILSTOREDIR/user@email6.com/inbox<enter>"
+macro index <f5> "<change-folder>$MAILSTOREDIR/user@email7.com/inbox<enter>"
 # sync email
 macro index O "<enter-command>unset wait_key<enter><shell-escape>offlineimap<enter><enter-command>set wait_key<enter>"
 macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"

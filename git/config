@@ -14,7 +14,7 @@
         showUntrackedFiles = all	
 [user]
         name = nicodebo
-        email = user@email1.com
+        email = user@email2.com
 
 [merge]
     tool = kdiff3
