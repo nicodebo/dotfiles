@@ -63,7 +63,6 @@ export NOTESTOREDIR="${HOME}/Documents/Note"
 export MAILSTOREDIR="${HOME}/.mail"
 # python -m venv, ENV_DIR
 export ENV_DIR="${XDG_DATA_HOME}/python_venv"
-export NVIM_PROVIDER_PYLIB="python3_neovim_provider"
 
 # colorized less and man pages
 export LESS=-RFX
