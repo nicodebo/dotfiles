@@ -57,6 +57,7 @@ nametrans = lambda folder: {'drafts':  '[Gmail]/Brouillons',
 [Repository Work-Remote]
 maxconnections = 1
 type = Gmail
+ssl_version = tls1_2
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = user@email2.com
 remotepasseval = get_pass("user@email2.com")
