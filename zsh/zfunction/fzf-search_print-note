@@ -3,7 +3,7 @@ local match
 local file
 local search
 
-search=$(ag --markdown --silent --break --color --number --noheading . "${NOTESTOREDIR}" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {3..-1} {1} | pygmentize -l md" --preview-window=right:50% --print0)
+search=$(ag --markdown --silent --break --color --number --noheading . "${NOTESTOREDIR}" | fzf -q "$1" --ansi --header="$header" --delimiter : --preview="grep --context=5 --color=always -F {3..-1} {1}" --preview-window=right:50% --print0)
 if [[ -n $search ]]
 then
   match=$(echo "$search" | cut -d ":" -f 3-)
@@ -14,7 +14,7 @@ then
   echo -e "${DARKGRAY}${file}${NC}"
   printf "${DARKGRAY}-%.0s${NC}" {1..80}
   echo "\r"
-  grep --context=5 --color=always -F "$match" "$file" | pygmentize -l md
+  grep --context=5 --color=always -F "$match" "$file"
   printf "${DARKGRAY}-%.0s${NC}" {1..80}
   echo "\r"
 fi
