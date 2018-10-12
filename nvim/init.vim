@@ -1,6 +1,6 @@
 " Author: nicodebo
 " Description: vim/nvim configuration file
-" Last Change: 2018 Sep 09
+" Last Change: 2018 Oct 11
 " Guidelines:
 "        * When a section become to large, make it into a separate file inside
 "          the config directory.
@@ -150,6 +150,13 @@ set path=.,**
 " Set Ctrl-z as a wildmenu trigger. I need to define it to be able to press Tab
 " but within a macro. I can now use <C-z> inside a macro to trigger menu
 set wildcharm=<C-z>
+
+" Figure out the system Python for Neovim.
+if exists("$VIRTUAL_ENV")
+    let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
+else
+    let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
+endif
 
 " }}}
 
