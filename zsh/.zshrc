@@ -240,5 +240,7 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 's' history-substring-search-up
 bindkey -M vicmd 't' history-substring-search-down
+# Allow backspace to delete word in insert mode
+bindkey "^?" backward-delete-char
 
 # }}}
