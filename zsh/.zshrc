@@ -185,13 +185,19 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # }}}
 
-# Source some shell programs ---------------------------------------------- {{{
+# Source some files ------------------------------------------------------- {{{
 
 # virtualenvwrapper
 [[ -s "/usr/bin/virtualenvwrapper_lazy.sh" ]] && source /usr/bin/virtualenvwrapper_lazy.sh
 
 # fzf keybindings
 [[ -s "/usr/share/fzf/key-bindings.zsh" ]] && source /usr/share/fzf/key-bindings.zsh
+
+# tmuxinator completion
+if stat -t /usr/lib/ruby/gems/*/gems/tmuxinator-*/completion/tmuxinator.zsh >/dev/null 2>&1
+then
+  source /usr/lib/ruby/gems/*/gems/tmuxinator-*/completion/tmuxinator.zsh
+fi
 
 # }}}
 
