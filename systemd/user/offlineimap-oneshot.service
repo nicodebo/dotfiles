@@ -11,7 +11,7 @@ Environment=PASSWORD_STORE_DIR=/home/debz/.local/share/pass
 Environment=MAILSTOREDIR=/home/debz/.mail
 Environment=IMAPFILTER_HOME=/home/debz/.config/imapfilter
 ExecStart=/usr/bin/imapfilter
-ExecStart=/home/debz/.local/bin/offlineimap -o -u basic
+ExecStart=/usr/bin/offlineimap -o -u basic
 # Give 120 seconds for offlineimap to gracefully stop before hard killing it:
 TimeoutStopSec=120
 
