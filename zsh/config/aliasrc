@@ -108,3 +108,8 @@ cheat.sh()
     # curl cheat.sh/:styles-demo to show the available color schemes
     curl -s cheat.sh/"$1"?style=native
 }
+
+# vim
+vim() {
+   command vim -u "${XDG_CONFIG_HOME}/vim/vimrc" "$@"
+}
