@@ -11,6 +11,7 @@ set header_cache     = $XDG_CACHE_HOME/neomutt/headers  # where to store headers
 set message_cachedir = $XDG_CACHE_HOME/neomutt/bodies   # where to store bodies
 set mailcap_path     = $XDG_CONFIG_HOME/neomutt/mailcap # entries for filetypes
 set tmpdir           = $XDG_CACHE_HOME/neomutt/temp     # where to keep temp files
+set nm_default_uri   = notmuch://$MAILSTOREDIR
 # set signature        = $XDG_CONFIG_HOME/neomutt/sig     # my signature file
 ###############################################################################
 #                                   Options                                   #
@@ -105,3 +106,4 @@ source $XDG_CONFIG_HOME/neomutt/accounts/work.muttrc          # load default acc
 source $XDG_CONFIG_HOME/neomutt/keybinds.muttrc               # load key bindings
 source $XDG_CONFIG_HOME/neomutt/theme.muttrc
 source $XDG_CONFIG_HOME/neomutt/subscriptions.muttrc              # Define the list of subscribed mailing lists.
+
