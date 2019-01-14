@@ -1,0 +1,2 @@
+#!/bin/sh
+ln -f $GIT_DIR/nvim/vimrc/bepo.vimrc $GIT_DIR/vim/vimconf/bepo.vimrc

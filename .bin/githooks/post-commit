@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# post commit hook that automatically save a patch to be used in dotfiles-github repo
+
+main(){
+	local repo_dir="$HOME/Documents/Dev/dotfiles-github"
+	git diff --cached HEAD~1 > "$repo_dir"/$(date +%Y%m%d-%H%M%S).patch
+	git log --format=%B -n 1 > "$repo_dir"/$(date +%Y%m%d-%H%M%S).msg
+}
+
+echo "post-commit started"
+main "$@"
+echo "post-commit finished"
